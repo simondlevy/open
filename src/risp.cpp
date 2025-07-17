@@ -531,8 +531,6 @@ namespace risp {
 
         spike_value_factor = 7;
 
-        if (params.contains("noisy_stddev")) noisy_stddev = params["noisy_stddev"]; 
-
         /* Have the saved parameters include all of the default information.   The reason is
            that this way, if defaults change, you can still have this information stored. */
 
