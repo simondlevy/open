@@ -754,6 +754,7 @@ namespace risp {
         return pp;
     }
 
+    /*
     json Processor::get_processor_properties() const {
 
         json j = json::object();
@@ -767,7 +768,7 @@ namespace risp {
         j["threshold_inclusive"] = threshold_inclusive;
 
         return j;
-    }
+    }*/
 
     json Processor::get_params() const {
         return saved_params;

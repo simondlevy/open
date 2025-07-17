@@ -542,7 +542,6 @@ public:
        fire-on-threshold vs fire-over-threshold). */
 
     virtual PropertyPack get_network_properties() const = 0;
-    virtual json get_processor_properties() const = 0;
 
     /* get_params() returns the json that you can use to recreate the processor. 
        It doesn't have to be the same json as was used to create the processor; just

@@ -204,7 +204,6 @@ public:
      fire-on-threshold vs fire-over-threshold. */
 
   PropertyPack get_network_properties() const;
-  json get_processor_properties() const;
   json get_params() const;
   string get_name() const;
 

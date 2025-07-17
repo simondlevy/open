@@ -933,13 +933,8 @@ int main(int argc, char **argv)
         }
         
   
-      } else if (sv[0] == "PP") { // get_processor_properties
-        if (p == nullptr) {
-          printf("Must make a processor first\n"); 
-        } else {
-          cout << p->get_processor_properties() << endl;
-        } 
-  
+      } else if (sv[0] == "PP") { 
+
       } else if (sv[0] == "NP" || sv[0] == "PPACK") { // get_network_properties
         if (p == nullptr) {
           printf("Must make a processor first\n"); 
