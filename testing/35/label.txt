@@ -1,1 +1,0 @@
-A RISP-7 network to approximate sine(x)

@@ -1,1 +1,0 @@
-XOR network from [Plank2021], Figure 5.

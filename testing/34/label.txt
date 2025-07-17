@@ -1,1 +1,0 @@
-The dbscan_systolic_full network example from the dbscan README.
