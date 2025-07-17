@@ -505,7 +505,7 @@ namespace risp {
         }
     }
 
-    Processor::Processor(json &params) 
+    Processor::Processor() 
     {
         string estring;
 

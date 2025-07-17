@@ -141,7 +141,7 @@ protected:
 class Processor : public neuro::Processor
 {
 public:
-  Processor(json &params);
+  Processor();
   ~Processor();
 
   bool load_network(neuro::Network* n, int network_id = 0);

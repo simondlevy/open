@@ -463,7 +463,7 @@ class Processor
 public:
     virtual ~Processor() {}
 
-    static Processor *make(const string &name, json &params);
+    static Processor *make();
 
     /* Load or clear a network. */
 

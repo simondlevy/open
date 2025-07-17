@@ -1,7 +1,7 @@
 #include "framework.hpp"
 #include "risp.hpp"
 
-neuro::Processor *neuro::Processor::make(const string &name, json &params)
+neuro::Processor *neuro::Processor::make()
 {
-  return new risp::Processor(params);
+  return new risp::Processor();
 }

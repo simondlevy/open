@@ -239,7 +239,7 @@ Network *load_network(Processor **pp,
   if (p == nullptr) {
     proc_params = net->get_data("proc_params");
     proc_name = net->get_data("other")["proc_name"];
-    p = Processor::make(proc_name, proc_params);
+    p = Processor::make();
     *pp = p;
   } 
 
@@ -394,7 +394,7 @@ int main(int argc, char **argv)
             printf("usage: MAKE proc_name processor_params_json. Bad json\n");
           } else {
             try {
-              p = Processor::make(proc_name, proc_params);
+              p = Processor::make();
   
             } catch (const SRE &e) {
               printf("%s\n",e.what());
