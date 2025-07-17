@@ -529,13 +529,8 @@ namespace risp {
         min_weight = -7;
         max_weight = 7;
 
-        if (params.contains("threshold_inclusive")) threshold_inclusive = params["threshold_inclusive"];
-
         spike_value_factor = 7;
 
-        if (params.contains("run_time_inclusive")) run_time_inclusive = params["run_time_inclusive"];
-        if (params.contains("fire_like_ravens")) fire_like_ravens = params["fire_like_ravens"];
-        if (params.contains("noisy_seed")) noisy_seed = params["noisy_seed"];
         if (params.contains("leak_mode")) leak_mode = params["leak_mode"];
 
         if (params.contains("stds")) stds = params["stds"].get< vector <double> >(); 
