@@ -520,29 +520,14 @@ namespace risp {
         noisy_stddev = 0;
         inputs_from_weights = false;
 
-        /* You don't have to check for these, because they are required in the JSON. */
-
         max_delay = 15;
         min_threshold = 0;
         max_threshold = 7;
         min_potential = -7;
         discrete = true;
 
-        /* Handle weights + min_weights + max_weights + inputs_from_weight. */
-
-        if (params.contains("weights") && params["weights"].size() > 0) {
-
-            weights = params["weights"].get< vector <double> >(); 
-
-            inputs_from_weights = params["inputs_from_weights"];
-
-            min_weight = -9999;
-            max_weight = -9999;
-
-        } else {
-            min_weight = params["min_weight"];
-            max_weight = params["max_weight"];
-        }
+        min_weight = -7;
+        max_weight = 7;
 
         if (params.contains("threshold_inclusive")) threshold_inclusive = params["threshold_inclusive"];
 

@@ -33,6 +33,9 @@ VRISP_RVV_SYNAPSES_OBJ = obj/vrisp_rvv_synapses.o obj/vrisp_static.o
 
 all: bin/processor_tool_risp
 
+test: bin/processor_tool_risp
+	bin/processor_tool_risp < sinewave_pt_input.txt
+
 clean:
 	rm -f bin/* obj/* lib/*
 
