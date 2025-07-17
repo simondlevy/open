@@ -531,9 +531,6 @@ namespace risp {
 
         spike_value_factor = 7;
 
-        if (params.contains("leak_mode")) leak_mode = params["leak_mode"];
-
-        if (params.contains("stds")) stds = params["stds"].get< vector <double> >(); 
         if (params.contains("noisy_stddev")) noisy_stddev = params["noisy_stddev"]; 
 
         /* Have the saved parameters include all of the default information.   The reason is
