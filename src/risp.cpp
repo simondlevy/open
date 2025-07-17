@@ -561,40 +561,12 @@ Processor::Processor(json &params)
 
     weights = params["weights"].get< vector <double> >(); 
 
-    if (params.contains("min_weight")) throw SRE("RISP: Cannot have weights and min_weight.");
-    if (params.contains("max_weight")) throw SRE("RISP: Cannot have weights and max_weight.");
-    if (!params.contains("inputs_from_weights")) {
-      throw SRE("RISP: If you specify weights, then you must specify inputs_from_weights.");
-    }
-
-    for (i = 1; i < weights.size(); i++) {
-      if (weights[i] < weights[i-1]) {
-        throw SRE("RISP: If you specify weights, then they must be sorted.\n");
-      }
-      if (discrete && weights[i] - ((int) weights[i]) != 0) {
-        throw SRE("RISP: Since discrete is true, weights must be integers.\n");
-      }
-    }
-
     inputs_from_weights = params["inputs_from_weights"];
 
-    if (!inputs_from_weights && !params.contains("spike_value_factor")) {
-      throw SRE("RISP: If inputs_from_weights is false, you must specify spike_value_factor.");
-    }
-
-    if (inputs_from_weights && params.contains("spike_value_factor")) {
-      throw SRE("RISP: If inputs_from_weights is true, you cannot specify spike_value_factor.");
-    }
- 
     min_weight = -9999;
     max_weight = -9999;
 
   } else {
-    if (!params.contains("min_weight")) throw SRE("RISP: Need parameter min_weight.");
-    if (!params.contains("max_weight")) throw SRE("RISP: Need parameter max_weight.");
-    if (params.contains("inputs_from_weights")) {
-      throw SRE("RISP: If you don't specify weights, you cannot specify inputs_from_weights.");
-    }
     min_weight = params["min_weight"];
     max_weight = params["max_weight"];
   }
