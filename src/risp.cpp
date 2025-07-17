@@ -292,34 +292,14 @@ void Network::apply_spike(const Spike& s, bool normalized)
 {
   Neuron *n;
   double v;
-  char buf[24];
   size_t index;
   string es;
-
-  if (normalized && (s.value < 0 || s.value > 1)) {
-    snprintf(buf, 24, "%lg", s.value);
-    throw SRE((string) "risp::Network::apply_spike() - value (" + buf + ") must be in [-1,1].");
-  }
-
-  if (!is_valid_input_id(s.id)) {
-    snprintf(buf, 24, "%d", s.id);
-    throw SRE((string) "risp::Network::apply_spike() - input_id " + buf + " is not valid");
-  }
 
   n = get_neuron(inputs[s.id]);
   if (s.time >= events.size()) events.resize(s.time + 1);
   if (inputs_from_weights) {
     if (!normalized) {
       index = s.value;
-      if (index >= weights.size()) {
-        snprintf(buf, 24, "%d", ((int) weights.size()) - 1);
-        es = "risp::Network::apply_spike() - value must be between 0 and ";
-        es += buf;
-        snprintf(buf, 24, "%d", (int) index);
-        es += ". Value given: ";
-        es += buf;
-        throw SRE(buf);
-      }
     } else {
       index = (s.value * weights.size());
       if (index >= weights.size()) index = weights.size()-1;
@@ -358,8 +338,6 @@ void Network::run(double duration) {
   Neuron *n;
   int run_time;
 
-  if (duration < 0) throw SRE("risp::Network::run() - duration < 0");
-    
   /* if clear_activity get called, we don't want to clear tracking info again. */
   if (overall_run_time != 0) clear_tracking_info();
 
@@ -395,11 +373,6 @@ void Network::run(double duration) {
 
 int Network::output_count(int output_id) 
 {
-  char buf[200];
-  if (!is_valid_output_id(output_id)) {
-    snprintf(buf, 200, "risp::Network::output_count() - output id %u is not valid", output_id);
-    throw SRE((string) buf);
-  }
   return neuron_map[outputs[output_id]]->fire_counts;
 }
 
