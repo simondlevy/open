@@ -423,12 +423,6 @@ bool Network::track_neuron_events(uint32_t node_id, bool track) {
 
 double Network::output_last_fire(int output_id) 
 {
-  char buf[100];
-
-  if (!is_valid_output_id(output_id)) {
-    snprintf(buf, 100, "risp::Network::output_last_fire() - output_id %u is not valid", output_id);
-    throw SRE((string) buf);
-  }
   return neuron_map[outputs[output_id]]->last_fire;
 }
 
@@ -444,12 +438,6 @@ vector <double> Network::output_last_fires() {
 
 vector <double> Network::output_vector(int output_id) 
 {
-  char buf[100];
-  if (!is_valid_output_id(output_id)) {
-    snprintf(buf, 100, "risp::Network::output_last_vector() - output_id %u is not valid", 
-             output_id);
-    throw SRE((string) buf);
-  }
   return neuron_map[outputs[output_id]]->fire_times;    // If tracking is turned off, this is empty.
 }
 
@@ -547,34 +535,6 @@ Processor::Processor(json &params)
 {
   string estring;
   size_t i;
-
-  if (params.contains("input_scaling_value")) {
-    estring =  "RISP: input_scaling_value is no longer supported.\n";
-    estring += "      Please change that parameter to spike_value_factor.\n";
-    throw SRE(estring);
-  }
-
-  if (params.contains("non_negative_charge")) {
-    estring =  "RISP: non_negative_charge is no longer supported.\n";
-    estring += "      Instead, min_potential is a required parameter.\n";
-    estring += "      Please set min_potential to zero.\n";
-    estring += "      Please also see utils/risp_08_2024.\n";
-    throw SRE(estring);
-  }
-
-  if (params.contains("specific_weights")) {
-    estring =  "RISP: specific_weights is no longer supported.\n";
-    estring += "      Instead, you simply set the weights array, and it will be used.\n";
-    estring += "      Please also see utils/risp_08_2024.\n";
-    throw SRE(estring);
-  }
-
-  if (params.contains("noisy_weights")) {
-    estring =  "RISP: noisy_weights is no longer supported.\n";
-    estring += "      Instead, you simply set the stds array, and it will be used.\n";
-    estring += "      Please also see utils/risp_08_2024.\n";
-    throw SRE(estring);
-  }
 
   /* Default params */
 
