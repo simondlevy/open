@@ -33,14 +33,6 @@ VRISP_RVV_SYNAPSES_OBJ = obj/vrisp_rvv_synapses.o obj/vrisp_static.o
 
 all: bin/processor_tool_risp
 
-riscv_vector: all \
-              bin/processor_tool_vrisp_vector_full \
-              bin/processor_tool_vrisp_vector_fired \
-              bin/processor_tool_vrisp_vector_synapses
-
-utils: bin/property_pack_tool \
-       bin/property_tool
-
 clean:
 	rm -f bin/* obj/* lib/*
 
