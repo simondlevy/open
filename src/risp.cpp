@@ -868,13 +868,7 @@ string Processor::get_name() const {
 Network* Processor::get_risp_network(int network_id) 
  {
   map <int, risp::Network*>::const_iterator it;
-  char buf[200];
   it = networks.find(network_id);
-  if (it == networks.end()) {
-    snprintf(buf, 200, "risp::Processor::get_risp_network() network_id %d does not exist", 
-             network_id);
-    throw SRE((string) buf);
-  }
   return it->second;
 }
 
