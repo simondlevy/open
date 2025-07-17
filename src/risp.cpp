@@ -120,10 +120,6 @@ namespace risp {
 
         n = new Neuron(node_id, threshold, leak);
 
-        /* JSP: I'm not a big fan of this hack, 
-           but I'd rather do this than put an if
-           statement before every threshold check.  */
-
         if (!threshold_inclusive) {
             n->threshold = (discrete) ? (n->threshold+1) : (n->threshold + 0.0000001);
         }
@@ -526,11 +522,11 @@ namespace risp {
 
         /* You don't have to check for these, because they are required in the JSON. */
 
-        max_delay = params["max_delay"];
-        min_threshold = params["min_threshold"];
-        max_threshold = params["max_threshold"];
-        min_potential = params["min_potential"];
-        discrete = params["discrete"];
+        max_delay = 15;
+        min_threshold = 0;
+        max_threshold = 7;
+        min_potential = -7;
+        discrete = true;
 
         /* Handle weights + min_weights + max_weights + inputs_from_weight. */
 
