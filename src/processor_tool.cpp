@@ -950,49 +950,7 @@ int main(int argc, char **argv)
         } 
         
       } else if (sv[0] == "EMPTYNET") { 
-        if (p == nullptr) {
-          printf("Must make a processor first\n"); 
-        } else {
-          if (sv.size() > 1) {
-            fout.clear();
-            fout.open(sv[1].c_str());
-            if (fout.fail()) {
-              perror(sv[1].c_str());
-              throw SRE("");
-            } 
-          }
-          if (net != nullptr) { delete net; net = nullptr; }
-          net = new Network;
-          net->set_properties(p->get_network_properties());
-          j1 = json::object();
-          j1["proc_name"] = p->get_name();
-          net->set_data("other", j1);
-          net->set_data("proc_params", p->get_params());
-          if (sv.size() == 1) {
-            cout << net->pretty_json() << endl;
-          } else {
-            fout << net->as_json() << endl;
-            fout.close();
-          }
-        }
       } else if (sv[0] == "PARAMS") { 
-        if (sv.size() != 1 && sv.size() != 2) {
-          cout << "usage: PARAMS [file] " << endl;
-        } else if (p == nullptr) {
-          printf("Must make a processor first\n"); 
-        } else if (sv.size() == 2) {
-          fout.clear();
-          fout.open(sv[1].c_str());
-          if (fout.fail()) {
-            perror(sv[1].c_str());
-          } else {
-            fout << p->get_params() << endl;
-            fout.close();
-          }
-        } else {
-          cout << p->get_params().dump(2) << endl;
-        }
-        
       } else if (sv[0] == "GSR") { // get_spike_raster
         gsr_nodes.clear();
         gsr_hidden_nodes = true;

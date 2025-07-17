@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include "risp.hpp"
-#include "utils/json_helpers.hpp"
+//#include "utils/json_helpers.hpp"
 #include <random>
 
 typedef std::runtime_error SRE;
@@ -755,24 +755,9 @@ namespace risp {
     }
 
     /*
-    json Processor::get_processor_properties() const {
-
-        json j = json::object();
-
-        j["spike_value_factor"] = spike_value_factor;
-        j["binary_input"] = false;
-        j["spike_raster_info"] = true;
-        j["plasticity"] = "none";
-        j["run_time_inclusive"] = run_time_inclusive;
-        j["integration_delay"] = false;
-        j["threshold_inclusive"] = threshold_inclusive;
-
-        return j;
-    }*/
-
     json Processor::get_params() const {
         return saved_params;
-    }
+    }*/
 
     string Processor::get_name() const {
         return "risp";
