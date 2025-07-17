@@ -97,14 +97,9 @@ Network::Network(neuro::Network *net,
 Neuron* Network::get_neuron(uint32_t node_id) 
 {
   unordered_map <uint32_t, Neuron*>::const_iterator it;
-  char buf[200];
 
   it = neuron_map.find(node_id);
 
-  if (it == neuron_map.end()) {
-    snprintf(buf, 200, "risp::Network::get_neuron() - %u is not in the neuron map\n", node_id);
-    throw SRE((string) buf);
-  }
   return it->second;
 }
 
@@ -122,12 +117,7 @@ bool Network::is_valid_output_id(int output_id) {
 
 Neuron* Network::add_neuron(uint32_t node_id, double threshold, bool leak) {
   Neuron *n;
-  char buf[200];
 
-  if (is_neuron(node_id)) {
-    snprintf(buf, 200, "risp::Neuron::add_neuron() - %u is already in the neuron map\n", node_id);
-    throw SRE((string) buf);
-  }
   n = new Neuron(node_id, threshold, leak);
 
   /* JSP: I'm not a big fan of this hack, 
@@ -158,16 +148,6 @@ Synapse* Network::add_synpase(uint32_t from_id, uint32_t to_id, double weight, u
   Neuron *from, *to;
   Synapse *syn;
   unordered_map <uint32_t, Neuron*>::const_iterator it;
-  char buf[200];
-
-  if (!is_neuron(from_id)) {
-    snprintf(buf, 200, "risp::Network::add_synpase() - node %u does not exist", from_id);
-    throw SRE((string) buf);
-  }
-  if (!is_neuron(to_id)) {
-    snprintf(buf, 200, "risp::Network::add_synpase() - node %u does not exist", to_id);
-    throw SRE((string) buf);
-  }
 
   from = get_neuron(from_id);
   to = get_neuron(to_id);
@@ -181,26 +161,14 @@ Synapse* Network::add_synpase(uint32_t from_id, uint32_t to_id, double weight, u
 
 void Network::add_input(uint32_t node_id, int input_id) 
 {
-  char buf[200];
-  
-  if (!is_neuron(node_id)) {
-    snprintf(buf, 200, "risp::Network::add_input() - node %u does not exist", node_id);
-    throw SRE((string) buf);
-  }
-  if (input_id < 0) throw SRE("risp::Network::add_input() - input_id < 0");
   if (input_id >= (int) inputs.size()) inputs.resize(input_id + 1, -1);
+
   inputs[input_id] = node_id;
 }
 
 
 void Network::add_output(uint32_t node_id, int output_id) 
 {
-  char buf[200];
-  if (!is_neuron(node_id)) {
-    snprintf(buf, 200, "risp::Network::add_output() - node %u does not exist", node_id);
-    throw SRE((string) buf);
-  }
-  if (output_id < 0) throw SRE("risp::Network::add_output() - output_id < 0");
   if (output_id >= (int) outputs.size()) outputs.resize(output_id + 1, -1);
   outputs[output_id] = node_id;
 }
