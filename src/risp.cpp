@@ -9,31 +9,6 @@ using namespace std;
 
 namespace risp {
 
-static json risp_spec = {
-  { "min_weight", "D" },
-  { "max_weight", "D`" },
-  { "max_delay", "I" },
-  { "min_threshold", "D" },
-  { "max_threshold", "D" },
-  { "min_potential", "D" },
-  { "noisy_stddev", "D" },
-  { "spike_value_factor", "D" },
-  { "leak_mode", "S" },            /* "all", "none", "configurable" */
-  { "fire_like_ravens", "B" },
-  { "run_time_inclusive", "B" },
-  { "threshold_inclusive", "B" },
-  { "fire_like_ravens", "B" },
-  { "discrete", "B" },
-  { "weights", "A"},
-  { "inputs_from_weights", "B"},
-  { "noisy_seed", "I" },
-  { "stds", "A"},
-    { "Necessary", { "max_delay", 
-                     "min_threshold",
-                     "max_threshold",
-                     "min_potential",
-                     "discrete" } } };
-
 /** initialization for Neuron, Synapse  */
 Neuron::Neuron(uint32_t node_id, double t, bool l) 
   : charge(0),
@@ -659,8 +634,6 @@ Processor::Processor(json &params)
     estring += "      Please also see utils/risp_08_2024.\n";
     throw SRE(estring);
   }
-
-  Parameter_Check_Json_T(params, risp_spec);
 
   /* Default params */
 
