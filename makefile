@@ -31,11 +31,7 @@ VRISP_RVV_FULL_OBJ = obj/vrisp_rvv_full.o obj/vrisp_static.o
 VRISP_RVV_FIRED_OBJ = obj/vrisp_rvv_fired.o obj/vrisp_static.o
 VRISP_RVV_SYNAPSES_OBJ = obj/vrisp_rvv_synapses.o obj/vrisp_static.o
 
-all: lib/libframework.a \
-     bin/network_tool \
-     bin/processor_tool_risp \
-     bin/processor_tool_vrisp \
-     bin/network_to_jgraph \
+all: bin/processor_tool_risp
 
 riscv_vector: all \
               bin/processor_tool_vrisp_vector_full \

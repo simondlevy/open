@@ -182,20 +182,6 @@ namespace risp {
         size_t events_size;
         double weight;
 
-        /*
-           the number of events may be very big, we want to deallocate the vector.
-cons:
-vector will perform a lot reallocation.
-pros:
-It will allow you to do more threads in the cluster. Think about this - 
-Let's assume at each timestep, it has roughly 50000 events.
-That wil consume 50000 * timestep * sizeof(pair<Neuron*, double>) bytes.
-When the timestep is very big, which will be for optimized whetstone's conv2d, 
-It may uses several GB memory.
-
-The move constructor is going to deallocate the memory.
-At the end of function, es should be free
-         */
         const vector<std::pair <Neuron*, double>> es = std::move(events[time]);
 
         /* Cause neurons to fire if we're firing like RAVENS */
@@ -635,31 +621,6 @@ At the end of function, es should be free
        if discrete&&!threshold_inclusive), then max threshold+1. */
 
     bool Processor::load_network(neuro::Network* net, int network_id) {
-
-#if 0
-        //risp::Network *risp_net;
-        string error;
-        string rln = "risp::load_network() - ";
-
-        /* Error Check properties */
-        error = "";
-        if (!net->is_node_property("Threshold")) error = rln + "Missing node' Threshold property\n";
-        if (!net->is_edge_property("Weight")) error += (rln + "Missing edge Weight property\n");
-        if (!net->is_edge_property("Delay")) error += (rln + "Missing edge Delay property\n");
-        if (leak_mode[0] == 'c' && !net->is_node_property("Leak")) {
-            error += (rln + "Missing node' Leak property\n");
-        }
-
-        if (net->get_properties().as_json() != get_network_properties().as_json()) {
-            error += (rln + "neuro::Network's properties are");
-            error += " different than processor's network properties\n";
-        }
-
-        if (error != "") {
-            cerr << error;
-            return false;
-        }
-#endif
 
         if (networks.find(network_id) != networks.end()) delete networks[network_id];
 
