@@ -523,18 +523,9 @@ void Network::synapse_weights(vector <uint32_t> &pres,
   }
 }
 
-static bool is_integer(double v)
-{
-  int iv;
-
-  iv = v;
-  return (iv == v);
-}
-
 Processor::Processor(json &params) 
 {
   string estring;
-  size_t i;
 
   /* Default params */
 
@@ -604,45 +595,6 @@ Processor::Processor(json &params)
 
   if (params.contains("stds")) stds = params["stds"].get< vector <double> >(); 
   if (params.contains("noisy_stddev")) noisy_stddev = params["noisy_stddev"]; 
-
-  if (leak_mode != "all" && leak_mode != "none" && leak_mode != "configurable") {
-    throw SRE("Reading processor json - bad leak_mode.  Must be all, none or configurable");
-  }
-
-  /* General Error Checking */
-
-  if (discrete) {
-    if (!is_integer(min_weight)) throw SRE("When discrete = true, min_weight must be an integer.");
-    if (!is_integer(max_weight)) throw SRE("When discrete = true, max_weight must be an integer.");
-    if (!is_integer(min_potential)) {
-      throw SRE("When discrete = true, min_potential must be an integer.");
-    }
-    if (!is_integer(min_threshold)) {
-      throw SRE("When discrete = true, min_threshold must be an integer.");
-    }
-    if (!is_integer(max_threshold)) {
-      throw SRE("When discrete = true, max_threshold must be an integer.");
-    }
-    for (i = 0; i < weights.size(); i++) {
-      if (!is_integer(weights[i])) throw SRE("When discrete = true, all weights must be integers.");
-    }
-  }
-  if (min_potential > 0) throw SRE("Reading processor json - min_potential must be <= 0");
-
-  if (stds.size() != 0 && weights.size() == 0) {
-    throw SRE("If you specify stds, then you must specify weights and they must be the same size.");
-  }
-
-  if (stds.size() != 0 && weights.size() != stds.size()) {
-    throw SRE("weights and stds must be the same size.");
-  }
-
-  if (stds.size() != 0 && noisy_stddev != 0) {
-    throw SRE("Cannot specify both noisy_stddev and stds.");
-  }
-
-  if (stds.size() != 0 && discrete) throw SRE("Cannot specify stds and discrete = true.");
-  if (noisy_stddev != 0 && discrete) throw SRE("Cannot specify noisy_stddev and discrete = true.");
 
   /* Have the saved parameters include all of the default information.   The reason is
      that this way, if defaults change, you can still have this information stored. */
