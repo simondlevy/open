@@ -531,29 +531,7 @@ namespace risp {
 
         if (params.contains("threshold_inclusive")) threshold_inclusive = params["threshold_inclusive"];
 
-        /* Spike_value_factor has to be set after discrete and threshold_inclusive have been set. */
-
-        if (params.contains("spike_value_factor")) {
-            spike_value_factor = params["spike_value_factor"];
-
-            /* If there are weights, and spike_value_factor is unspecified, then we're using
-               inputs_from_weights, and spike_value_factor is meaningless. I'm going to set it
-               to a big number to help debug. */
-
-        } else if (weights.size() > 0) {
-            spike_value_factor = -99999999.99;
-
-            /* Otherwise, the default is max_weight.  
-               If this is < max_threshold, then print a warning message on stderr. */
-
-        } else {
-            spike_value_factor = max_weight;
-            if (max_weight < max_threshold || (!threshold_inclusive && max_weight == max_threshold)) {
-                fprintf(stderr, "Warning: max_weight <%s max_threshold and spike_value_factor unset.\n",
-                        (threshold_inclusive) ? "=" : "");
-                fprintf(stderr, "Spike_value_factor set to %lg.\n", spike_value_factor);
-            }
-        } 
+        spike_value_factor = 7;
 
         if (params.contains("run_time_inclusive")) run_time_inclusive = params["run_time_inclusive"];
         if (params.contains("fire_like_ravens")) fire_like_ravens = params["fire_like_ravens"];
