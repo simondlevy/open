@@ -182,20 +182,7 @@ namespace risp
                 return true;
             }
 
-
-            double output_last_fire(int output_id) 
-            {
-                return neuron_map[outputs[output_id]]->last_fire;
-            }
-
-            vector <double> output_last_fires() {
-                size_t i;
-                vector <double> rv;
-                for (i = 0; i < outputs.size(); i++) {
-                    if(outputs[i] != -1) rv.push_back(neuron_map[outputs[i]]->last_fire);
-                }
-                return rv;
-            }
+            ////////////////////////////////////////////////////////////////////
 
             int output_count(int output_id) 
             {
@@ -666,13 +653,14 @@ namespace risp
                 return get_risp_network(network_id)->track_neuron_events(node_id, track);
             }
 
+            /*
             double output_last_fire(int output_id, int network_id) {
                 return get_risp_network(network_id)->output_last_fire(output_id);
             }
 
             vector <double> output_last_fires(int network_id) {
                 return get_risp_network(network_id)->output_last_fires();
-            }
+            }*/
 
             int output_count(int output_id, int network_id) {
                 return get_risp_network(network_id)->output_count(output_id);

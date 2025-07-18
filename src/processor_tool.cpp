@@ -214,7 +214,7 @@ int main(int argc, char **argv)
     istringstream ss;
 
     size_t i;
-    int node_id, output_id, spike_id;
+    int spike_id;
     double spike_time, spike_val;
     double sim_time;
     string alias, id;

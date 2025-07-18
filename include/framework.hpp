@@ -499,9 +499,6 @@ public:
 
     /* Access output spike data */
 
-    virtual double output_last_fire(int output_id, int network_id = 0) = 0;
-    virtual vector <double> output_last_fires(int network_id = 0) = 0;
-
     virtual int output_count(int output_id, int network_id = 0) = 0;
     virtual vector <int> output_counts(int network_id = 0) = 0;
 

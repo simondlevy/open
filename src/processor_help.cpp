@@ -17,9 +17,6 @@ using std::make_pair;
 using nlohmann::json;
 
 
-/* Iterate and call track_neuron_events() for every neuron in the network.
-   If this fails, we're simply returning false, and not trying to undo anything. */
-
 bool track_all_neuron_events(Processor *p, Network *n, int network_id)
 {
   NodeMap::iterator nit;
