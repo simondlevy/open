@@ -365,11 +365,7 @@ int main(int argc, char **argv)
 
                         event_counts = p->output_counts();
 
-                        Node * node = net->get_output(0);
-
-                        printf("node %s spike counts: %d\n",
-                                node_name(node).c_str(),
-                                event_counts[0]);
+                        printf("node 3 spike counts: %d\n", event_counts[0]);
                     }
                 }
 
