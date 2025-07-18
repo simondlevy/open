@@ -501,7 +501,6 @@ public:
 
     virtual vector <int> output_counts(int network_id = 0) = 0;
 
-    virtual vector <double> output_vector(int output_id, int network_id = 0) = 0;
     virtual vector < vector <double> > output_vectors(int network_id = 0) = 0;
 
     /* Spike data from all neurons. */

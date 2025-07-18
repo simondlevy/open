@@ -193,11 +193,6 @@ namespace risp
 
             ////////////////////////////////////////////////////////////////////
 
-            vector <double> output_vector(int output_id) 
-            {
-                return neuron_map[outputs[output_id]]->fire_times;
-            }
-
             vector < vector <double> > output_vectors() 
             {
                 size_t i;
@@ -650,10 +645,6 @@ namespace risp
 
             vector <int> output_counts(int network_id) {
                 return get_risp_network(network_id)->output_counts();
-            }
-
-            vector <double> output_vector(int output_id, int network_id) {
-                return get_risp_network(network_id)->output_vector(output_id);
             }
 
             vector < vector <double> > output_vectors(int network_id) {

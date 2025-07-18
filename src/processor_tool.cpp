@@ -223,8 +223,6 @@ int main(int argc, char **argv)
     vector <Node *> node_vector;
     vector <Spike> spikes_array;
     vector <Spike> spikes;
-    vector <double> output_times; // hold return value of output_vector()
-    vector < vector <double> > all_output_times; // hold return value of output_vectors()
     vector < vector< double> > neuron_times;     // hold the return value of neuron_times();
     vector <string> spike_strings;              // hold spike strings from neuron_vectors_to_json()
     vector <int> v;
