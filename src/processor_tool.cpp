@@ -702,36 +702,7 @@ int main(int argc, char **argv)
                 }
 
             }
-            else if (sv[0] == "OLF") { // test output_last_fire and output_last_fires.
 
-                if (network_processor_validation(net, p)) {
-
-                    if (sv.size() == 1) {
-                        output_times = p->output_last_fires();
-                        for (i = 0; i < (size_t)net->num_outputs(); i++) {
-                            node = net->get_output(i);
-                            printf("node %s last fire time: %.1lf\n", node_name(node).c_str(), output_times[i]);
-                        }
-                    } else {
-
-                        for (i = 1; i < sv.size(); i++) {
-                            try {
-                                if (sscanf(sv[i].c_str(), "%d", &node_id) != 1) {
-                                    throw SRE(sv[i] + " is not a valid node id");
-                                }
-                                output_node_id_validation(node_id, net);
-                                output_id = net->get_node(node_id)->output_id;
-                                node = net->get_node(node_id);
-                                printf("node %s last fire time: %.1lf\n", node_name(node).c_str(), p->output_last_fire(output_id));
-
-                            } catch (const SRE &e) {
-                                printf("%s\n",e.what());
-                            }
-                        }
-                    }
-                }
-
-            }
             else if (sv[0] == "OC") {   // Test output_count and output_counts
                 if (network_processor_validation(net, p)) {
                     if (sv.size() == 1) {
@@ -760,145 +731,11 @@ int main(int argc, char **argv)
                 }
 
             }
-            else if (sv[0] == "TRACK_O" || sv[0] == "UNTRACK_O") { // track_output_events() and track_all_output_events()
-                if (network_processor_validation(net, p)) {
-                    if (sv.size() == 1) {
-                        if (sv[0][0] == 'T') {
-                            (void) track_all_output_events(p, net);
-                        } else {
-                            for (i = 0; i < (size_t)net->num_outputs(); i++) p->track_output_events(i, false);
-                        } 
-                    } else {
-                        for (i = 1; i < sv.size(); i++) {
-                            try {
-                                if (sscanf(sv[i].c_str(), "%d", &node_id) != 1) {
-                                    throw SRE(sv[i] + " is not a valid node id");
-                                }
-                                output_node_id_validation(node_id, net);
 
-                                output_id = net->get_node(node_id)->output_id;
-                                if (!p->track_output_events(output_id, (sv[0][0] == 'T'))) {
-                                    snprintf(buf, 50, "%d, %d) failed.", output_id, (sv[0][0] == 'T'));
-                                    throw SRE((string) "track_output_events(" + buf);
-                                }
-                            } catch (const SRE &e) {
-                                printf("%s\n",e.what());
-                            }
-                        }
-                    } 
-
-                }
-            }
-            else if (sv[0] == "TRACK_N" || sv[0] == "UNTRACK_N") { // track_neuron_events() and track_all_neuron_events()
-                if (network_processor_validation(net, p)) {
-                    if (sv.size() == 1) {
-                        if (sv[0][0] == 'T') {
-                            if (!track_all_neuron_events(p, net)) {
-                                printf("track_all_neuron_events() not supported by processor.\n");
-                            }
-                        } else {
-                            for (nit = net->begin(); nit != net->end(); nit++) {
-                                p->track_neuron_events(nit->second->id, false);
-                            }
-                        } 
-                    } else {
-                        for (i = 1; i < sv.size(); i++) {
-                            try {
-                                if (sscanf(sv[i].c_str(), "%d", &node_id) != 1 || node_id < 0) {
-                                    throw SRE(sv[i] + " is not a valid node id");
-                                }
-                                if (!p->track_neuron_events(node_id, (sv[0][0] == 'T'))) {
-                                    snprintf(buf, 50, "%d, %d) failed.", node_id, (sv[0][0] == 'T'));
-                                    throw SRE((string) "track_neuron_events(" + buf);
-                                }
-                            } catch (const SRE &e) {
-                                printf("%s\n",e.what());
-                            }
-                        }
-                    } 
-
-                }
-
-            }
-            else if (sv[0] == "OT" || sv[0] == "OV") {  //  output_vector(int output_id, int network_id = 0)
-                if (network_processor_validation(net, p)) {
-
-                    /* if OT doesn't take any node_ids, do all outputs */
-
-                    if (sv.size() == 1) {
-                        try {
-                            all_output_times = p->output_vectors();
-                            if (all_output_times.size() == 0) {
-                                throw SRE("Processor error -- p->output_vectors returned a vector of size zero");
-                            } 
-                            for (i = 0; i < (size_t)net->num_outputs(); i++) {
-
-                                node = net->get_output(i);
-                                printf("node %s spike times:", node_name(node).c_str());
-                                for (j = 0; j < all_output_times[i].size(); j++) {
-                                    printf(" %.1lf", all_output_times[i][j]);
-                                }
-                                printf("\n");
-                            }
-                        } catch (const SRE &e) {
-                            printf("%s\n",e.what());
-                        } catch (...) {
-                            printf("Unknown error\n");
-                        }
-                    } else {
-
-                        for (i = 1; i < sv.size(); i++) {
-                            try {
-
-                                if (sscanf(sv[i].c_str(), "%d", &node_id) != 1) {
-                                    throw SRE(sv[i] + " is not a valid node id");
-                                }
-                                output_node_id_validation(node_id, net);
-                                output_id = net->get_node(node_id)->output_id;
-
-                                output_times = p->output_vector(output_id);
-                                node = net->get_node(node_id);
-                                printf("node %s spike times: ", node_name(node).c_str());
-                                for (j = 0; j < output_times.size(); j++) {
-                                    printf("%.1lf ",output_times[j]);
-                                }
-                                printf("\n");
-
-                            } catch (const SRE &e) {
-                                printf("%s\n",e.what());
-                            } catch (...) {
-                                printf("Unknown error\n");
-                            }
-                        }
-                    }
-                }
-
-
-            }
             else if (sv[0] == "CA" || sv[0] == "CLEAR-A") { // clear_activity
 
                 if (network_processor_validation(net, p)) 
                     p->clear_activity();
-
-            }
-            else if (sv[0] == "CLEAR" || sv[0] == "C") {
-
-                if (network_processor_validation(net, p)) {
-                    p->clear();
-                    delete net;
-                    net = nullptr;
-                }
-
-
-            }
-            else if (sv[0] == "PP") { 
-
-            }
-            else if (sv[0] == "NP" || sv[0] == "PPACK") { 
-                if (p == nullptr) {
-                    printf("Must make a processor first\n"); 
-                } else {
-                } 
 
             }
 
