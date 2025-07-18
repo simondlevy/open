@@ -340,16 +340,7 @@ int main(int argc, char **argv)
             // convert cmd to uppercase
             if (sv.size() != 0) to_uppercase(sv[0]); 
 
-            if (sv.size() == 0 || sv[0][0] == '#') {
-            }
-            else if (sv[0] == "?") {
-                print_commands(stdout);
-            }
-            else if (sv[0] == "Q") {
-                safe_exit(p, net);
-
-            }
-            else if (sv[0] == "ML") { // make() and load_network()
+            if (sv[0] == "ML") { // make() and load_network()
 
                 if (!read_json(sv, 1, network_json)) {
 
@@ -381,8 +372,6 @@ int main(int argc, char **argv)
                 }
 
             }
-
-            ////////////////////////////////////////////////////////////////////
 
             else if (sv[0] == "AS" || sv[0] == "ASV") { // apply_spike()
 
