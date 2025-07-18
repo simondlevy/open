@@ -135,7 +135,8 @@ namespace risp
                 events[s.time].push_back(std::make_pair(n,v));
             }
 
-            void run(double duration) {
+            void run(double duration)
+            {
                 uint32_t i;
                 Neuron *n;
                 int run_time;
@@ -144,6 +145,7 @@ namespace risp
                 if (overall_run_time != 0) clear_tracking_info();
 
                 run_time = (run_time_inclusive) ? duration : duration-1;
+
                 overall_run_time += (run_time+1);
 
                 /* expand the event buffer */
@@ -187,41 +189,6 @@ namespace risp
                     if (outputs[i] != -1) rv.push_back(neuron_map[outputs[i]]->fire_counts);
                 }
                 return rv;
-            }
-
-            ////////////////////////////////////////////////////////////////////
-
-            vector < double > neuron_charges() 
-            {
-                vector < double > rv;
-                Neuron *n;
-                size_t i;
-
-                for (i = 0; i < sorted_neuron_vector.size(); i++) {
-                    n = sorted_neuron_vector[i];
-                    rv.push_back(n->charge);
-                }
-                return rv;
-            }
-
-            void synapse_weights(vector <uint32_t> &pres, vector <uint32_t> &posts,
-                    vector <double> &vals) 
-            {
-                size_t i, j;
-                Neuron *n;
-
-                pres.clear();
-                posts.clear();
-                vals.clear();
-
-                for (i = 0; i < sorted_neuron_vector.size(); i++) {
-                    n = sorted_neuron_vector[i];
-                    for (j = 0; j < n->synapses.size(); j++) {
-                        pres.push_back(n->id);
-                        posts.push_back(n->synapses[j]->to->id);
-                        vals.push_back(n->synapses[j]->weight);
-                    }
-                }
             }
 
             void clear_activity() 
@@ -285,16 +252,6 @@ namespace risp
             bool is_neuron(uint32_t node_id) 
             {
                 return neuron_map.find(node_id) != neuron_map.end();
-            }
-
-            bool is_valid_input_id(int input_id) 
-            {
-                return !(input_id < 0 || input_id >= (int) inputs.size() || inputs[input_id] == -1);
-            }
-
-            bool is_valid_output_id(int output_id) 
-            {
-                return !(output_id < 0 || output_id >= (int) outputs.size() || outputs[output_id] == -1);
             }
 
             void add_input(uint32_t node_id, int input_id) 
@@ -555,18 +512,6 @@ namespace risp
 
             vector <int> output_counts(int network_id) {
                 return get_risp_network(network_id)->output_counts();
-            }
-
-            vector < double > neuron_charges(int network_id) {
-                return get_risp_network(network_id)->neuron_charges();
-            }
-
-            void  synapse_weights(vector <uint32_t> &pres,
-                    vector <uint32_t> &posts,
-                    vector <double> &vals,
-                    int network_id)
-            {
-                return get_risp_network(network_id)->synapse_weights(pres, posts, vals);
             }
 
             void clear_activity(int network_id) {
