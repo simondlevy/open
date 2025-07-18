@@ -423,27 +423,27 @@ namespace risp
                         weights);
             }
 
-            void clear(int network_id) 
+            void clear() 
             {
                 delete network;
             }
 
-            void run(double duration, int network_id) 
+            void run(double duration) 
             {
                 network->run(duration);
             }
 
-            bool track_neuron_events(uint32_t node_id, bool track, int network_id) 
+            bool track_neuron_events(uint32_t node_id, bool track) 
             {
                 return network->track_neuron_events(node_id, track);
             }
 
-            vector <int> output_counts(int network_id) 
+            vector <int> output_counts() 
             {
                 return network->output_counts();
             }
 
-            void clear_activity(int network_id) 
+            void clear_activity() 
             {
                 network->clear_activity();
             }

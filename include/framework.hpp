@@ -466,7 +466,7 @@ namespace neuro
 
             virtual void load_network(Network* n) = 0;
 
-            virtual void clear(int network_id = 0) = 0;
+            virtual void clear() = 0;
 
             /* Queue spike(s) as input to a network or to multiple networks.
                When normalized == true (the default), spike values should be between 
@@ -478,19 +478,19 @@ namespace neuro
 
             /* Run the network(s) for the desired time with queued input(s) */
 
-            virtual void run(double duration, int network_id = 0) = 0;
+            virtual void run(double duration) = 0;
 
             /* Output tracking.  See the markdown for a detailed description of these.  */
 
-            virtual bool track_neuron_events(uint32_t node_id, bool track = true, int network_id = 0) = 0;
+            virtual bool track_neuron_events(uint32_t node_id, bool track = true) = 0;
 
             /* Access output spike data */
 
-            virtual vector <int> output_counts(int network_id = 0) = 0;
+            virtual vector <int> output_counts() = 0;
 
 
             /* Remove state, keep network loaded */
-            virtual void clear_activity(int network_id = 0) = 0;
+            virtual void clear_activity() = 0;
     };
 
     /**
@@ -498,7 +498,8 @@ namespace neuro
      */
 
     bool track_all_output_events(Processor *p, Network *n, int network_id = 0);
-    bool track_all_neuron_events(Processor *p, Network *n, int network_id = 0);
+
+    bool track_all_neuron_events(Processor *p, Network *);
 
     json neuron_last_fires_to_json(const vector <double> &last_fires, Network *n);
     json neuron_counts_to_json(const vector <int> &counts, Network *n);

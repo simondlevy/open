@@ -17,12 +17,12 @@ namespace neuro
     using nlohmann::json;
 
 
-    bool track_all_neuron_events(Processor *p, Network *n, int network_id)
+    bool track_all_neuron_events(Processor *p, Network *n)
     {
         NodeMap::iterator nit;
 
         for (nit = n->begin(); nit != n->end(); nit++) {
-            if (!p->track_neuron_events(nit->second->id, true, network_id)) return false;
+            if (!p->track_neuron_events(nit->second->id, true)) return false;
         }
 
         return true;
