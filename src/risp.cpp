@@ -8,66 +8,6 @@ using namespace std;
 
 namespace risp {
 
-    Processor::Processor() 
-    {
-        string estring;
-
-        /* Default params */
-
-        min_delay = 1;
-        leak_mode = "none";
-        run_time_inclusive = false;
-        threshold_inclusive = true;
-        fire_like_ravens = false;
-        noisy_seed = 0;
-        noisy_stddev = 0;
-        inputs_from_weights = false;
-
-        max_delay = 15;
-        min_threshold = 0;
-        max_threshold = 7;
-        min_potential = -7;
-        discrete = true;
-
-        min_weight = -7;
-        max_weight = 7;
-
-        spike_value_factor = 7;
-
-        /* Have the saved parameters include all of the default information.   The reason is
-           that this way, if defaults change, you can still have this information stored. */
-
-        if (weights.size() == 0) {
-            saved_params["min_weight"] = min_weight;
-            saved_params["max_weight"] = max_weight;
-            saved_params["spike_value_factor"] = spike_value_factor;
-        } else {
-            saved_params["weights"] = weights;
-            saved_params["inputs_from_weights"] = inputs_from_weights;
-            if (!inputs_from_weights) saved_params["spike_value_factor"] = spike_value_factor;
-        }
-
-        saved_params["max_delay"] = max_delay;
-        saved_params["min_threshold"] = min_threshold;
-        saved_params["max_threshold"] = max_threshold;
-        saved_params["min_potential"] = min_potential;
-        saved_params["discrete"] = discrete;
-
-        saved_params["leak_mode"] = leak_mode;
-        saved_params["fire_like_ravens"] = fire_like_ravens;
-        saved_params["run_time_inclusive"] = run_time_inclusive;
-        saved_params["threshold_inclusive"] = threshold_inclusive;
-        if (noisy_seed != 0) saved_params["noisy_seed"] = noisy_seed;
-        if (noisy_stddev != 0) saved_params["noisy_stddev"] = noisy_stddev;
-        if (stds.size() != 0) saved_params["stds"] = stds;
-
-    };
-
-    Processor::~Processor(){
-        map <int, risp::Network*>::const_iterator it;
-        for (it = networks.begin(); it != networks.end(); ++it) delete it->second;
-    }
-
     /* Set the max spiking value (the value that corresponds to 1
        when you call apply_spikes() to either the max threshold, or
        if discrete&&!threshold_inclusive), then max threshold+1. */
