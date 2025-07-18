@@ -19,9 +19,10 @@ namespace neuro
 
     bool track_all_neuron_events(Processor *p, Network *n)
     {
+        /*
         for (auto nit = n->begin(); nit != n->end(); nit++) {
             p->track_neuron_events(nit->second->id);
-        }
+        }*/
 
         return true;
     }

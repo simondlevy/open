@@ -419,6 +419,11 @@ namespace risp
                         discrete, 
                         inputs_from_weights,
                         weights);
+
+                for (auto nit = net->begin(); nit != net->end(); nit++) {
+                    track_neuron_events(nit->second->id);
+                }
+
             }
 
             void run(double duration) 
