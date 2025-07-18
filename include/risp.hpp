@@ -654,17 +654,9 @@ namespace risp
             }
 
             /*
-            double output_last_fire(int output_id, int network_id) {
-                return get_risp_network(network_id)->output_last_fire(output_id);
-            }
-
-            vector <double> output_last_fires(int network_id) {
-                return get_risp_network(network_id)->output_last_fires();
-            }*/
-
             int output_count(int output_id, int network_id) {
                 return get_risp_network(network_id)->output_count(output_id);
-            }
+            }*/
 
             vector <int> output_counts(int network_id) {
                 return get_risp_network(network_id)->output_counts();
