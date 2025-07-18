@@ -3,7 +3,6 @@
 #include <map>
 #include <list>
 #include "framework.hpp"
-#include "utils/MOA.hpp"
 
 using namespace neuro;
 using namespace std;
@@ -768,6 +767,7 @@ namespace risp
         protected:
 
             double get_input_spike_factor() const;
+
             map <int, risp::Network*> networks;
 
             double min_weight;
