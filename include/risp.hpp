@@ -191,30 +191,6 @@ namespace risp
 
             ////////////////////////////////////////////////////////////////////
 
-            vector <double> neuron_last_fires() 
-            {
-                vector <double> rv;
-                size_t i;
-
-                for (i = 0; i < sorted_neuron_vector.size(); i++) {
-                    rv.push_back(sorted_neuron_vector[i]->last_fire);
-                }
-                return rv;
-            }
-
-            vector < vector <double> > neuron_vectors() 
-            {
-                vector < vector <double> > rv;
-                Neuron *n;
-                size_t i;
-
-                for (i = 0; i < sorted_neuron_vector.size(); i++) {
-                    n = sorted_neuron_vector[i];
-                    rv.push_back(n->fire_times);   // JSP: If tracking is turned off, this will be empty.
-                }
-                return rv;
-            }
-
             vector < double > neuron_charges() 
             {
                 vector < double > rv;
@@ -581,15 +557,8 @@ namespace risp
                 return get_risp_network(network_id)->output_counts();
             }
 
-            vector < vector <double> > neuron_vectors(int network_id) {
-                return get_risp_network(network_id)->neuron_vectors();
-            }
             vector < double > neuron_charges(int network_id) {
                 return get_risp_network(network_id)->neuron_charges();
-            }
-
-            vector <double> neuron_last_fires(int network_id) {
-                return get_risp_network(network_id)->neuron_last_fires();
             }
 
             void  synapse_weights(vector <uint32_t> &pres,

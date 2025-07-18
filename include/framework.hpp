@@ -503,9 +503,6 @@ public:
 
     /* Spike data from all neurons. */
 
-    virtual vector <double> neuron_last_fires(int network_id = 0) = 0;
-    virtual vector < vector <double> > neuron_vectors(int network_id = 0) = 0;
-
     /* Charge data from all neurons. */
 
     virtual vector <double> neuron_charges(int network_id = 0) = 0;
@@ -536,12 +533,6 @@ public:
 
 bool track_all_output_events(Processor *p, Network *n, int network_id = 0);
 bool track_all_neuron_events(Processor *p, Network *n, int network_id = 0);
-
-/* If node n is the ith smallest node by node id, and the jth smallest node
-   in the ordering of the NodeMap then rv[i].second = j, and rv[i].first = the
-   node's id.  This helps deal with the return values to neuron_counts(),
-   neuron_last_fires(), neuron_vectors() and neuron_charges(), and also with the fact that
-   nodes are stored in a hash table.  */
 
 json neuron_last_fires_to_json(const vector <double> &last_fires, Network *n);
 json neuron_counts_to_json(const vector <int> &counts, Network *n);
