@@ -29,7 +29,7 @@ namespace risp
 
             void perform_fire(int time)
             {
-                if (track) fire_times.push_back(time);
+                fire_times.push_back(time);
                 last_fire = time;
                 fire_counts++;
                 charge = 0;
@@ -45,7 +45,6 @@ namespace risp
             bool leak;                   /**< Leak on this neuron or not */
             uint32_t id;                 /**< ID for logging events */
             bool check;                  /**< True if we have checked if this neruon fires or not */
-            bool track;                  /**< True if fire_times is being tracked */
     };
 
     class Synapse {
@@ -173,11 +172,6 @@ namespace risp
                     if (n->leak) n->charge = 0;
                     if (n->charge < min_potential) n->charge = min_potential;
                 }
-            }
-
-            void track_neuron_events(uint32_t node_id) 
-            {
-                neuron_map[node_id]->track = true;
             }
 
             vector <int> output_counts() 
@@ -420,20 +414,11 @@ namespace risp
                         inputs_from_weights,
                         weights);
 
-                for (auto nit = net->begin(); nit != net->end(); nit++) {
-                    track_neuron_events(nit->second->id);
-                }
-
             }
 
             void run(double duration) 
             {
                 network->run(duration);
-            }
-
-            void track_neuron_events(uint32_t node_id) 
-            {
-                network->track_neuron_events(node_id);
             }
 
             vector <int> output_counts() 
