@@ -160,12 +160,11 @@ Network *load_network(Processor **pp, const json &network_json)
     net->from_json(network_json);
 
     p = *pp;
-    if (p == nullptr) {
-        proc_params = net->get_data("proc_params");
-        proc_name = net->get_data("other")["proc_name"];
-        p = Processor::make();
-        *pp = p;
-    } 
+
+    proc_params = net->get_data("proc_params");
+    proc_name = net->get_data("other")["proc_name"];
+    p = Processor::make();
+    *pp = p;
 
 
     p->init_network();
