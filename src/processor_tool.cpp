@@ -25,9 +25,6 @@ void to_uppercase(string &s);
 /** Make sure the node "node_id" is an output node in the network */
 void output_node_id_validation(const int node_id, const Network *n);
 
-/** Make sure network and processor have been created */
-bool network_processor_validation(const Network *n, const Processor *p);
-
 /** Read a json object from file or stdin */
 bool read_json(const vector <string> &sv, size_t starting_field, json &rv);
 
@@ -84,14 +81,6 @@ void output_node_id_validation(const int node_id, const Network *n)
     }
 }
 
-bool network_processor_validation(const Network *n, const Processor *p) {
-    bool success = (n != nullptr && p != nullptr);
-
-    if (!success) {
-        printf("Processor or network is not loaded\n");
-    }
-    return success;
-}
 
 bool read_json(const vector <string> &sv, size_t starting_field, json &rv)
 {
@@ -259,70 +248,56 @@ int main(int argc, char **argv)
 
             else if (sv[0] == "AS" || sv[0] == "ASV") {
 
-                if (network_processor_validation(net, p)) {
+                normalized = (sv[0].size() == 2);
 
-                    normalized = (sv[0].size() == 2);
+                for (i = 0; i < (sv.size() - 1) / 3; i++) {
 
-                    for (i = 0; i < (sv.size() - 1) / 3; i++) {
-                        try {
+                    if (sscanf(sv[i*3 + 1].c_str(), "%d", &spike_id) != 1 ||
+                            sscanf(sv[i*3 + 2].c_str(), "%lf", &spike_time) != 1 || 
+                            sscanf(sv[i*3 + 3].c_str(), "%lf", &spike_val) != 1 ) {
 
-                            if (sscanf(sv[i*3 + 1].c_str(), "%d", &spike_id) != 1 ||
-                                    sscanf(sv[i*3 + 2].c_str(), "%lf", &spike_time) != 1 || 
-                                    sscanf(sv[i*3 + 3].c_str(), "%lf", &spike_val) != 1 ) {
+                        throw SRE((string) "Invalid spike [ " + sv[i*3 + 1] + "," + sv[i*3 + 2] + "," +
+                                sv[i*3 + 3] + "]\n");
+                    } 
 
-                                throw SRE((string) "Invalid spike [ " + sv[i*3 + 1] + "," + sv[i*3 + 2] + "," +
-                                        sv[i*3 + 3] + "]\n");
-                            } 
+                    p->apply_spike(
+                            Spike(
+                                net->get_node(spike_id)->input_id,
+                                spike_time, spike_val),
+                            normalized);
 
-                            p->apply_spike(
-                                    Spike(
-                                        net->get_node(spike_id)->input_id,
-                                        spike_time, spike_val),
-                                    normalized);
-
-                            spikes_array.push_back(Spike(spike_id, spike_time, spike_val));
-
-                        } catch (const SRE &e) {
-                            printf("%s\n",e.what());
-                        }   
-
-                    }
+                    spikes_array.push_back(Spike(spike_id, spike_time, spike_val));
                 }
             } 
 
             else if (sv[0] == "RUN") {
 
-                if (network_processor_validation(net, p)) {
-                    if (sv.size() != 2 || sscanf(sv[1].c_str(), "%lf", &sim_time) != 1 || sim_time < 0) {
-                        printf("usage: RUN sim_time. sim_time >= 0\n");
-                    } else {
+                if (sv.size() != 2 || sscanf(sv[1].c_str(), "%lf", &sim_time) != 1 || sim_time < 0) {
+                    printf("usage: RUN sim_time. sim_time >= 0\n");
+                } else {
 
-                        p->run(sim_time);
-                        spikes_array.clear();
+                    p->run(sim_time);
+                    spikes_array.clear();
 
-                    }
                 }
 
             }
 
             else if (sv[0] == "OC") {   
 
-                if (network_processor_validation(net, p)) {
 
-                    if (sv.size() == 1) {
+                if (sv.size() == 1) {
 
-                        event_counts = p->output_counts();
+                    event_counts = p->output_counts();
 
-                        printf("node 3 spike counts: %d\n", event_counts[0]);
-                    }
+                    printf("node 3 spike counts: %d\n", event_counts[0]);
                 }
 
             }
 
             else if (sv[0] == "CA" || sv[0] == "CLEAR-A") { // clear_activity
 
-                if (network_processor_validation(net, p)) 
-                    p->clear_activity();
+                p->clear_activity();
 
             }
 
