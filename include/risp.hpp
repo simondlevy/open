@@ -70,10 +70,8 @@ namespace risp
                     char leak,
                     bool _run_time_inclusive,
                     bool _threshold_inclusive,
-                    bool _fire_like_ravens,
                     bool _discrete, 
                     bool _inputs_from_weights, 
-                    uint32_t _noisy_seed,
                     vector <double> & _weights) 
             {
                 size_t i;
@@ -88,15 +86,12 @@ namespace risp
                 min_potential = _min_potential;
                 run_time_inclusive = _run_time_inclusive;
                 threshold_inclusive = _threshold_inclusive;
-                fire_like_ravens = _fire_like_ravens;
-                noisy_seed = _noisy_seed;
                 weights = _weights;
                 discrete = _discrete;
                 inputs_from_weights = _inputs_from_weights;
                 overall_run_time = 0;
                 neuron_fire_counter = 0;
                 neuron_accum_counter = 0;
-                rng.Seed(noisy_seed, "noisy_risp");
 
                 /* Add neurons */
                 net->make_sorted_node_vector();
@@ -523,22 +518,28 @@ namespace risp
             vector < vector < std::pair<Neuron *, double> >> events;
 
             long long neuron_fire_counter;  /**< This is what total_neuron_counts() returns. */
+
             long long neuron_accum_counter; /**< This is what total_neuron_accumulates() returns. */
+
             int overall_run_time;     /**< This is what get_time() returns. */
+
             bool run_time_inclusive;  /**< Do we run for duration+1 (true) or duration (false) */
+
             bool threshold_inclusive; /**< Do we spike on >= or >. */
+
             double min_potential;     /**< At the end of a timestep, pin the charge to this if less than. */
-            bool fire_like_ravens;    /**< Register neuron fires one step later, so RISP can match RAVENS. */
+
             bool discrete;            /**< Are networks discrete */
+
             bool inputs_from_weights; /**< Inputs are indices into the weight vector. */
+
             char leak_mode;           /**< 'a' for all, 'n' for nothing, 'c' for configurable */
+
             vector <double> weights;
-            uint32_t noisy_seed;
-            MOA rng;
 
             double spike_value_factor;
-            vector <Neuron *> to_fire;   /* To make RISP like RAVENS, this lets you fire a timestep later. */
 
+            vector <Neuron *> to_fire;   /* To make RISP like RAVENS, this lets you fire a timestep later. */
     };
 
     class Processor : public neuro::Processor
@@ -555,8 +556,6 @@ namespace risp
                 leak_mode = "none";
                 run_time_inclusive = false;
                 threshold_inclusive = true;
-                fire_like_ravens = false;
-                noisy_seed = 0;
                 inputs_from_weights = false;
 
                 max_delay = 15;
@@ -584,10 +583,8 @@ namespace risp
                         leak_mode[0], 
                         run_time_inclusive, 
                         threshold_inclusive, 
-                        fire_like_ravens, 
                         discrete, 
                         inputs_from_weights,
-                        noisy_seed, 
                         weights);
 
                 networks[network_id] = risp_net;
@@ -771,9 +768,7 @@ namespace risp
             string leak_mode;
             bool run_time_inclusive;
             bool threshold_inclusive;
-            bool fire_like_ravens;
             bool inputs_from_weights;
-            uint32_t noisy_seed;
             vector <double> weights;
 
             uint32_t min_delay;
