@@ -494,15 +494,6 @@ namespace neuro
 
             /* Remove state, keep network loaded */
             virtual void clear_activity(int network_id = 0) = 0;
-
-            /* Network and Processor Properties.  The network properties correspond to the Data
-               field in the network, nodes and edges.  The processor properties are so that
-               applications may query the processor for various properties (e.g. input scaling,
-               fire-on-threshold vs fire-over-threshold). */
-
-            /* get_name() returns the name of the processor. */
-
-            virtual string get_name() const = 0;
     };
 
     /**

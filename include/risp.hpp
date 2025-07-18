@@ -182,7 +182,8 @@ namespace risp
                 return true;
             }
 
-            vector <int> output_counts() {
+            vector <int> output_counts() 
+            {
                 size_t i;
                 vector <int> rv;
                 for (i = 0; i < outputs.size(); i++) {
@@ -469,12 +470,9 @@ namespace risp
                 return get_risp_network(network_id)->output_counts();
             }
 
-            void clear_activity(int network_id) {
+            void clear_activity(int network_id) 
+            {
                 get_risp_network(network_id)->clear_activity();
-            }
-
-            string get_name() const {
-                return "risp";
             }
 
             Network* get_risp_network(int network_id) 
