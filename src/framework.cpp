@@ -618,12 +618,8 @@ Node* Network::get_input(int input_id) const
 
 Node* Network::get_output(int output_id) const
 {
-    char buf[48];
     int node_id = m_outputs.at(output_id);
-    if (node_id < 0) {
-      snprintf(buf, 48, "Output %d does not have a node", output_id);
-      throw SRE(buf);
-    }
+    
     return get_node(node_id);
 }
 
