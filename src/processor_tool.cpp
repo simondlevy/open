@@ -381,11 +381,15 @@ int main(int argc, char **argv)
                 }
 
             }
+
+            ////////////////////////////////////////////////////////////////////
+
             else if (sv[0] == "AS" || sv[0] == "ASV") { // apply_spike()
 
                 if (network_processor_validation(net, p)) {
+
                     if (sv.size() < 2 || (sv.size() - 1) % 3 != 0) {
-                        printf("usage: %s node_id spike_time spike_value node_id1 spike_time1 spike_value1 ...\n", sv[0].c_str());
+
                     } else {
 
                         normalized = (sv[0].size() == 2);
@@ -401,7 +405,8 @@ int main(int argc, char **argv)
                                 } 
                                 spike_validation(Spike(spike_id, spike_time, spike_val), net, normalized);
 
-                                p->apply_spike(Spike(net->get_node(spike_id)->input_id, spike_time, spike_val), normalized);
+                                p->apply_spike(Spike(net->get_node(spike_id)->input_id,
+                                            spike_time, spike_val), normalized);
                                 spikes_array.push_back(Spike(spike_id, spike_time, spike_val));
 
                             } catch (const SRE &e) {
@@ -412,15 +417,6 @@ int main(int argc, char **argv)
                     }
                 }
             } 
-
-            else if (sv[0] == "PS") {
-                for (i = 0; i < spikes_array.size(); i++){
-                    printf("Spike: [%d,%lg,%lg]\n", spikes_array[i].id, spikes_array[i].time, spikes_array[i].value);
-                }
-
-            }
-
-            ////////////////////////////////////////////////////////////////////
 
             else if (sv[0] == "RUN") {
 
