@@ -90,7 +90,6 @@ namespace risp
                 discrete = _discrete;
                 inputs_from_weights = _inputs_from_weights;
                 overall_run_time = 0;
-                neuron_accum_counter = 0;
 
                 /* Add neurons */
                 net->make_sorted_node_vector();
@@ -191,15 +190,6 @@ namespace risp
             }
 
             ////////////////////////////////////////////////////////////////////
-
-            long long total_neuron_accumulates() 
-            {
-                long long rv;
-
-                rv = neuron_accum_counter;
-                neuron_accum_counter = 0;
-                return rv;
-            }
 
             vector <int> neuron_counts() {
                 size_t i;
@@ -386,7 +376,6 @@ namespace risp
                     n = es[i].first;
                     n->check = true;
                     n->charge += es[i].second;
-                    neuron_accum_counter++;
                 }
 
                 events_size = events.size();
@@ -450,8 +439,6 @@ namespace risp
              *  Each subvector stores a set of events, which is composed of neuron and charge change.
              */
             vector < vector < std::pair<Neuron *, double> >> events;
-
-            long long neuron_accum_counter; /**< This is what total_neuron_accumulates() returns. */
 
             int overall_run_time;     /**< This is what get_time() returns. */
 
@@ -594,11 +581,6 @@ namespace risp
                 for (i = 0; i < network_ids.size(); i++) {
                     get_risp_network(network_ids[i])->run(duration);
                 }
-            }
-
-            long long total_neuron_accumulates(int network_id) 
-            {
-                return get_risp_network(network_id)->total_neuron_accumulates();
             }
 
             bool track_neuron_events(uint32_t node_id, bool track, int network_id) 
