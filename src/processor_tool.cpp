@@ -8,11 +8,9 @@
 #include <unordered_set>
 #include <unistd.h>
 #include "framework.hpp"
-#include "utils/json_helpers.hpp"
 
 using namespace std;
 using namespace neuro;
-using nlohmann::json;
 
 typedef runtime_error SRE;
 
@@ -62,8 +60,8 @@ int main(int argc, char **argv)
     vector <Node *> node_vector;
     vector <Spike> spikes_array;
     vector <Spike> spikes;
-    vector < vector< double> > neuron_times;     // hold the return value of neuron_times();
-    vector <string> spike_strings;              // hold spike strings from neuron_vectors_to_json()
+    vector < vector< double> > neuron_times;     
+    vector <string> spike_strings;              
     vector <int> v;
     vector <int> neuron_alias;
     vector <int> event_counts;
@@ -77,11 +75,6 @@ int main(int argc, char **argv)
     map <int, string>::iterator ait;
     bool normalized;
     unordered_set <int> gsr_nodes;
-
-    json proc_params, network_json;
-    json spike_counts, spike_raster;
-    json associated_data;
-    json j1, j2;
 
     if (argc > 2 || (argc == 2 && strcmp(argv[1], "--help") == 0)) {
         fprintf(stderr, "usage: processor_tool [prompt]\n");
