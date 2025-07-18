@@ -8,72 +8,6 @@ using namespace std;
 
 namespace risp {
 
-    Synapse::Synapse(double w, uint32_t d, Neuron* to_n) : weight(w), to(to_n), delay(d) {};
-
-    Network::Network(neuro::Network *net, 
-            double _spike_value_factor, 
-            double _min_potential, 
-            char leak,
-            bool _run_time_inclusive,
-            bool _threshold_inclusive,
-            bool _fire_like_ravens,
-            bool _discrete, 
-            bool _inputs_from_weights, 
-            uint32_t _noisy_seed,
-            double _noisy_stddev,
-            vector <double> & _weights, 
-            vector < double> & _stds) {
-
-        size_t i;
-        neuro::Node *node;
-        neuro::Edge *edge;
-        EdgeMap::iterator eit;
-        Neuron *n;
-        leak_mode = leak;
-        bool neuron_leak;
-
-        spike_value_factor = _spike_value_factor;
-        min_potential = _min_potential;
-        run_time_inclusive = _run_time_inclusive;
-        threshold_inclusive = _threshold_inclusive;
-        fire_like_ravens = _fire_like_ravens;
-        noisy_seed = _noisy_seed;
-        noisy_stddev = _noisy_stddev;
-        weights = _weights;
-        stds = _stds;
-        discrete = _discrete;
-        inputs_from_weights = _inputs_from_weights;
-        overall_run_time = 0;
-        neuron_fire_counter = 0;
-        neuron_accum_counter = 0;
-        rng.Seed(noisy_seed, "noisy_risp");
-
-        /* Add neurons */
-        net->make_sorted_node_vector();
-
-        for(i = 0; i < net->sorted_node_vector.size(); i++) {
-            node = net->sorted_node_vector[i];
-
-            if (leak_mode == 'c') {
-                neuron_leak = (node->get("Leak") != 0);
-            } else {
-                neuron_leak = (leak_mode == 'a');
-            }
-
-            n = add_neuron(node->id, node->get("Threshold"), neuron_leak);
-            if (node->is_input()) add_input(node->id, node->input_id);
-            if (node->is_output()) add_output(node->id, node->output_id);
-
-            sorted_neuron_vector.push_back(n);
-        }
-
-        /* Add synpases */
-        for (eit = net->edges_begin(); eit != net->edges_end(); ++eit) {
-            edge = eit->second.get();
-            add_synpase(edge->from->id, edge->to->id, edge->get("Weight"), edge->get("Delay"));
-        }
-    }
-
     Neuron* Network::get_neuron(uint32_t node_id) 
     {
         unordered_map <uint32_t, Neuron*>::const_iterator it;
@@ -106,9 +40,6 @@ namespace risp {
 
         neuron_map[node_id] = n;
         return n;
-    }
-
-    Network::~Network() {
     }
 
     Synapse* Network::add_synpase(uint32_t from_id, uint32_t to_id, double weight, uint32_t delay) {
