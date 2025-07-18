@@ -193,22 +193,6 @@ namespace risp
 
             ////////////////////////////////////////////////////////////////////
 
-            vector < vector <double> > output_vectors() 
-            {
-                size_t i;
-                Neuron *n;
-                vector < vector <double> > rv;
-
-                for (i = 0; i < outputs.size(); i++) {
-                    if (outputs[i] != -1) {
-                        n = neuron_map[outputs[i]];
-                        rv.push_back(n->fire_times);     // If tracking is turned off, this will be empty.
-                    }
-                }
-                return rv;
-
-            }
-
             long long total_neuron_counts() 
             {
                 long long rv;
@@ -646,11 +630,6 @@ namespace risp
             vector <int> output_counts(int network_id) {
                 return get_risp_network(network_id)->output_counts();
             }
-
-            vector < vector <double> > output_vectors(int network_id) {
-                return get_risp_network(network_id)->output_vectors();
-            }
-
 
             vector <int> neuron_counts(int network_id) {
                 return get_risp_network(network_id)->neuron_counts();
