@@ -1,7 +1,6 @@
 #pragma once
 
 #include <map>
-#include <list>
 #include "framework.hpp"
 
 using namespace neuro;
@@ -94,6 +93,7 @@ namespace risp
                 net->make_sorted_node_vector();
 
                 for(i = 0; i < net->sorted_node_vector.size(); i++) {
+
                     node = net->sorted_node_vector[i];
 
                     if (leak_mode == 'c') {
@@ -179,7 +179,9 @@ namespace risp
                 size_t i;
                 vector <int> rv;
                 for (i = 0; i < outputs.size(); i++) {
-                    if (outputs[i] != -1) rv.push_back(neuron_map[outputs[i]]->fire_counts);
+                    if (outputs[i] != -1) {
+                        rv.push_back(neuron_map[outputs[i]]->fire_counts);
+                    }
                 }
                 return rv;
             }
@@ -339,8 +341,10 @@ namespace risp
 
             vector <int> inputs;        /**< index is input id and its value is neuron id. 
                                           If the neuron id is -1, it's not an input node. */
+
             vector <int> outputs;       /**< index is output id and its value is neuron id. 
                                           If the neuron id is -1, it's not an ouput node. */
+
             vector <Neuron *> sorted_neuron_vector;         /**< sorted neurons by node id */
 
             unordered_map <uint32_t, Neuron*> neuron_map;   /**< key is neuron id */
