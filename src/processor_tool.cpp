@@ -414,30 +414,13 @@ int main(int argc, char **argv)
 
             }
 
-            else if (sv[0] == "OC") {   // Test output_count and output_counts
+            else if (sv[0] == "OC") {   
                 if (network_processor_validation(net, p)) {
                     if (sv.size() == 1) {
                         event_counts = p->output_counts();
                         for (i = 0; i < (size_t)net->num_outputs(); i++) {
                             Node * node = net->get_output(i);
                             printf("node %s spike counts: %d\n", node_name(node).c_str(), event_counts[i]);
-                        }
-                    } else {
-
-                        for (i = 1; i < sv.size(); i++) {
-                            try {
-                                if (sscanf(sv[i].c_str(), "%d", &node_id) != 1) {
-                                    throw SRE(sv[i] + " is not a valid node id");
-                                }
-                                output_node_id_validation(node_id, net);
-
-                                output_id = net->get_node(node_id)->output_id;
-                                Node * node = net->get_node(node_id);
-                                printf("node %s spike counts: %d\n",
-                                        node_name(node).c_str(), p->output_count(output_id));
-                            } catch (const SRE &e) {
-                                printf("%s\n",e.what());
-                            }
                         }
                     }
                 }
