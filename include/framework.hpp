@@ -278,8 +278,6 @@ namespace neuro
             void randomize(const json& params);            
 
             void prune();                      
-            void make_sorted_node_vector();       
-            vector <Node *> sorted_node_vector;   
 
             NodeMap::iterator begin();         
             NodeMap::iterator end();           

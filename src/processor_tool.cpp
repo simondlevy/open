@@ -51,15 +51,7 @@ string node_name(Node *n) {
 
 int max_node_name_len(Network *net) 
 {
-    size_t i;
-    Node *n;
-    int max_name_len = 0;
-    for (i = 0; i < net->sorted_node_vector.size(); i++) {
-        n = net->sorted_node_vector[i];
-        max_name_len = std::max(max_name_len, (int) node_name(n).size());
-    }
-
-    return max_name_len;
+    return 4;
 
 }
 

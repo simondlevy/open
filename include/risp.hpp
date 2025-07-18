@@ -90,18 +90,6 @@ namespace risp
                 inputs_from_weights = _inputs_from_weights;
                 overall_run_time = 0;
 
-#if 0
-                net->make_sorted_node_vector();
-
-                for(i = 0; i < net->sorted_node_vector.size(); i++) {
-
-                    node = net->sorted_node_vector[i];
-
-                    n = add_neuron(node->id, node->get("Threshold"));
-
-                }
-#endif
-
                 add_neuron(0, 3.000000);
                 add_neuron(1, 1.000000);
                 add_neuron(2, 6.000000);

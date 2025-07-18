@@ -258,7 +258,6 @@ void Network::copy_from(const Network& net)
     m_associated_data = net.m_associated_data;
     values = net.values;
     printf("Network::copy_from()\n");
-    sorted_node_vector.clear();
 }
 
 void Network::move_from(Network&& net)
@@ -272,7 +271,6 @@ void Network::move_from(Network&& net)
     m_associated_data = std::move(net.m_associated_data);
     values = std::move(net.values);
     printf("Network::move_from()\n");
-    sorted_node_vector.clear();
 }
 
 void Network::clear(bool include_properties)
@@ -286,8 +284,6 @@ void Network::clear(bool include_properties)
   m_nodes.clear();
   m_edges.clear();
   m_associated_data = json::object();
-  sorted_node_vector.clear();
-    printf("Network::clear()\n");
 }
 
 json Network::as_json() const
@@ -442,9 +438,6 @@ Node* Network::add_node(uint32_t idx)
       snprintf(buf, 200, "Could not insert node %u.", idx);
       throw SRE(buf);
     }
-
-    // Any node addition or deletion invalidates the sorted_node_vector.
-    sorted_node_vector.clear();
 
     // resize the values vector to match properties
     nit->second->values.resize(m_properties.node_vec_size);
@@ -651,15 +644,6 @@ EdgeMap::iterator Network::edges_begin()
 EdgeMap::iterator Network::edges_end()
 {
     return m_edges.end();
-}
-
-void Network::make_sorted_node_vector()
-{
-  NodeMap::iterator nit;
-
-  if (sorted_node_vector.size() != 0) return;
-  for (nit = begin(); nit != end(); nit++) sorted_node_vector.push_back(nit->second.get());
-  sort(sorted_node_vector.begin(), sorted_node_vector.end(), node_comp);
 }
 
 size_t Network::num_nodes() const
