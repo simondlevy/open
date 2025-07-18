@@ -436,16 +436,6 @@ namespace risp
                 delete risp_net;
             }
 
-            void apply_spike(const Spike& s, const vector<int>& network_ids,
-                    bool normalize) 
-            {
-                size_t i;
-
-                for (i = 0; i < network_ids.size(); i++) {
-                    apply_spike(s, normalize, network_ids[i]);
-                }
-            }
-
             void run(double duration, int network_id) 
             {
                 get_risp_network(network_id)->run(duration);
@@ -474,9 +464,9 @@ namespace risp
 
         protected:
 
-            void apply_spike(const Spike& s, bool normalize, int network_id) 
+            void apply_spike(const Spike& s, bool normalized) 
             {
-                get_risp_network(network_id)->apply_spike(s, normalize);
+                get_risp_network(0)->apply_spike(s, normalized);
             }
 
             double get_input_spike_factor() const;

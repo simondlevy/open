@@ -474,10 +474,7 @@ namespace neuro
 
                When normalized == false, the value is simply passed to the neuroprocessor. */
 
-            virtual void apply_spike(const Spike& s, bool normalized = true, int network_id = 0) = 0;
-            virtual void apply_spike(const Spike& s, 
-                    const vector<int>& network_ids, 
-                    bool normalized = true) = 0;
+            virtual void apply_spike(const Spike& s, bool normalized = true) = 0;
 
             /* Run the network(s) for the desired time with queued input(s) */
 
