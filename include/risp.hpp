@@ -177,7 +177,8 @@ namespace risp
             {
                 vector <int> rv;
 
-                rv.push_back(neuron_map[outputs[0]]->fire_counts);
+                // rv.push_back(neuron_map[outputs[0]]->fire_counts);
+                rv.push_back(neuron_map[3]->fire_counts);
 
                 return rv;
             }
