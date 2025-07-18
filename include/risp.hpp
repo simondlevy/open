@@ -175,13 +175,10 @@ namespace risp
 
             vector <int> output_counts() 
             {
-                size_t i;
                 vector <int> rv;
-                for (i = 0; i < outputs.size(); i++) {
-                    if (outputs[i] != -1) {
-                        rv.push_back(neuron_map[outputs[i]]->fire_counts);
-                    }
-                }
+
+                rv.push_back(neuron_map[outputs[0]]->fire_counts);
+
                 return rv;
             }
 
