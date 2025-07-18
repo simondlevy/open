@@ -100,13 +100,6 @@ namespace risp
 
                     neuron_leak = leak_mode == 'c' ? (node->get("Leak") != 0) : (leak_mode == 'a'); 
 
-                    /*
-                    if (leak_mode == 'c') {
-                        neuron_leak = (node->get("Leak") != 0);
-                    } else {
-                        neuron_leak = (leak_mode == 'a');
-                    }*/
-
                     n = add_neuron(node->id, node->get("Threshold"), neuron_leak);
 
                     sorted_neuron_vector.push_back(n);

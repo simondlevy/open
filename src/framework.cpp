@@ -522,71 +522,8 @@ Edge* Network::add_or_get_edge(uint32_t fr, uint32_t to)
    
 void Network::rename_node(uint32_t old_name, uint32_t new_name)
 {   
-    NodeMap::iterator nit;
-    bool inserted;
-    Node *n;
-    char buf[200];
-
-    if (!is_node(old_name)) {
-      snprintf(buf, 200, "Cannot rename a node which does not exist. '%u' -> '%u'.", 
-               old_name, new_name);
-      throw SRE(buf);
-    }
-
-    if(old_name == new_name) return; // nothing to do 
-
-    n = get_node(old_name);
-    if (n->is_input() || n->is_output()) {
-      snprintf(buf, 200, "Cannot rename an input or output node %u", old_name);
-      throw SRE(buf);
-    }
-
-    if (is_node(new_name)) {
-      snprintf(buf, 200, "Cannot rename a node to a taken name. '%u' -> '%u'.", old_name, new_name);
-      throw SRE(buf);
-    }
-
-    std::tie(nit, inserted) = m_nodes.emplace(new_name, std::move(m_nodes.at(old_name)));
-    
-    // Any node addition or deletion invalidates the sorted_node_vector.
-    sorted_node_vector.clear();
-   
-    n = nit->second.get(); // we must get the node before we call erase otherwise we may lose it.
-    m_nodes.erase(old_name);
-    n->id = new_name;
-   
-    // Move edges
-    for(auto &e : n->incoming)
-    {   
-
-        auto fr_idx = e->from->id;
-        auto new_edge_name = make_pair(fr_idx, new_name);
-
-        if (fr_idx == new_name) fr_idx = old_name; // self-loop case
-        auto old_edge_name = make_pair(fr_idx, old_name);
-         
-        m_edges.emplace(new_edge_name, std::move(m_edges.at(old_edge_name)));
-        m_edges.erase(old_edge_name);
-         
-       
-    }
-
-    for(auto &e : n->outgoing)
-    {
-
-        auto to_idx = e->to->id;
-        auto old_edge_name = make_pair(old_name, to_idx);
-        auto new_edge_name = make_pair(new_name, to_idx);
-        if (to_idx != new_name) // self-loop edge only has one instance in m_edges.
-        {
-            m_edges.emplace(new_edge_name, std::move(m_edges.at(old_edge_name)));
-            m_edges.erase(old_edge_name);
-        }
-    
-    }
-
-    
-  
+    (void)old_name;
+    (void)new_name;
 }
 
 bool Network::is_node(uint32_t idx) const
