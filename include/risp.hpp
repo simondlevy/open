@@ -622,47 +622,49 @@ namespace risp
             ~Processor() { }
 
             bool load_network(neuro::Network* n, int network_id = 0);
+
             bool load_networks(std::vector<neuro::Network*> &n);
+
             void clear(int network_id = 0);
 
-            /* Queue spike(s) as input to a network or to multiple networks */
-
             void apply_spike(const Spike& s, bool normalized = true, int network_id = 0);
+
             void apply_spike(const Spike& s, const vector<int>& network_ids, bool normalized = true);
 
             void apply_spikes(const vector<Spike>& s, bool normalized = true, int network_id = 0);
+
             void apply_spikes(const vector<Spike>& s, const vector<int>& network_ids, bool normalized = true);
 
-            /* Run the network(s) for the desired time with queued input(s) */
-
             void run(double duration, int network_id = 0);
+
             void run(double duration, const vector<int>& network_ids);
 
-            /* Get processor time based on specified network */
             double get_time(int network_id = 0);
 
-            /* Output tracking.  See the markdown for a detailed description of these.  */
-
             bool track_output_events(int output_id, bool track = true, int network_id = 0);
+
             bool track_neuron_events(uint32_t node_id, bool track = true, int network_id = 0);
 
-            /* Access output spike data */
-
             double output_last_fire(int output_id, int network_id = 0);
+
             vector <double> output_last_fires(int network_id = 0);
 
             int output_count(int output_id, int network_id = 0);
+
             vector <int> output_counts(int network_id = 0);
 
             vector <double> output_vector(int output_id, int network_id = 0);
+
             vector < vector <double> > output_vectors(int network_id = 0);
 
-            /* Spike data from all neurons. */
-
             long long total_neuron_counts(int network_id = 0);
+
             long long total_neuron_accumulates(int network_id = 0);
+
             vector <int> neuron_counts(int network_id = 0);
+
             vector <double> neuron_last_fires(int network_id = 0);
+
             vector < vector <double> > neuron_vectors(int network_id = 0);
 
             vector < double > neuron_charges(int network_id = 0);
@@ -672,15 +674,8 @@ namespace risp
                     vector <double> &vals,
                     int network_id = 0);
 
-            /* Remove state, keep network loaded */
             void clear_activity(int network_id = 0);
 
-            /* Network and Processor Properties.  The network properties correspond to the Data
-               field in the network, nodes and edges.  The processor properties are so that
-               applications may query the processor for various properties (e.g. input scaling,
-               fire-on-threshold vs fire-over-threshold. */
-
-            json get_params() const;
             string get_name() const;
 
         protected:

@@ -8,10 +8,6 @@ using namespace std;
 
 namespace risp {
 
-    /* Set the max spiking value (the value that corresponds to 1
-       when you call apply_spikes() to either the max threshold, or
-       if discrete&&!threshold_inclusive), then max threshold+1. */
-
     bool Processor::load_network(neuro::Network* net, int network_id) {
 
         if (networks.find(network_id) != networks.end()) delete networks[network_id];
