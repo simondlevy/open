@@ -151,21 +151,19 @@ bool read_json(const vector <string> &sv, size_t starting_field, json &rv)
 
 Network *load_network(Processor **pp, const json &network_json)
 {
-    Network *net;
-    json proc_params;
-    string proc_name;
-    Processor *p;
+    Network * net = new Network();
 
-    net = new Network();
     net->from_json(network_json);
 
-    p = *pp;
+    Processor * p = *pp;
 
-    proc_params = net->get_data("proc_params");
-    proc_name = net->get_data("other")["proc_name"];
+    json proc_params = net->get_data("proc_params");
+
+    string proc_name = net->get_data("other")["proc_name"];
+
     p = Processor::make();
-    *pp = p;
 
+    *pp = p;
 
     p->init_network();
 
