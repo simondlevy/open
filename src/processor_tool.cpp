@@ -7,7 +7,9 @@
 #include <map>
 #include <unordered_set>
 #include <unistd.h>
+
 #include "framework.hpp"
+#include "risp.hpp"
 
 using namespace std;
 using namespace neuro;
@@ -108,7 +110,7 @@ int main(int argc, char **argv)
 
             if (sv[0] == "ML") {
 
-                p = Processor::make();
+                p = new risp::Processor();
 
                 p->init_network();
             }
@@ -142,13 +144,11 @@ int main(int argc, char **argv)
 
                     p->run(sim_time);
                     spikes_array.clear();
-
                 }
 
             }
 
             else if (sv[0] == "OC") {   
-
 
                 if (sv.size() == 1) {
 

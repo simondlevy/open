@@ -23,7 +23,6 @@ FR_CFLAGS = -std=c++11 -Wall -Wextra -Iinclude -Iinclude/utils $(CFLAGS)
 FR_OBJ = obj/framework.o obj/properties.o
 
 RISP_INC = include/risp.hpp
-RISP_OBJ = obj/risp_static.o
 
 all: bin/processor_tool_risp
 
@@ -47,11 +46,8 @@ bin/network_tool: src/network_tool.cpp $(FR_INC) $(FR_LIB)
 bin/network_to_jgraph: src/network_to_jgraph.cpp $(FR_INC) $(FR_LIB)
 	$(CXX) $(FR_CFLAGS) -o bin/network_to_jgraph src/network_to_jgraph.cpp $(FR_LIB)
 
-bin/processor_tool_risp: src/processor_tool.cpp $(FR_INC) $(RISP_INC) $(RISP_OBJ) $(FR_LIB)
-	$(CXX) $(FR_CFLAGS) -o bin/processor_tool_risp src/processor_tool.cpp $(RISP_OBJ) $(FR_LIB)
-
-bin/processor_tool_vrisp: src/processor_tool.cpp $(FR_INC) $(VRISP_INC) $(VRISP_OBJ) $(FR_LIB)
-	$(CXX) $(FR_CFLAGS) -o bin/processor_tool_vrisp src/processor_tool.cpp $(VRISP_OBJ) $(FR_LIB)
+bin/processor_tool_risp: src/processor_tool.cpp $(FR_INC) $(RISP_INC) $(FR_LIB)
+	$(CXX) $(FR_CFLAGS) -o bin/processor_tool_risp src/processor_tool.cpp $(FR_LIB)
 
 bin/processor_tool_vrisp_vector_full: src/processor_tool.cpp $(FR_INC) $(VRISP_INC) $(VRISP_RVV_FULL_OBJ) $(FR_LIB)
 	$(CXX) $(FR_CFLAGS) -o bin/processor_tool_vrisp_vector_full src/processor_tool.cpp $(VRISP_RVV_FULL_OBJ) $(FR_LIB)
@@ -73,9 +69,6 @@ bin/property_pack_tool: src/property_pack_tool.cpp $(FR_INC) $(FR_LIB)
 
 # ------------------------------------------------------------
 # Object files
-
-obj/risp_static.o: src/risp_static.cpp $(FR_INC) $(RISP_INC)
-	$(CXX) -c $(FR_CFLAGS) -o obj/risp_static.o src/risp_static.cpp
 
 obj/framework.o: src/framework.cpp $(FR_INC)
 	$(CXX) -c $(FR_CFLAGS) -o obj/framework.o src/framework.cpp
