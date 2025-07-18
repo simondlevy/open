@@ -90,7 +90,6 @@ namespace risp
                 discrete = _discrete;
                 inputs_from_weights = _inputs_from_weights;
                 overall_run_time = 0;
-                neuron_fire_counter = 0;
                 neuron_accum_counter = 0;
 
                 /* Add neurons */
@@ -192,15 +191,6 @@ namespace risp
             }
 
             ////////////////////////////////////////////////////////////////////
-
-            long long total_neuron_counts() 
-            {
-                long long rv;
-
-                rv = neuron_fire_counter;
-                neuron_fire_counter = 0;
-                return rv;
-            }
 
             long long total_neuron_accumulates() 
             {
@@ -380,8 +370,6 @@ namespace risp
                 for (i = 0; i < to_fire.size(); i++) {
                     to_fire[i]->perform_fire(time);
                 }
-                neuron_fire_counter += to_fire.size();
-
                 to_fire.clear();
 
                 for (i = 0; i < es.size(); i++) {
@@ -429,8 +417,6 @@ namespace risp
 
                             }
 
-                            neuron_fire_counter++;
-
                             n->perform_fire(time);
                         }
 
@@ -464,8 +450,6 @@ namespace risp
              *  Each subvector stores a set of events, which is composed of neuron and charge change.
              */
             vector < vector < std::pair<Neuron *, double> >> events;
-
-            long long neuron_fire_counter;  /**< This is what total_neuron_counts() returns. */
 
             long long neuron_accum_counter; /**< This is what total_neuron_accumulates() returns. */
 
@@ -610,11 +594,6 @@ namespace risp
                 for (i = 0; i < network_ids.size(); i++) {
                     get_risp_network(network_ids[i])->run(duration);
                 }
-            }
-
-            long long total_neuron_counts(int network_id) 
-            {
-                return get_risp_network(network_id)->total_neuron_counts();
             }
 
             long long total_neuron_accumulates(int network_id) 
