@@ -481,7 +481,7 @@ namespace neuro
 
             /* Output tracking.  See the markdown for a detailed description of these.  */
 
-            virtual bool track_neuron_events(uint32_t node_id, bool track = true) = 0;
+            virtual void track_neuron_events(uint32_t node_id) = 0;
 
             /* Access output spike data */
 

@@ -22,7 +22,7 @@ namespace neuro
         NodeMap::iterator nit;
 
         for (nit = n->begin(); nit != n->end(); nit++) {
-            if (!p->track_neuron_events(nit->second->id, true)) return false;
+            p->track_neuron_events(nit->second->id);
         }
 
         return true;

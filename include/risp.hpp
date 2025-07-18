@@ -175,11 +175,9 @@ namespace risp
                 }
             }
 
-            bool track_neuron_events(uint32_t node_id, bool track) 
+            void track_neuron_events(uint32_t node_id) 
             {
-                neuron_map[node_id]->track = track;
-
-                return true;
+                neuron_map[node_id]->track = true;
             }
 
             vector <int> output_counts() 
@@ -428,9 +426,9 @@ namespace risp
                 network->run(duration);
             }
 
-            bool track_neuron_events(uint32_t node_id, bool track) 
+            void track_neuron_events(uint32_t node_id) 
             {
-                return network->track_neuron_events(node_id, track);
+                network->track_neuron_events(node_id);
             }
 
             vector <int> output_counts() 
