@@ -326,8 +326,11 @@ int main(int argc, char **argv)
                                 } 
                                 spike_validation(Spike(spike_id, spike_time, spike_val), net, normalized);
 
-                                p->apply_spike(Spike(net->get_node(spike_id)->input_id,
-                                            spike_time, spike_val), normalized);
+                                p->apply_spike(
+                                        Spike(
+                                            net->get_node(spike_id)->input_id,
+                                            spike_time, spike_val),
+                                        normalized);
 
                                 spikes_array.push_back(Spike(spike_id, spike_time, spike_val));
 

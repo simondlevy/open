@@ -436,11 +436,6 @@ namespace risp
                 delete risp_net;
             }
 
-            void apply_spike(const Spike& s, bool normalize, int network_id) 
-            {
-                get_risp_network(network_id)->apply_spike(s, normalize);
-            }
-
             void apply_spike(const Spike& s, const vector<int>& network_ids,
                     bool normalize) 
             {
@@ -478,6 +473,11 @@ namespace risp
             }
 
         protected:
+
+            void apply_spike(const Spike& s, bool normalize, int network_id) 
+            {
+                get_risp_network(network_id)->apply_spike(s, normalize);
+            }
 
             double get_input_spike_factor() const;
 
