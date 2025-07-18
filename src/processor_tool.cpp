@@ -22,9 +22,6 @@ void print_commands(FILE *f);
 /** Convert a string to uppercase */
 void to_uppercase(string &s);
 
-/** Make sure the spike has the legal id, time, and value. **/
-void spike_validation(const Spike &s, const Network *n, bool normalized);
-
 /** Make sure the node "node_id" is an output node in the network */
 void output_node_id_validation(const int node_id, const Network *n);
 
@@ -66,30 +63,6 @@ int node_validation(const Network *n, const string &node_id)
     }
     if (!n->is_node(nid)) throw SRE(node_id + " is not a node in the network");
     return nid;
-}
-
-void spike_validation(const Spike &s, const Network *n, bool normalized) 
-{
-    Node *node;
-    char buf[20];
-
-    try {
-        if (normalized) {
-            if (s.value < -1 || s.value > 1) throw "spike val must be >= -1 and <= 1";
-        }
-        if (s.time < 0) throw "spike time must be > 0";
-        node = n->get_node(s.id);
-        if (!node->is_input()) {
-            snprintf(buf, 20, "%d", s.id);
-            throw (string) "node " + buf + " is not an input node";
-        }
-
-    } catch (const string &s) {
-        throw SRE(s);
-    } catch (const char *s) {
-        throw SRE(s);
-    }
-
 }
 
 void output_node_id_validation(const int node_id, const Network *n) 
@@ -303,7 +276,6 @@ int main(int argc, char **argv)
                                     throw SRE((string) "Invalid spike [ " + sv[i*3 + 1] + "," + sv[i*3 + 2] + "," +
                                             sv[i*3 + 3] + "]\n");
                                 } 
-                                spike_validation(Spike(spike_id, spike_time, spike_val), net, normalized);
 
                                 p->apply_spike(
                                         Spike(
