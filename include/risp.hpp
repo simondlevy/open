@@ -177,8 +177,8 @@ namespace risp
 
             bool track_neuron_events(uint32_t node_id, bool track) 
             {
-                if(!is_neuron(node_id)) return false;
                 neuron_map[node_id]->track = track;
+
                 return true;
             }
 
@@ -248,11 +248,6 @@ namespace risp
                 it = neuron_map.find(node_id);
 
                 return it->second;
-            }
-
-            bool is_neuron(uint32_t node_id) 
-            {
-                return neuron_map.find(node_id) != neuron_map.end();
             }
 
             void add_input(uint32_t node_id, int input_id) 
