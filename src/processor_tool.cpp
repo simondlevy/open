@@ -221,21 +221,6 @@ int main(int argc, char **argv)
 
                 net = load_network(&p, network_json);
 
-                /*
-                if (!read_json(sv, 1, network_json)) {
-
-                    printf("usage: ML network_json. Bad json\n");
-
-                } else {
-
-
-                    if (p != nullptr) { delete p; p = nullptr; }
-                    if (net != nullptr) { delete net; net = nullptr; }
-
-                    net = load_network(&p, network_json);
-
-                }*/
-
             }
 
             else if (sv[0] == "AS" || sv[0] == "ASV") {
