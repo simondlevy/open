@@ -74,7 +74,6 @@ namespace risp
                     bool _inputs_from_weights, 
                     vector <double> & _weights) 
             {
-                EdgeMap::iterator eit;
                 leak_mode = leak;
 
                 spike_value_factor = _spike_value_factor;
@@ -552,11 +551,6 @@ namespace risp
             void run(double duration) 
             {
                 network->run(duration);
-            }
-
-            void output_counts(int * counts)
-            {
-                (void)counts;
             }
 
             vector <int> output_counts() 

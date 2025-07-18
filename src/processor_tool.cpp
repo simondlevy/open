@@ -16,28 +16,12 @@ using nlohmann::json;
 
 typedef runtime_error SRE;
 
-/** Print commands */
-void print_commands(FILE *f);
-
-/** Convert a string to uppercase */
-void to_uppercase(string &s);
-
-/** Make sure the node "node_id" is an output node in the network */
-void output_node_id_validation(const int node_id, const Network *n);
-
-string node_name(Node *n);
-
-void print_commands(FILE *f) 
+static void print_commands(FILE *f) 
 { 
     fprintf(f, "Q                                   - Quit\n");
 }
 
-string node_name(Node *n) {
-    if (n->name == "") return std::to_string(n->id);
-    return (std::to_string(n->id)) + "(" + n->name + ")";
-}
-
-void to_uppercase(string &s) 
+static void to_uppercase(string &s) 
 {
     size_t i;
     for (i = 0; i < s.size(); i++) {
@@ -47,37 +31,7 @@ void to_uppercase(string &s)
     }
 }
 
-int node_validation(const Network *n, const string &node_id)
-{
-    uint32_t nid;
-
-    if (sscanf(node_id.c_str(), "%u", &nid) == 0) {
-        throw SRE((string) "Bad node specification - " + node_id);
-    }
-    if (!n->is_node(nid)) throw SRE(node_id + " is not a node in the network");
-    return nid;
-}
-
-void output_node_id_validation(const int node_id, const Network *n) 
-{
-    Node *node;
-    char buf[20];
-
-    try {
-        if (node_id < 0) throw "node_id must > 0";
-        node = n->get_node(node_id);
-        if (!node->is_output()) {
-            snprintf(buf, 20, "%d", node_id);
-            throw (string) "node " + buf + " is not an input node";
-        }
-    } catch (const string &s) {
-        throw SRE(s);
-    } catch (const char *s) {
-        throw SRE(s);
-    }
-}
-
-void safe_exit(Processor *p, Network *n)
+static void safe_exit(Processor *p, Network *n)
 {
     if (p != nullptr) delete p;
     if (n != nullptr) delete n;
