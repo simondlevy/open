@@ -471,7 +471,6 @@ Edge* Network::add_edge(uint32_t fr, uint32_t to)
       throw SRE(buf);
     }
 
-    // get_node will throw if the node does not exist -- this will propagate through this call to prevent the edge
     try {
         from_node = get_node(fr);
         to_node = get_node(to);

@@ -537,7 +537,6 @@ namespace risp
 
             void init_network() 
             {
-
                 network = new risp::Network(
                         spike_value_factor,
                         min_potential,

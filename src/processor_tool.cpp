@@ -229,10 +229,7 @@ int main(int argc, char **argv)
                                 sv[i*3 + 3] + "]\n");
                     } 
 
-                    p->apply_spike(
-                            Spike(
-                                net->get_node(spike_id)->input_id,
-                                spike_time, spike_val),
+                    p->apply_spike(Spike( spike_id, spike_time, spike_val),
                             normalized);
 
                     spikes_array.push_back(Spike(spike_id, spike_time, spike_val));
