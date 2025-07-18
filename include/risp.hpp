@@ -303,13 +303,103 @@ namespace risp
                 return !(output_id < 0 || output_id >= (int) outputs.size() || outputs[output_id] == -1);
             }
 
-            void add_input(uint32_t node_id, int input_id);
+            void add_input(uint32_t node_id, int input_id) 
+            {
+                if (input_id >= (int) inputs.size()) inputs.resize(input_id + 1, -1);
 
-            void add_output(uint32_t node_id, int output_id);
+                inputs[input_id] = node_id;
+            }
+
+
+            void add_output(uint32_t node_id, int output_id) 
+            {
+                if (output_id >= (int) outputs.size()) outputs.resize(output_id + 1, -1);
+                outputs[output_id] = node_id;
+            }
+
+            void process_events(uint32_t time) 
+            {
+                size_t i, j;
+                Neuron *n;
+                Synapse *syn;
+                size_t to_time;
+                size_t events_size;
+                double weight;
+
+                const vector<std::pair <Neuron*, double>> es = std::move(events[time]);
+
+                /* Cause neurons to fire if we're firing like RAVENS */
+
+                for (i = 0; i < to_fire.size(); i++) to_fire[i]->perform_fire(time);
+                neuron_fire_counter += to_fire.size();
+                to_fire.clear();
+
+                /* apply leak / reset minimum charge before the events happen */
+
+                for (i = 0; i < es.size(); i++) {
+                    n = es[i].first;
+                    if (n->leak) n->charge = 0;
+                    if (n->charge < min_potential) n->charge = min_potential;
+                }
+
+                /* collect charges */
+
+                for (i = 0; i < es.size(); i++) {
+                    n = es[i].first;
+                    n->check = true;
+                    n->charge += es[i].second;
+                    neuron_accum_counter++;
+                }
+
+                /* (CZ): I store events vector size onto events_size. 
+                   I think this is more efficient than using .size() call a lot times.
+                   (JSP doesn't think it matters.)  */
+
+                events_size = events.size();
+
+                /* determine if neuron fires */
+                for (i = 0; i < es.size(); i++) {
+
+                    n = es[i].first;
+                    if (n->check == true) {
+
+                        /* fire */
+                        if (n->charge >= n->threshold) {
+                            for (j = 0; j < n->synapses.size(); j++) {
+                                syn = n->synapses[j];
+                                to_time = time + syn->delay;
+
+                                if (to_time >= events_size) {
+                                    events_size = to_time + 1;
+                                    events.resize(events_size);
+                                }
+
+                                if (weights.size() == 0) {
+                                    weight = syn->weight;
+                                } else if (stds.size() == 0) {
+                                    weight = weights[int(syn->weight)];
+                                } else {
+                                    weight = rng.Random_Normal(weights[int(syn->weight)], stds[int(syn->weight)]);
+                                }
+                                if (noisy_stddev != 0) weight = rng.Random_Normal(weight, noisy_stddev);
+
+                                events[to_time].push_back(make_pair(syn->to, weight));
+
+                            }
+
+                            if (fire_like_ravens) {
+                                to_fire.push_back(n);
+                            } else {
+                                neuron_fire_counter++;
+                                n->perform_fire(time);
+                            }
+                        }
+                        n->check = false;
+                    }
+                }
+            }
 
             void clear_tracking_info();   
-
-            void process_events(uint32_t time); /**< Process events at time "time" */
 
             vector <int> inputs;        /**< index is input id and its value is neuron id. 
                                           If the neuron id is -1, it's not an input node. */
