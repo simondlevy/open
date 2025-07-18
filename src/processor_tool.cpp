@@ -25,10 +25,6 @@ void to_uppercase(string &s);
 /** Make sure the node "node_id" is an output node in the network */
 void output_node_id_validation(const int node_id, const Network *n);
 
-/** Read a json object from file or stdin */
-bool read_json(const vector <string> &sv, size_t starting_field, json &rv);
-
-
 string node_name(Node *n);
 
 void print_commands(FILE *f) 
@@ -82,7 +78,7 @@ void output_node_id_validation(const int node_id, const Network *n)
 }
 
 
-bool read_json(const vector <string> &sv, size_t starting_field, json &rv)
+static bool read_json(const vector <string> &sv, size_t starting_field, json &rv)
 {
     bool success;
     string s;
@@ -118,10 +114,6 @@ Network *load_network(Processor **pp, const json &network_json)
     net->from_json(network_json);
 
     Processor * p = *pp;
-
-    json proc_params = net->get_data("proc_params");
-
-    string proc_name = net->get_data("other")["proc_name"];
 
     p = Processor::make();
 
