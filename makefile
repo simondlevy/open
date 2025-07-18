@@ -23,13 +23,7 @@ FR_CFLAGS = -std=c++11 -Wall -Wextra -Iinclude -Iinclude/utils $(CFLAGS)
 FR_OBJ = obj/framework.o obj/processor_help.o obj/properties.o
 
 RISP_INC = include/risp.hpp
-RISP_OBJ = obj/risp.o obj/risp_static.o
-
-VRISP_INC = include/vrisp.hpp
-VRISP_OBJ = obj/vrisp.o obj/vrisp_static.o
-VRISP_RVV_FULL_OBJ = obj/vrisp_rvv_full.o obj/vrisp_static.o
-VRISP_RVV_FIRED_OBJ = obj/vrisp_rvv_fired.o obj/vrisp_static.o
-VRISP_RVV_SYNAPSES_OBJ = obj/vrisp_rvv_synapses.o obj/vrisp_static.o
+RISP_OBJ = obj/risp_static.o
 
 all: bin/processor_tool_risp
 
@@ -80,26 +74,8 @@ bin/property_pack_tool: src/property_pack_tool.cpp $(FR_INC) $(FR_LIB)
 # ------------------------------------------------------------
 # Object files
 
-obj/risp.o: src/risp.cpp $(FR_INC) $(RISP_INC)
-	$(CXX) -c $(FR_CFLAGS) -o obj/risp.o src/risp.cpp
-
 obj/risp_static.o: src/risp_static.cpp $(FR_INC) $(RISP_INC)
 	$(CXX) -c $(FR_CFLAGS) -o obj/risp_static.o src/risp_static.cpp
-
-obj/vrisp.o: src/vrisp.cpp $(FR_INC) $(VRISP_INC)
-	$(CXX) -c $(FR_CFLAGS) -DNO_SIMD -o obj/vrisp.o src/vrisp.cpp
-
-obj/vrisp_rvv_full.o: src/vrisp.cpp $(FR_INC) $(VRISP_INC)
-	$(CXX) -c $(FR_CFLAGS) -DRISCVV_FULL -o obj/vrisp_rvv_full.o src/vrisp.cpp
-
-obj/vrisp_rvv_fired.o: src/vrisp.cpp $(FR_INC) $(VRISP_INC)
-	$(CXX) -c $(FR_CFLAGS) -DRISCVV_FIRED -o obj/vrisp_rvv_fired.o src/vrisp.cpp
-
-obj/vrisp_rvv_synapses.o: src/vrisp.cpp $(FR_INC) $(VRISP_INC)
-	$(CXX) -c $(FR_CFLAGS) -DRISCVV_SYNAPSES -o obj/vrisp_rvv_synapses.o src/vrisp.cpp
-
-obj/vrisp_static.o: src/vrisp_static.cpp $(FR_INC) $(VRISP_INC)
-	$(CXX) -c $(FR_CFLAGS) -o obj/vrisp_static.o src/vrisp_static.cpp
 
 obj/framework.o: src/framework.cpp $(FR_INC)
 	$(CXX) -c $(FR_CFLAGS) -o obj/framework.o src/framework.cpp
