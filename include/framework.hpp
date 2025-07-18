@@ -462,33 +462,19 @@ namespace neuro
 
             static Processor *make();
 
-            /* Load or clear a network. */
-
             virtual void load_network(Network* n) = 0;
 
 
             /* Queue spike(s) as input to a network or to multiple networks.
                When normalized == true (the default), spike values should be between 
                -1 and 1, and then the processor can convert its value to the proper range. 
-
                When normalized == false, the value is simply passed to the neuroprocessor. */
-
             virtual void apply_spike(const Spike& s, bool normalized = true) = 0;
-
-            /* Run the network(s) for the desired time with queued input(s) */
 
             virtual void run(double duration) = 0;
 
-            /* Output tracking.  See the markdown for a detailed description of these.  */
-
-            virtual void track_neuron_events(uint32_t node_id) = 0;
-
-            /* Access output spike data */
-
             virtual vector <int> output_counts() = 0;
 
-
-            /* Remove state, keep network loaded */
             virtual void clear_activity() = 0;
     };
 
