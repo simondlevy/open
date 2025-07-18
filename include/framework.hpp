@@ -493,9 +493,6 @@ public:
     virtual void run(double duration, int network_id = 0) = 0;
     virtual void run(double duration, const vector<int>& network_ids) = 0;
 
-    /* Get processor time based on specified network */
-    virtual double get_time(int network_id = 0) = 0;
-
     /* Output tracking.  See the markdown for a detailed description of these.  */
 
     virtual bool track_output_events(int output_id, bool track = true, int network_id = 0) = 0;

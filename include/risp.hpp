@@ -175,12 +175,6 @@ namespace risp
                 }
             }
 
-
-            double get_time() 
-            {
-                return (double) overall_run_time;
-            }
-
             bool track_output_events(int output_id, bool track) 
             {
                 if (!is_valid_output_id(output_id)) return false;
@@ -672,11 +666,6 @@ namespace risp
             long long total_neuron_accumulates(int network_id) 
             {
                 return get_risp_network(network_id)->total_neuron_accumulates();
-            }
-
-            double get_time(int network_id) 
-            {
-                return get_risp_network(network_id)->get_time();
             }
 
             bool track_output_events(int output_id, bool track, int network_id) 
