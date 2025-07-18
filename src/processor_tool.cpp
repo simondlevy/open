@@ -217,6 +217,11 @@ int main(int argc, char **argv)
 
             if (sv[0] == "ML") {
 
+                read_json(sv, 1, network_json);
+
+                net = load_network(&p, network_json);
+
+                /*
                 if (!read_json(sv, 1, network_json)) {
 
                     printf("usage: ML network_json. Bad json\n");
@@ -229,7 +234,7 @@ int main(int argc, char **argv)
 
                     net = load_network(&p, network_json);
 
-                }
+                }*/
 
             }
 
