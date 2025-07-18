@@ -134,35 +134,121 @@ namespace risp
 
             ~Network() {}
 
-            /* Similar calls from Processor API */
-            void apply_spike(const Spike& s, bool normalized = true);
-            void run(double duration);
-            double get_time();
-            bool track_output_events(int output_id, bool track);
-            bool track_neuron_events(uint32_t node_id, bool track);
+            void apply_spike(const Spike& s, bool normalized) 
+            {
+                (void)normalized;
 
-            double output_last_fire(int output_id);
-            vector <double> output_last_fires();
+                Neuron * n = get_neuron(inputs[s.id]);
+
+                if (s.time >= events.size()) {
+                    events.resize(s.time + 1);
+                }
+
+                double v = floor(s.value * spike_value_factor);
+
+                events[s.time].push_back(std::make_pair(n,v));
+            }
+
+            void run(double duration) {
+                uint32_t i;
+                Neuron *n;
+                int run_time;
+
+                /* if clear_activity get called, we don't want to clear tracking info again. */
+                if (overall_run_time != 0) clear_tracking_info();
+
+                run_time = (run_time_inclusive) ? duration : duration-1;
+                overall_run_time += (run_time+1);
+
+                /* expand the event buffer */
+                if ((int) events.size() <= run_time) {
+                    events.resize(run_time + 1);
+                }
+
+                for (i = 0; i <= (uint32_t) run_time; i++) {
+                    process_events(i);
+                }
+
+                /* shift extra spiking events to the beginning from the previous run() call*/
+                if ((int) events.size() > run_time + 1) {
+                    for (i = run_time + 1; i < events.size(); i++) {
+                        events[i - run_time - 1] = std::move(events[i]);   // Google tells me this is O(1)
+
+                    }
+                }
+
+                /* Deal with leak/non-negative charge  at the end of the run, 
+                   so that if you pull neuron charges, they will be correct */
+
+                for (i = 0; i < sorted_neuron_vector.size(); i++) {
+                    n = sorted_neuron_vector[i];
+                    if (n->leak) n->charge = 0;
+                    if (n->charge < min_potential) n->charge = min_potential;
+                }
+            }
+
+
+            double get_time() 
+            {
+                return (double) overall_run_time;
+            }
+
+            bool track_output_events(int output_id, bool track) 
+            {
+                if (!is_valid_output_id(output_id)) return false;
+                neuron_map[outputs[output_id]]->track = track;
+                return true;
+            }
+
+            bool track_neuron_events(uint32_t node_id, bool track) 
+            {
+                if(!is_neuron(node_id)) return false;
+                neuron_map[node_id]->track = track;
+                return true;
+            }
+
+
+            double output_last_fire(int output_id) 
+            {
+                return neuron_map[outputs[output_id]]->last_fire;
+            }
+
+            vector <double> output_last_fires() {
+                size_t i;
+                vector <double> rv;
+                for (i = 0; i < outputs.size(); i++) {
+                    if(outputs[i] != -1) rv.push_back(neuron_map[outputs[i]]->last_fire);
+                }
+                return rv;
+            }
 
             int output_count(int output_id);
+
             vector <int> output_counts();
 
             vector <double> output_vector(int output_id);
+
             vector < vector <double> > output_vectors();
 
             long long total_neuron_counts();
+
             long long total_neuron_accumulates();
+
             vector <int> neuron_counts();
+
             vector <double> neuron_last_fires();
+
             vector < vector <double> > neuron_vectors();
 
             vector < double > neuron_charges();
+
             void synapse_weights(vector <uint32_t> &pres, vector <uint32_t> &posts, vector <double> &vals);
 
             void clear_activity();
 
 
         protected:
+
             Neuron* add_neuron(uint32_t node_id, double threshold, bool leak);
             Synapse* add_synpase(uint32_t from_id, uint32_t to_id, double weight, uint32_t delay);
 
