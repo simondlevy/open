@@ -333,7 +333,7 @@ namespace neuro
 
             static Processor *make();
 
-            virtual void load_network(Network* n) = 0;
+            virtual void init_network() = 0;
 
             virtual void apply_spike(const Spike& s, bool normalized = true) = 0;
 

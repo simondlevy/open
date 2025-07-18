@@ -64,7 +64,7 @@ namespace risp
 
         public:
 
-            Network(neuro::Network *net, 
+            Network(
                     double _spike_value_factor, 
                     double _min_potential, 
                     char leak,
@@ -74,7 +74,6 @@ namespace risp
                     bool _inputs_from_weights, 
                     vector <double> & _weights) 
             {
-                neuro::Edge *edge;
                 EdgeMap::iterator eit;
                 leak_mode = leak;
 
@@ -536,10 +535,10 @@ namespace risp
 
             ~Processor() { }
 
-            void load_network(neuro::Network* net) 
+            void init_network() 
             {
 
-                network = new risp::Network(net, 
+                network = new risp::Network(
                         spike_value_factor,
                         min_potential,
                         leak_mode[0], 

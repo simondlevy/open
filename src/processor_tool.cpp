@@ -149,8 +149,7 @@ bool read_json(const vector <string> &sv, size_t starting_field, json &rv)
     }
 }
 
-Network *load_network(Processor **pp,
-        const json &network_json)
+Network *load_network(Processor **pp, const json &network_json)
 {
     Network *net;
     json proc_params;
@@ -169,7 +168,7 @@ Network *load_network(Processor **pp,
     } 
 
 
-    p->load_network(net);
+    p->init_network();
 
     return net;
 }
@@ -255,7 +254,7 @@ int main(int argc, char **argv)
             // convert cmd to uppercase
             if (sv.size() != 0) to_uppercase(sv[0]); 
 
-            if (sv[0] == "ML") { // make() and load_network()
+            if (sv[0] == "ML") {
 
                 if (!read_json(sv, 1, network_json)) {
 
