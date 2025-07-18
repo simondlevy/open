@@ -187,8 +187,6 @@ Network *load_network(Processor **pp,
 
     p->load_network(net);
 
-    track_all_neuron_events(p, net);
-
     return net;
 }
 

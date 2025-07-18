@@ -20,7 +20,7 @@ CXX ?= g++
 FR_LIB = lib/libframework.a
 FR_INC = include/framework.hpp
 FR_CFLAGS = -std=c++11 -Wall -Wextra -Iinclude -Iinclude/utils $(CFLAGS)
-FR_OBJ = obj/framework.o obj/processor_help.o obj/properties.o
+FR_OBJ = obj/framework.o obj/properties.o
 
 RISP_INC = include/risp.hpp
 RISP_OBJ = obj/risp_static.o
