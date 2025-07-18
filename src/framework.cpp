@@ -257,6 +257,7 @@ void Network::copy_from(const Network& net)
 
     m_associated_data = net.m_associated_data;
     values = net.values;
+    printf("Network::copy_from()\n");
     sorted_node_vector.clear();
 }
 
@@ -270,6 +271,7 @@ void Network::move_from(Network&& net)
     m_outputs = std::move(net.m_outputs);
     m_associated_data = std::move(net.m_associated_data);
     values = std::move(net.values);
+    printf("Network::move_from()\n");
     sorted_node_vector.clear();
 }
 
@@ -285,6 +287,7 @@ void Network::clear(bool include_properties)
   m_edges.clear();
   m_associated_data = json::object();
   sorted_node_vector.clear();
+    printf("Network::clear()\n");
 }
 
 json Network::as_json() const

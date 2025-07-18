@@ -80,7 +80,6 @@ namespace risp
                 EdgeMap::iterator eit;
                 Neuron *n;
                 leak_mode = leak;
-                bool neuron_leak;
 
                 spike_value_factor = _spike_value_factor;
                 min_potential = _min_potential;
@@ -98,9 +97,7 @@ namespace risp
 
                     node = net->sorted_node_vector[i];
 
-                    neuron_leak = leak_mode == 'c' ? (node->get("Leak") != 0) : (leak_mode == 'a'); 
-
-                    n = add_neuron(node->id, node->get("Threshold"), neuron_leak);
+                    n = add_neuron(node->id, node->get("Threshold"));
 
                     sorted_neuron_vector.push_back(n);
                 }
@@ -208,9 +205,9 @@ namespace risp
 
         protected:
 
-            Neuron* add_neuron(uint32_t node_id, double threshold, bool leak) 
+            Neuron* add_neuron(uint32_t node_id, double threshold) 
             {
-                Neuron * n = new Neuron(node_id, threshold, leak);
+                Neuron * n = new Neuron(node_id, threshold, false);
 
                 if (!threshold_inclusive) {
                     n->threshold = (discrete) ? (n->threshold+1) : (n->threshold + 0.0000001);
