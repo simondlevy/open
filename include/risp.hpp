@@ -90,6 +90,7 @@ namespace risp
                 inputs_from_weights = _inputs_from_weights;
                 overall_run_time = 0;
 
+#if 0
                 net->make_sorted_node_vector();
 
                 for(i = 0; i < net->sorted_node_vector.size(); i++) {
@@ -99,6 +100,48 @@ namespace risp
                     n = add_neuron(node->id, node->get("Threshold"));
 
                 }
+#endif
+
+                add_neuron(0, 3.000000);
+                add_neuron(1, 1.000000);
+                add_neuron(2, 6.000000);
+                add_neuron(3, 0.000000);
+                add_neuron(4, 6.000000);
+                add_neuron(5, 7.000000);
+                add_neuron(6, 0.000000);
+                add_neuron(7, 3.000000);
+                add_neuron(8, 3.000000);
+                add_neuron(9, 0.000000);
+                add_neuron(10, 6.000000);
+                add_neuron(11, 2.000000);
+                add_neuron(12, 0.000000);
+                add_neuron(13, 0.000000);
+                add_neuron(15, 4.000000);
+                add_neuron(16, 7.000000);
+                add_neuron(17, 7.000000);
+                add_neuron(18, 3.000000);
+                add_neuron(20, 7.000000);
+                add_neuron(22, 6.000000);
+                add_neuron(26, 4.000000);
+                add_neuron(30, 3.000000);
+                add_neuron(32, 2.000000);
+                add_neuron(33, 4.000000);
+                add_neuron(34, 6.000000);
+                add_neuron(41, 5.000000);
+                add_neuron(42, 7.000000);
+                add_neuron(51, 3.000000);
+                add_neuron(60, 4.000000);
+                add_neuron(62, 2.000000);
+                add_neuron(64, 2.000000);
+                add_neuron(67, 5.000000);
+                add_neuron(68, 7.000000);
+                add_neuron(77, 3.000000);
+                add_neuron(80, 4.000000);
+                add_neuron(88, 3.000000);
+                add_neuron(93, 3.000000);
+                add_neuron(95, 5.000000);
+                add_neuron(101, 3.000000);
+                add_neuron(102, 5.000000);
 
                 add_input(0, 0);
                 add_input(1, 1);
