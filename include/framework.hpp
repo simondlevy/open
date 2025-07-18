@@ -466,7 +466,6 @@ namespace neuro
 
             virtual void load_network(Network* n) = 0;
 
-            virtual void clear() = 0;
 
             /* Queue spike(s) as input to a network or to multiple networks.
                When normalized == true (the default), spike values should be between 

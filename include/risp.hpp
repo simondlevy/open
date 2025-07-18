@@ -423,11 +423,6 @@ namespace risp
                         weights);
             }
 
-            void clear() 
-            {
-                delete network;
-            }
-
             void run(double duration) 
             {
                 network->run(duration);
