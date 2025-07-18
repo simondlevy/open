@@ -128,15 +128,6 @@ namespace risp {
     }
 
     Network::~Network() {
-        size_t i;
-        Neuron *n;
-        unordered_map <uint32_t, Neuron*>::const_iterator it;
-
-        for (it = neuron_map.begin(); it != neuron_map.end(); ++it) {
-            n = it->second;
-            for (i = 0; i < n->synapses.size(); i++) delete n->synapses[i];
-            delete n;
-        }
     }
 
     Synapse* Network::add_synpase(uint32_t from_id, uint32_t to_id, double weight, uint32_t delay) {
