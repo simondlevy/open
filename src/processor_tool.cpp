@@ -37,8 +37,6 @@ bool read_json(const vector <string> &sv, size_t starting_field, json &rv);
 
 string node_name(Node *n);
 
-int max_node_name_len(Network *net);
-
 void print_commands(FILE *f) 
 { 
     fprintf(f, "Q                                   - Quit\n");
@@ -47,12 +45,6 @@ void print_commands(FILE *f)
 string node_name(Node *n) {
     if (n->name == "") return std::to_string(n->id);
     return (std::to_string(n->id)) + "(" + n->name + ")";
-}
-
-int max_node_name_len(Network *net) 
-{
-    return 4;
-
 }
 
 void to_uppercase(string &s) 

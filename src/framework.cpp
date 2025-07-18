@@ -47,8 +47,6 @@ static json edge_specs = {
 
 static const vector<string> required_edge_keys { "from", "to", "values" };
 
-static bool node_comp(Node *n1, Node *n2) { return (n1->id < n2->id); }
-
 void Node::set(int idx, double val)
 {
     values.at(idx) = val;

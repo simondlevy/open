@@ -74,11 +74,8 @@ namespace risp
                     bool _inputs_from_weights, 
                     vector <double> & _weights) 
             {
-                size_t i;
-                neuro::Node *node;
                 neuro::Edge *edge;
                 EdgeMap::iterator eit;
-                Neuron *n;
                 leak_mode = leak;
 
                 spike_value_factor = _spike_value_factor;
