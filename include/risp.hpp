@@ -412,7 +412,7 @@ namespace risp
             void load_network(neuro::Network* net) 
             {
 
-                risp::Network * risp_net = new risp::Network(net, 
+                network = new risp::Network(net, 
                         spike_value_factor,
                         min_potential,
                         leak_mode[0], 
@@ -421,53 +421,43 @@ namespace risp
                         discrete, 
                         inputs_from_weights,
                         weights);
-
-                networks[0] = risp_net;
             }
 
             void clear(int network_id) 
             {
-                risp::Network *risp_net = get_risp_network(network_id);
-                networks.erase(network_id);
-                delete risp_net;
+                delete network;
             }
 
             void run(double duration, int network_id) 
             {
-                get_risp_network(network_id)->run(duration);
+                network->run(duration);
             }
 
             bool track_neuron_events(uint32_t node_id, bool track, int network_id) 
             {
-                return get_risp_network(network_id)->track_neuron_events(node_id, track);
+                return network->track_neuron_events(node_id, track);
             }
 
-            vector <int> output_counts(int network_id) {
-                return get_risp_network(network_id)->output_counts();
+            vector <int> output_counts(int network_id) 
+            {
+                return network->output_counts();
             }
 
             void clear_activity(int network_id) 
             {
-                get_risp_network(network_id)->clear_activity();
-            }
-
-            Network* get_risp_network(int network_id) 
-            {
-                map <int, risp::Network*>::const_iterator it;
-                it = networks.find(network_id);
-                return it->second;
+                network->clear_activity();
             }
 
         protected:
 
             void apply_spike(const Spike& s, bool normalized) 
             {
-                get_risp_network(0)->apply_spike(s, normalized);
+                network->apply_spike(s, normalized);
             }
 
             double get_input_spike_factor() const;
 
-            map <int, risp::Network*> networks;
+            risp::Network * network;
 
             double min_weight;
             double max_weight;
