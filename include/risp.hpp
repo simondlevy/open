@@ -455,38 +455,9 @@ namespace risp
                 }
             }
 
-            void apply_spikes(const vector<Spike>& s, bool normalize, int network_id) 
-            {
-                size_t i;
-                risp::Network *risp_net = get_risp_network(network_id);
-
-                for (i = 0; i < s.size(); i++) {
-                    risp_net->apply_spike(s[i], normalize);
-                }
-            }
-
-            void apply_spikes(const vector<Spike>& s, 
-                    const vector<int>& network_ids,
-                    bool normalize) 
-            {
-                size_t i;
-                for (i = 0; i < network_ids.size(); i++) {
-                    apply_spikes(s, normalize, network_ids[i]);
-                }
-            }
-
-
             void run(double duration, int network_id) 
             {
                 get_risp_network(network_id)->run(duration);
-            }
-
-            void run(double duration, const vector<int>& network_ids) 
-            {
-                size_t i;
-                for (i = 0; i < network_ids.size(); i++) {
-                    get_risp_network(network_ids[i])->run(duration);
-                }
             }
 
             bool track_neuron_events(uint32_t node_id, bool track, int network_id) 

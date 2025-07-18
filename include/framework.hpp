@@ -479,17 +479,9 @@ namespace neuro
                     const vector<int>& network_ids, 
                     bool normalized = true) = 0;
 
-            virtual void apply_spikes(const vector<Spike>& s, 
-                    bool normalized = true, 
-                    int network_id = 0) = 0;
-            virtual void apply_spikes(const vector<Spike>& s, 
-                    const vector<int>& network_ids,
-                    bool normalized = true) = 0;
-
             /* Run the network(s) for the desired time with queued input(s) */
 
             virtual void run(double duration, int network_id = 0) = 0;
-            virtual void run(double duration, const vector<int>& network_ids) = 0;
 
             /* Output tracking.  See the markdown for a detailed description of these.  */
 
@@ -528,25 +520,10 @@ namespace neuro
             const string &type,
             Network *n);
 
-    /* This is a heavyweight procedure.  It assumes that *n* has been loaded on *p*.  It
-       will call run(1) duration times, and then return a json with two keys.  Each val
-       is a vector of vectors.  The outer vector has an entry for each timestep.
-
-       "spike_raster": The inner vector is 0 or 1 for each neuron. The values are presented in
-       the same order as sorted_node_vector.
-       "charges": The inner vector contains the charge of each neuron (doubles).  The values
-       are presented in the same order as sorted_node_vector.
-     */
-
     json run_and_track(int duration, Processor *p, int network_id = 0);
 
     /* This copies n, but sets the synapse weights from the network that is on the processor. */
 
     Network *pull_network(Processor *p, Network *n, int network_id = 0);
-
-    /* Use the spike raster to emit the appropriate apply_spikes() calls. */
-
-    void apply_spike_raster(Processor *p, int in_neuron, const vector <char> &sr, int network_id = 0);
-
 
 }   // End of neuro namespace.

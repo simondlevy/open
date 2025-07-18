@@ -305,7 +305,7 @@ int main(int argc, char **argv)
 
             }
 
-            else if (sv[0] == "AS" || sv[0] == "ASV") { // apply_spike()
+            else if (sv[0] == "AS" || sv[0] == "ASV") {
 
                 if (network_processor_validation(net, p)) {
 
