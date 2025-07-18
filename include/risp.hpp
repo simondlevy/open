@@ -433,23 +433,6 @@ namespace risp
                 return true;
             }
 
-            /*
-            bool load_networks(std::vector<neuro::Network*> &n) 
-            {
-                size_t i, j;
-
-                for (i = 0; i < n.size(); i++) {
-                    if(load_network(n[i], i) == false) {
-                        for (j = 0; j <= i; j++) {
-                            delete networks[j];
-                            networks.erase(j);
-                        }
-                        return false;
-                    }
-                }
-                return true;
-            }*/
-
             void clear(int network_id) 
             {
                 risp::Network *risp_net = get_risp_network(network_id);

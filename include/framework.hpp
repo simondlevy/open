@@ -465,7 +465,7 @@ namespace neuro
             /* Load or clear a network. */
 
             virtual bool load_network(Network* n, int network_id = 0) = 0;
-            //virtual bool load_networks(std::vector<Network*> &n) = 0;
+
             virtual void clear(int network_id = 0) = 0;
 
             /* Queue spike(s) as input to a network or to multiple networks.
