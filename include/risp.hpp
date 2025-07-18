@@ -191,17 +191,6 @@ namespace risp
 
             ////////////////////////////////////////////////////////////////////
 
-            vector <int> neuron_counts() {
-                size_t i;
-                vector <int> rv;
-
-                for (i = 0; i < sorted_neuron_vector.size(); i++) {
-                    rv.push_back(sorted_neuron_vector[i]->fire_counts);
-                }
-
-                return rv;
-            }
-
             vector <double> neuron_last_fires() 
             {
                 vector <double> rv;
@@ -590,10 +579,6 @@ namespace risp
 
             vector <int> output_counts(int network_id) {
                 return get_risp_network(network_id)->output_counts();
-            }
-
-            vector <int> neuron_counts(int network_id) {
-                return get_risp_network(network_id)->neuron_counts();
             }
 
             vector < vector <double> > neuron_vectors(int network_id) {

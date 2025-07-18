@@ -503,7 +503,6 @@ public:
 
     /* Spike data from all neurons. */
 
-    virtual vector <int> neuron_counts(int network_id = 0) = 0;
     virtual vector <double> neuron_last_fires(int network_id = 0) = 0;
     virtual vector < vector <double> > neuron_vectors(int network_id = 0) = 0;
 

@@ -235,32 +235,6 @@ Network *pull_network(Processor *p, Network *n, int network_id)
 
 /* Do run(1) duration times, and keep track of spike_raster/charge info. */
 
-json run_and_track(int duration, Processor *p, int network_id)
-{
-  int i;
-  size_t j;
-  json rv;
-  vector <double> charges;
-  vector <int> counts;
-
-  rv["spike_raster"] = json::array();
-  rv["charges"] = json::array();
-
-  for (i = 0; i < duration; i++) {
-    p->run(1, network_id);
-    counts = p->neuron_counts(network_id);
-    charges = p->neuron_charges(network_id);
-    rv["spike_raster"].push_back(json::array());
-    rv["charges"].push_back(json::array());
-    for (j = 0; j < counts.size(); j++) {
-      rv["spike_raster"][i].push_back((counts[j] != 0) ? 1 : 0);
-    }
-    for (j = 0; j < charges.size(); j++) rv["charges"][i].push_back(charges[j]);
-  }
-    
-  return rv;
-}
-
 void apply_spike_raster(Processor *p, int in_neuron, const vector <char> &sr, int network_id)
 {
   size_t i;
