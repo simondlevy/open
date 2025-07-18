@@ -90,7 +90,6 @@ namespace risp
                 inputs_from_weights = _inputs_from_weights;
                 overall_run_time = 0;
 
-                /* Add neurons */
                 net->make_sorted_node_vector();
 
                 for(i = 0; i < net->sorted_node_vector.size(); i++) {
@@ -99,7 +98,6 @@ namespace risp
 
                     n = add_neuron(node->id, node->get("Threshold"));
 
-                    sorted_neuron_vector.push_back(n);
                 }
 
                 add_input(0, 0);
@@ -177,7 +175,6 @@ namespace risp
             {
                 vector <int> rv;
 
-                // rv.push_back(neuron_map[outputs[0]]->fire_counts);
                 rv.push_back(neuron_map[3]->fire_counts);
 
                 return rv;
@@ -212,6 +209,8 @@ namespace risp
                 }
 
                 neuron_map[node_id] = n;
+
+                sorted_neuron_vector.push_back(n);
 
                 return n;
             }
