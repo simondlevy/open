@@ -281,10 +281,6 @@ namespace risp {
 
         double v = floor(s.value * spike_value_factor);
 
-        if (noisy_stddev != 0) {
-            v = rng.Random_Normal(v, noisy_stddev);
-        }
-
         events[s.time].push_back(std::make_pair(n,v));
     }
 
