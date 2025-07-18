@@ -182,13 +182,6 @@ namespace risp
                 return true;
             }
 
-            ////////////////////////////////////////////////////////////////////
-
-            int output_count(int output_id) 
-            {
-                return neuron_map[outputs[output_id]]->fire_counts;
-            }
-
             vector <int> output_counts() {
                 size_t i;
                 vector <int> rv;
@@ -197,6 +190,8 @@ namespace risp
                 }
                 return rv;
             }
+
+            ////////////////////////////////////////////////////////////////////
 
             vector <double> output_vector(int output_id) 
             {
@@ -652,11 +647,6 @@ namespace risp
             {
                 return get_risp_network(network_id)->track_neuron_events(node_id, track);
             }
-
-            /*
-            int output_count(int output_id, int network_id) {
-                return get_risp_network(network_id)->output_count(output_id);
-            }*/
 
             vector <int> output_counts(int network_id) {
                 return get_risp_network(network_id)->output_counts();

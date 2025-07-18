@@ -499,7 +499,6 @@ public:
 
     /* Access output spike data */
 
-    virtual int output_count(int output_id, int network_id = 0) = 0;
     virtual vector <int> output_counts(int network_id = 0) = 0;
 
     virtual vector <double> output_vector(int output_id, int network_id = 0) = 0;
