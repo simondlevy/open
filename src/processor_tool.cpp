@@ -201,7 +201,9 @@ int main(int argc, char **argv)
     net = nullptr;
 
     while(1) {
+
         try {
+
             if (prompt != "") printf("%s", prompt.c_str());
             if (!getline(cin, l)) safe_exit(p, net);
             sv.clear();
@@ -221,27 +223,12 @@ int main(int argc, char **argv)
 
                 } else {
 
-                    try {
 
-                        if (p != nullptr) { delete p; p = nullptr; }
-                        if (net != nullptr) { delete net; net = nullptr; }
+                    if (p != nullptr) { delete p; p = nullptr; }
+                    if (net != nullptr) { delete net; net = nullptr; }
 
-                        net = load_network(&p, network_json);
+                    net = load_network(&p, network_json);
 
-                    } catch (const SRE &e) {
-                        printf("%s\n",e.what());
-                        if (net != nullptr) { delete net; net = nullptr; }
-                        if (p != nullptr) { delete p; p = nullptr; }
-                        net = nullptr;
-                        p = nullptr;
-                    } catch (...) {
-                        printf("Unknown error when making processor\n");
-                        if (net != nullptr) { delete net; net = nullptr; }
-                        if (p != nullptr) { delete p; p = nullptr; }
-                        net = nullptr;
-                        p = nullptr;
-
-                    }
                 }
 
             }
