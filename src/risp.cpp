@@ -8,17 +8,6 @@ using namespace std;
 
 namespace risp {
 
-    /** initialization for Neuron, Synapse  */
-    Neuron::Neuron(uint32_t node_id, double t, bool l) 
-        : charge(0),
-        threshold(t),
-        last_check(-1),
-        last_fire(-1),
-        fire_counts(0),
-        leak(l),
-        id(node_id),
-        check(false) {};
-
     Synapse::Synapse(double w, uint32_t d, Neuron* to_n) : weight(w), to(to_n), delay(d) {};
 
     void Neuron::perform_fire(int time)
