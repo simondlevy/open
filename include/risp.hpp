@@ -438,21 +438,22 @@ namespace risp
 
                 const vector<std::pair <Neuron*, double>> es = std::move(events[time]);
 
-                /* Cause neurons to fire if we're firing like RAVENS */
-
-                for (i = 0; i < to_fire.size(); i++) to_fire[i]->perform_fire(time);
+                for (i = 0; i < to_fire.size(); i++) {
+                    to_fire[i]->perform_fire(time);
+                }
                 neuron_fire_counter += to_fire.size();
-                to_fire.clear();
 
-                /* apply leak / reset minimum charge before the events happen */
+                to_fire.clear();
 
                 for (i = 0; i < es.size(); i++) {
                     n = es[i].first;
-                    if (n->leak) n->charge = 0;
-                    if (n->charge < min_potential) n->charge = min_potential;
+                    if (n->leak) {
+                        n->charge = 0;
+                    }
+                    if (n->charge < min_potential) {
+                        n->charge = min_potential;
+                    }
                 }
-
-                /* collect charges */
 
                 for (i = 0; i < es.size(); i++) {
                     n = es[i].first;
@@ -461,22 +462,21 @@ namespace risp
                     neuron_accum_counter++;
                 }
 
-                /* (CZ): I store events vector size onto events_size. 
-                   I think this is more efficient than using .size() call a lot times.
-                   (JSP doesn't think it matters.)  */
-
                 events_size = events.size();
 
-                /* determine if neuron fires */
                 for (i = 0; i < es.size(); i++) {
 
                     n = es[i].first;
+
                     if (n->check == true) {
 
                         /* fire */
                         if (n->charge >= n->threshold) {
+
                             for (j = 0; j < n->synapses.size(); j++) {
+
                                 syn = n->synapses[j];
+
                                 to_time = time + syn->delay;
 
                                 if (to_time >= events_size) {
@@ -484,26 +484,17 @@ namespace risp
                                     events.resize(events_size);
                                 }
 
-                                if (weights.size() == 0) {
-                                    weight = syn->weight;
-                                } else if (stds.size() == 0) {
-                                    weight = weights[int(syn->weight)];
-                                } else {
-                                    weight = rng.Random_Normal(weights[int(syn->weight)], stds[int(syn->weight)]);
-                                }
-                                if (noisy_stddev != 0) weight = rng.Random_Normal(weight, noisy_stddev);
+                                weight = syn->weight;
 
                                 events[to_time].push_back(make_pair(syn->to, weight));
 
                             }
 
-                            if (fire_like_ravens) {
-                                to_fire.push_back(n);
-                            } else {
-                                neuron_fire_counter++;
-                                n->perform_fire(time);
-                            }
+                            neuron_fire_counter++;
+
+                            n->perform_fire(time);
                         }
+
                         n->check = false;
                     }
                 }
