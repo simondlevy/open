@@ -495,7 +495,6 @@ public:
 
     /* Output tracking.  See the markdown for a detailed description of these.  */
 
-    virtual bool track_output_events(int output_id, bool track = true, int network_id = 0) = 0;
     virtual bool track_neuron_events(uint32_t node_id, bool track = true, int network_id = 0) = 0;
 
     /* Access output spike data */
@@ -546,9 +545,6 @@ public:
  * Helper procedures for applications using processors.
  */
 
-/* This calls track_output_events for all of the output neurons in the given network. 
-   If it fails, it will undo the track_output_events() calls that it made previously. */
-    
 bool track_all_output_events(Processor *p, Network *n, int network_id = 0);
 bool track_all_neuron_events(Processor *p, Network *n, int network_id = 0);
 

@@ -175,13 +175,6 @@ namespace risp
                 }
             }
 
-            bool track_output_events(int output_id, bool track) 
-            {
-                if (!is_valid_output_id(output_id)) return false;
-                neuron_map[outputs[output_id]]->track = track;
-                return true;
-            }
-
             bool track_neuron_events(uint32_t node_id, bool track) 
             {
                 if(!is_neuron(node_id)) return false;
@@ -666,11 +659,6 @@ namespace risp
             long long total_neuron_accumulates(int network_id) 
             {
                 return get_risp_network(network_id)->total_neuron_accumulates();
-            }
-
-            bool track_output_events(int output_id, bool track, int network_id) 
-            {
-                return get_risp_network(network_id)->track_output_events(output_id, track);
             }
 
             bool track_neuron_events(uint32_t node_id, bool track, int network_id) 

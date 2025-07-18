@@ -16,27 +16,6 @@ using std::vector;
 using std::make_pair;
 using nlohmann::json;
 
-/* Iterate and call track_output_events() for every output neuron in the network.
-   If this fails, "undo" all of the previous calls. */
-
-bool track_all_output_events(Processor *p, Network *n, int network_id)
-{
-  int num;
-
-  try {
-    for (num = 0; num < n->num_outputs(); num++) {
-      if (!p->track_output_events(num, true, network_id)) throw "";
-    }
-  } catch (...) {
-    while (num > 0) {
-      num--;
-      (void) p->track_output_events(num, false, network_id);
-    }
-    return false;
-  }
-
-  return true;
-}
 
 /* Iterate and call track_neuron_events() for every neuron in the network.
    If this fails, we're simply returning false, and not trying to undo anything. */
