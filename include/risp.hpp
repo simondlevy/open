@@ -30,6 +30,14 @@ namespace risp
                 id(node_id),
                 check(false) {};
 
+            void perform_fire(int time)
+            {
+                if (track) fire_times.push_back(time);
+                last_fire = time;
+                fire_counts++;
+                charge = 0;
+            }
+
             vector <Synapse*> synapses;  /**< Outgoing synapses */
             vector <double> fire_times;  /**< Firing times */ 
             double charge;               /**< Charge value */
@@ -41,7 +49,6 @@ namespace risp
             uint32_t id;                 /**< ID for logging events */
             bool check;                  /**< True if we have checked if this neruon fires or not */
             bool track;                  /**< True if fire_times is being tracked */
-            void perform_fire(int time); /**< Perform the firing actions */
     };
 
     class Synapse {

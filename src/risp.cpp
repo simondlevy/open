@@ -10,14 +10,6 @@ namespace risp {
 
     Synapse::Synapse(double w, uint32_t d, Neuron* to_n) : weight(w), to(to_n), delay(d) {};
 
-    void Neuron::perform_fire(int time)
-    {
-        if (track) fire_times.push_back(time);
-        last_fire = time;
-        fire_counts++;
-        charge = 0;
-    }
-
     Network::Network(neuro::Network *net, 
             double _spike_value_factor, 
             double _min_potential, 
