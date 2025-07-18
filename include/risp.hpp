@@ -16,6 +16,8 @@ namespace risp
 
         public:
 
+            Neuron() { }
+
             Neuron(uint32_t node_id, double t, bool l) 
                 : charge(0),
                 threshold(t),
@@ -103,11 +105,15 @@ namespace risp
                     }
 
                     n = add_neuron(node->id, node->get("Threshold"), neuron_leak);
-                    if (node->is_input()) add_input(node->id, node->input_id);
-                    if (node->is_output()) add_output(node->id, node->output_id);
 
                     sorted_neuron_vector.push_back(n);
                 }
+
+                add_input(0, 0);
+                add_input(1, 1);
+                add_input(2, 2);
+
+                add_output(3, 0);
 
                 /* Add synpases */
                 for (eit = net->edges_begin(); eit != net->edges_end(); ++eit) {
@@ -208,15 +214,14 @@ namespace risp
 
             Neuron* add_neuron(uint32_t node_id, double threshold, bool leak) 
             {
-                Neuron *n;
-
-                n = new Neuron(node_id, threshold, leak);
+                Neuron * n = new Neuron(node_id, threshold, leak);
 
                 if (!threshold_inclusive) {
                     n->threshold = (discrete) ? (n->threshold+1) : (n->threshold + 0.0000001);
                 }
 
                 neuron_map[node_id] = n;
+
                 return n;
             }
 
@@ -425,6 +430,11 @@ namespace risp
                 network->run(duration);
             }
 
+            void output_counts(int * counts)
+            {
+                (void)counts;
+            }
+
             vector <int> output_counts() 
             {
                 return network->output_counts();
@@ -461,6 +471,7 @@ namespace risp
 
             uint32_t min_delay;
             uint32_t max_delay;
+
     };
 
 }

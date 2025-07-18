@@ -358,12 +358,18 @@ int main(int argc, char **argv)
             }
 
             else if (sv[0] == "OC") {   
+
                 if (network_processor_validation(net, p)) {
+
                     if (sv.size() == 1) {
+
                         event_counts = p->output_counts();
+
                         for (i = 0; i < (size_t)net->num_outputs(); i++) {
                             Node * node = net->get_output(i);
-                            printf("node %s spike counts: %d\n", node_name(node).c_str(), event_counts[i]);
+                            printf("node %s spike counts: %d\n",
+                                    node_name(node).c_str(),
+                                    event_counts[i]);
                         }
                     }
                 }
