@@ -222,34 +222,148 @@ namespace risp
                 return rv;
             }
 
-            int output_count(int output_id);
+            int output_count(int output_id) 
+            {
+                return neuron_map[outputs[output_id]]->fire_counts;
+            }
 
-            vector <int> output_counts();
+            vector <int> output_counts() {
+                size_t i;
+                vector <int> rv;
+                for (i = 0; i < outputs.size(); i++) {
+                    if (outputs[i] != -1) rv.push_back(neuron_map[outputs[i]]->fire_counts);
+                }
+                return rv;
+            }
 
-            vector <double> output_vector(int output_id);
+            vector <double> output_vector(int output_id) 
+            {
+                return neuron_map[outputs[output_id]]->fire_times;
+            }
 
-            vector < vector <double> > output_vectors();
+            vector < vector <double> > output_vectors() 
+            {
+                size_t i;
+                Neuron *n;
+                vector < vector <double> > rv;
 
-            long long total_neuron_counts();
+                for (i = 0; i < outputs.size(); i++) {
+                    if (outputs[i] != -1) {
+                        n = neuron_map[outputs[i]];
+                        rv.push_back(n->fire_times);     // If tracking is turned off, this will be empty.
+                    }
+                }
+                return rv;
 
-            long long total_neuron_accumulates();
+            }
 
-            vector <int> neuron_counts();
+            long long total_neuron_counts() 
+            {
+                long long rv;
 
-            vector <double> neuron_last_fires();
+                rv = neuron_fire_counter;
+                neuron_fire_counter = 0;
+                return rv;
+            }
 
-            vector < vector <double> > neuron_vectors();
+            long long total_neuron_accumulates() 
+            {
+                long long rv;
 
-            vector < double > neuron_charges();
+                rv = neuron_accum_counter;
+                neuron_accum_counter = 0;
+                return rv;
+            }
 
-            void synapse_weights(vector <uint32_t> &pres, vector <uint32_t> &posts, vector <double> &vals);
+            vector <int> neuron_counts() {
+                size_t i;
+                vector <int> rv;
 
-            void clear_activity();
+                for (i = 0; i < sorted_neuron_vector.size(); i++) {
+                    rv.push_back(sorted_neuron_vector[i]->fire_counts);
+                }
 
+                return rv;
+            }
+
+            vector <double> neuron_last_fires() 
+            {
+                vector <double> rv;
+                size_t i;
+
+                for (i = 0; i < sorted_neuron_vector.size(); i++) {
+                    rv.push_back(sorted_neuron_vector[i]->last_fire);
+                }
+                return rv;
+            }
+
+            vector < vector <double> > neuron_vectors() 
+            {
+                vector < vector <double> > rv;
+                Neuron *n;
+                size_t i;
+
+                for (i = 0; i < sorted_neuron_vector.size(); i++) {
+                    n = sorted_neuron_vector[i];
+                    rv.push_back(n->fire_times);   // JSP: If tracking is turned off, this will be empty.
+                }
+                return rv;
+            }
+
+            vector < double > neuron_charges() 
+            {
+                vector < double > rv;
+                Neuron *n;
+                size_t i;
+
+                for (i = 0; i < sorted_neuron_vector.size(); i++) {
+                    n = sorted_neuron_vector[i];
+                    rv.push_back(n->charge);
+                }
+                return rv;
+            }
+
+            void synapse_weights(vector <uint32_t> &pres, vector <uint32_t> &posts,
+                    vector <double> &vals) 
+            {
+                size_t i, j;
+                Neuron *n;
+
+                pres.clear();
+                posts.clear();
+                vals.clear();
+
+                for (i = 0; i < sorted_neuron_vector.size(); i++) {
+                    n = sorted_neuron_vector[i];
+                    for (j = 0; j < n->synapses.size(); j++) {
+                        pres.push_back(n->id);
+                        posts.push_back(n->synapses[j]->to->id);
+                        vals.push_back(n->synapses[j]->weight);
+                    }
+                }
+            }
+
+            void clear_activity() 
+            {
+                Neuron *n;
+                size_t i;
+                for (i = 0; i < sorted_neuron_vector.size(); i++) {
+                    n = sorted_neuron_vector[i];
+                    n->last_fire = -1;
+                    n->fire_counts = 0;
+                    n->fire_times.clear();  // JSP should clear regardless of tracking.
+                    n->charge = 0;
+                    n->last_check = -1;
+                }
+
+                events.clear();
+                to_fire.clear();
+                overall_run_time = 0;
+            }
 
         protected:
 
-            
+
             Neuron* add_neuron(uint32_t node_id, double threshold, bool leak) 
             {
                 Neuron *n;
@@ -399,7 +513,18 @@ namespace risp
                 }
             }
 
-            void clear_tracking_info();   
+            void clear_tracking_info()
+            {
+                size_t i;
+                Neuron *n;
+
+                for (i = 0; i < sorted_neuron_vector.size(); i++) {
+                    n = sorted_neuron_vector[i];
+                    n->last_fire = -1;
+                    n->fire_counts = 0;
+                    n->fire_times.clear();  // Doesn't matter if tracking is on or off.
+                }
+            }
 
             vector <int> inputs;        /**< index is input id and its value is neuron id. 
                                           If the neuron id is -1, it's not an input node. */
