@@ -9,7 +9,6 @@ using namespace std;
 
 namespace risp
 {
-
     class Synapse;
     class Neuron;
     class Network;
@@ -361,7 +360,6 @@ namespace risp
 
         protected:
 
-
             Neuron* add_neuron(uint32_t node_id, double threshold, bool leak) 
             {
                 Neuron *n;
@@ -591,7 +589,8 @@ namespace risp
 
             ~Processor() { }
 
-            bool load_network(neuro::Network* net, int network_id) {
+            bool load_network(neuro::Network* net, int network_id) 
+            {
 
                 if (networks.find(network_id) != networks.end()) delete networks[network_id];
 
@@ -613,7 +612,8 @@ namespace risp
                 return true;
             }
 
-            bool load_networks(std::vector<neuro::Network*> &n) {
+            bool load_networks(std::vector<neuro::Network*> &n) 
+            {
                 size_t i, j;
 
                 for (i = 0; i < n.size(); i++) {
@@ -628,21 +628,21 @@ namespace risp
                 return true;
             }
 
-            void clear(int network_id) {
+            void clear(int network_id) 
+            {
                 risp::Network *risp_net = get_risp_network(network_id);
                 networks.erase(network_id);
                 delete risp_net;
             }
 
-
-
-            void apply_spike(const Spike& s, bool normalize, int network_id) {
+            void apply_spike(const Spike& s, bool normalize, int network_id) 
+            {
                 get_risp_network(network_id)->apply_spike(s, normalize);
             }
 
-            void apply_spike(const Spike& s, 
-                    const vector<int>& network_ids,
-                    bool normalize) {
+            void apply_spike(const Spike& s, const vector<int>& network_ids,
+                    bool normalize) 
+            {
                 size_t i;
 
                 for (i = 0; i < network_ids.size(); i++) {
@@ -650,7 +650,8 @@ namespace risp
                 }
             }
 
-            void apply_spikes(const vector<Spike>& s, bool normalize, int network_id) {
+            void apply_spikes(const vector<Spike>& s, bool normalize, int network_id) 
+            {
                 size_t i;
                 risp::Network *risp_net = get_risp_network(network_id);
 
@@ -659,10 +660,10 @@ namespace risp
                 }
             }
 
-
             void apply_spikes(const vector<Spike>& s, 
                     const vector<int>& network_ids,
-                    bool normalize) {
+                    bool normalize) 
+            {
                 size_t i;
                 for (i = 0; i < network_ids.size(); i++) {
                     apply_spikes(s, normalize, network_ids[i]);
@@ -670,35 +671,41 @@ namespace risp
             }
 
 
-            void run(double duration, int network_id) {
+            void run(double duration, int network_id) 
+            {
                 get_risp_network(network_id)->run(duration);
             }
 
-            void run(double duration, const vector<int>& network_ids) {
+            void run(double duration, const vector<int>& network_ids) 
+            {
                 size_t i;
                 for (i = 0; i < network_ids.size(); i++) {
                     get_risp_network(network_ids[i])->run(duration);
                 }
             }
 
-
-            long long total_neuron_counts(int network_id) {
+            long long total_neuron_counts(int network_id) 
+            {
                 return get_risp_network(network_id)->total_neuron_counts();
             }
 
-            long long total_neuron_accumulates(int network_id) {
+            long long total_neuron_accumulates(int network_id) 
+            {
                 return get_risp_network(network_id)->total_neuron_accumulates();
             }
 
-            double get_time(int network_id) {
+            double get_time(int network_id) 
+            {
                 return get_risp_network(network_id)->get_time();
             }
 
-            bool track_output_events(int output_id, bool track, int network_id) {
+            bool track_output_events(int output_id, bool track, int network_id) 
+            {
                 return get_risp_network(network_id)->track_output_events(output_id, track);
             }
 
-            bool track_neuron_events(uint32_t node_id, bool track, int network_id) {
+            bool track_neuron_events(uint32_t node_id, bool track, int network_id) 
+            {
                 return get_risp_network(network_id)->track_neuron_events(node_id, track);
             }
 
@@ -764,6 +771,7 @@ namespace risp
                 it = networks.find(network_id);
                 return it->second;
             }
+
         protected:
 
             double get_input_spike_factor() const;
