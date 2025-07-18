@@ -261,10 +261,8 @@ void safe_exit(Processor *p, Network *n)
 int main(int argc, char **argv) 
 {
     Processor *p;
-    Network *net, *pulled; 
+    Network *net; 
     NodeMap::iterator nit;
-    Node *node, *n;
-    char buf[50];
 
     string proc_name, prompt;
     string cmd;
@@ -274,13 +272,10 @@ int main(int argc, char **argv)
 
     istringstream ss;
 
-    size_t i, j;
-    int k;
-    int node_id, output_id, spike_id, from, to;
-    int max_name_len;
+    size_t i;
+    int node_id, output_id, spike_id;
     double spike_time, spike_val;
     double sim_time;
-    double val;
     string alias, id;
 
     vector <string> sv; // read inputs
@@ -302,7 +297,6 @@ int main(int argc, char **argv)
     map <int, double>::iterator mit;
     map <int, string> aliases; // Aliases for input/output nodes.
     map <int, string>::iterator ait;
-    bool gsr_hidden_nodes;
     bool normalized;
     unordered_set <int> gsr_nodes;
 
@@ -325,7 +319,6 @@ int main(int argc, char **argv)
 
     p = nullptr;
     net = nullptr;
-    max_name_len = 0;
 
     while(1) {
         try {
@@ -353,7 +346,6 @@ int main(int argc, char **argv)
                         if (net != nullptr) { delete net; net = nullptr; }
 
                         net = load_network(&p, network_json);
-                        max_name_len = max_node_name_len(net);
 
                     } catch (const SRE &e) {
                         printf("%s\n",e.what());
@@ -427,7 +419,7 @@ int main(int argc, char **argv)
                     if (sv.size() == 1) {
                         event_counts = p->output_counts();
                         for (i = 0; i < (size_t)net->num_outputs(); i++) {
-                            node = net->get_output(i);
+                            Node * node = net->get_output(i);
                             printf("node %s spike counts: %d\n", node_name(node).c_str(), event_counts[i]);
                         }
                     } else {
@@ -440,7 +432,7 @@ int main(int argc, char **argv)
                                 output_node_id_validation(node_id, net);
 
                                 output_id = net->get_node(node_id)->output_id;
-                                node = net->get_node(node_id);
+                                Node * node = net->get_node(node_id);
                                 printf("node %s spike counts: %d\n",
                                         node_name(node).c_str(), p->output_count(output_id));
                             } catch (const SRE &e) {
