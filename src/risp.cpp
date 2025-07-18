@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cmath>
 #include "risp.hpp"
-//#include "utils/json_helpers.hpp"
 #include <random>
 
 typedef std::runtime_error SRE;
@@ -272,33 +271,20 @@ namespace risp {
 
     void Network::apply_spike(const Spike& s, bool normalized) 
     {
-        Neuron *n;
-        double v;
-        size_t index;
-        string es;
+        (void)normalized;
 
-        n = get_neuron(inputs[s.id]);
-        if (s.time >= events.size()) events.resize(s.time + 1);
-        if (inputs_from_weights) {
-            if (!normalized) {
-                index = s.value;
-            } else {
-                index = (s.value * weights.size());
-                if (index >= weights.size()) index = weights.size()-1;
-            }
-            if (stds.size() != 0) {
-                v = rng.Random_Normal(weights[index], stds[index]);
-            } else {
-                v = weights[index];
-            }
-        } else {
-            if (normalized) {
-                v = (discrete) ? floor(s.value * spike_value_factor) : s.value * spike_value_factor;
-            } else {
-                v = s.value;
-            }
+        Neuron * n = get_neuron(inputs[s.id]);
+
+        if (s.time >= events.size()) {
+            events.resize(s.time + 1);
         }
-        if (noisy_stddev != 0) v = rng.Random_Normal(v, noisy_stddev);
+
+        double v = floor(s.value * spike_value_factor);
+
+        if (noisy_stddev != 0) {
+            v = rng.Random_Normal(v, noisy_stddev);
+        }
+
         events[s.time].push_back(std::make_pair(n,v));
     }
 
@@ -753,11 +739,6 @@ namespace risp {
 
         return pp;
     }
-
-    /*
-    json Processor::get_params() const {
-        return saved_params;
-    }*/
 
     string Processor::get_name() const {
         return "risp";
