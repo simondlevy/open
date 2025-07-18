@@ -74,9 +74,7 @@ namespace risp
                     bool _discrete, 
                     bool _inputs_from_weights, 
                     uint32_t _noisy_seed,
-                    double _noisy_stddev,
-                    vector <double> & _weights, 
-                    vector < double> & _stds) 
+                    vector <double> & _weights) 
             {
                 size_t i;
                 neuro::Node *node;
@@ -92,9 +90,7 @@ namespace risp
                 threshold_inclusive = _threshold_inclusive;
                 fire_like_ravens = _fire_like_ravens;
                 noisy_seed = _noisy_seed;
-                noisy_stddev = _noisy_stddev;
                 weights = _weights;
-                stds = _stds;
                 discrete = _discrete;
                 inputs_from_weights = _inputs_from_weights;
                 overall_run_time = 0;
@@ -537,10 +533,8 @@ namespace risp
             bool inputs_from_weights; /**< Inputs are indices into the weight vector. */
             char leak_mode;           /**< 'a' for all, 'n' for nothing, 'c' for configurable */
             vector <double> weights;
-            double noisy_stddev;
             uint32_t noisy_seed;
             MOA rng;
-            vector <double> stds;
 
             double spike_value_factor;
             vector <Neuron *> to_fire;   /* To make RISP like RAVENS, this lets you fire a timestep later. */
@@ -563,7 +557,6 @@ namespace risp
                 threshold_inclusive = true;
                 fire_like_ravens = false;
                 noisy_seed = 0;
-                noisy_stddev = 0;
                 inputs_from_weights = false;
 
                 max_delay = 15;
@@ -595,9 +588,8 @@ namespace risp
                         discrete, 
                         inputs_from_weights,
                         noisy_seed, 
-                        noisy_stddev,
-                        weights,
-                        stds);
+                        weights);
+
                 networks[network_id] = risp_net;
 
                 return true;
@@ -774,7 +766,6 @@ namespace risp
             double min_threshold;
             double max_threshold;
             double min_potential;
-            double noisy_stddev;
             bool discrete;
             double spike_value_factor;
             string leak_mode;
@@ -784,7 +775,6 @@ namespace risp
             bool inputs_from_weights;
             uint32_t noisy_seed;
             vector <double> weights;
-            vector <double> stds;
 
             uint32_t min_delay;
             uint32_t max_delay;
