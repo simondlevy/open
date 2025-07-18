@@ -564,50 +564,8 @@ Edge* Network::get_edge(uint32_t fr, uint32_t to) const
 
 void Network::remove_node(uint32_t idx, bool force)
 {
-    char buf[100];
-    Node* n = get_node(idx);
-
-    if (!force && n->input_id >= 0) {
-      snprintf(buf, 100, "Input node %u cannot be removed.", n->id);
-      throw SRE(buf);
-    }
-    if (!force && n->output_id >= 0) {
-      snprintf(buf, 100, "Output node %u cannot be removed.", n->id);
-      throw SRE(buf);
-    }
-
-    // Any node addition or deletion invalidates the sorted_node_vector.
-    sorted_node_vector.clear();
-   
-    // Remove all synapses to/from this node
-    // Note: we just need to remove references to these edges & then remove from the hash table
-    // This node's incoming/outgoing vector can be deallocated all together rather than per-edge
-    for(auto e : n->incoming)
-    {
-        Node *from_node = e->from;
-        auto f_edge = std::find(from_node->outgoing.begin(), from_node->outgoing.end(), e);
-        std::iter_swap(f_edge, from_node->outgoing.end() - 1);
-        from_node->outgoing.pop_back();
-        m_edges.erase(make_pair(from_node->id, idx));
-    }
-
-    for(auto e : n->outgoing)
-    {
-        Node *to_node = e->to;
-        auto t_edge = std::find(to_node->incoming.begin(), to_node->incoming.end(), e);
-        std::iter_swap(t_edge, to_node->incoming.end() - 1);
-        to_node->incoming.pop_back();
-        m_edges.erase(make_pair(idx, to_node->id));
-    }
-
-    if(n->input_id >= 0)
-        m_inputs[n->input_id] = -1;
-
-    if(n->output_id >= 0)
-        m_outputs[n->output_id] = -1;
-
-    // hash table owns the pointer, so this also deconstructs the node
-    m_nodes.erase(idx);
+    (void)idx;
+    (void)force;
 }
 
 void Network::remove_edge(uint32_t fr, uint32_t to)
