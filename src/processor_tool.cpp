@@ -107,12 +107,8 @@ static bool read_json(const vector <string> &sv, size_t starting_field, json &rv
     }
 }
 
-Network *load_network(Processor **pp, const json &network_json)
+void load_network(Processor **pp, const json &network_json)
 {
-    Network * net = new Network();
-
-    net->from_json(network_json);
-
     Processor * p = *pp;
 
     p = Processor::make();
@@ -120,8 +116,6 @@ Network *load_network(Processor **pp, const json &network_json)
     *pp = p;
 
     p->init_network();
-
-    return net;
 }
 
 
@@ -211,7 +205,7 @@ int main(int argc, char **argv)
 
                 read_json(sv, 1, network_json);
 
-                net = load_network(&p, network_json);
+                load_network(&p, network_json);
 
             }
 
