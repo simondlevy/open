@@ -77,48 +77,6 @@ void output_node_id_validation(const int node_id, const Network *n)
     }
 }
 
-
-static bool read_json(const vector <string> &sv, size_t starting_field, json &rv)
-{
-    bool success;
-    string s;
-    ifstream fin;
-
-    rv.clear();
-    if (starting_field < sv.size()) {
-        fin.clear();
-        fin.open(sv[starting_field].c_str());
-        if (fin.fail()) { 
-            perror(sv[starting_field].c_str());
-            return false;
-        } 
-        try { fin >> rv; success = true; } catch(...) { success = false; }
-        fin.close();
-        return success;
-
-    } else {
-        try {
-            cin >> rv;
-            getline(cin, s);
-            return true;
-        } catch (...) {
-            return false;
-        }
-    }
-}
-
-void load_network(Processor **pp, const json &network_json)
-{
-    Processor * p = *pp;
-
-    p = Processor::make();
-
-    *pp = p;
-
-    p->init_network();
-}
-
-
 void safe_exit(Processor *p, Network *n)
 {
     if (p != nullptr) delete p;
@@ -203,10 +161,9 @@ int main(int argc, char **argv)
 
             if (sv[0] == "ML") {
 
-                read_json(sv, 1, network_json);
+                p = Processor::make();
 
-                load_network(&p, network_json);
-
+                p->init_network();
             }
 
             else if (sv[0] == "AS" || sv[0] == "ASV") {
