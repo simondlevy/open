@@ -8,34 +8,6 @@ using namespace std;
 
 namespace risp {
 
-    Neuron* Network::add_neuron(uint32_t node_id, double threshold, bool leak) {
-        Neuron *n;
-
-        n = new Neuron(node_id, threshold, leak);
-
-        if (!threshold_inclusive) {
-            n->threshold = (discrete) ? (n->threshold+1) : (n->threshold + 0.0000001);
-        }
-
-        neuron_map[node_id] = n;
-        return n;
-    }
-
-    Synapse* Network::add_synpase(uint32_t from_id, uint32_t to_id, double weight, uint32_t delay) {
-        Neuron *from, *to;
-        Synapse *syn;
-        unordered_map <uint32_t, Neuron*>::const_iterator it;
-
-        from = get_neuron(from_id);
-        to = get_neuron(to_id);
-
-        syn = new Synapse(weight, delay, to);
-        from->synapses.push_back(syn);
-
-        return syn;
-    }
-
-
     void Network::add_input(uint32_t node_id, int input_id) 
     {
         if (input_id >= (int) inputs.size()) inputs.resize(input_id + 1, -1);
