@@ -433,6 +433,7 @@ namespace risp
                 return true;
             }
 
+            /*
             bool load_networks(std::vector<neuro::Network*> &n) 
             {
                 size_t i, j;
@@ -447,7 +448,7 @@ namespace risp
                     }
                 }
                 return true;
-            }
+            }*/
 
             void clear(int network_id) 
             {
