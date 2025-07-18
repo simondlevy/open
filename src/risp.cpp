@@ -8,27 +8,6 @@ using namespace std;
 
 namespace risp {
 
-    Neuron* Network::get_neuron(uint32_t node_id) 
-    {
-        unordered_map <uint32_t, Neuron*>::const_iterator it;
-
-        it = neuron_map.find(node_id);
-
-        return it->second;
-    }
-
-    bool Network::is_neuron(uint32_t node_id) {
-        return neuron_map.find(node_id) != neuron_map.end();
-    }
-
-    bool Network::is_valid_input_id(int input_id) {
-        return !(input_id < 0 || input_id >= (int) inputs.size() || inputs[input_id] == -1);
-    }
-
-    bool Network::is_valid_output_id(int output_id) {
-        return !(output_id < 0 || output_id >= (int) outputs.size() || outputs[output_id] == -1);
-    }
-
     Neuron* Network::add_neuron(uint32_t node_id, double threshold, bool leak) {
         Neuron *n;
 

@@ -250,17 +250,38 @@ namespace risp
         protected:
 
             Neuron* add_neuron(uint32_t node_id, double threshold, bool leak);
+
             Synapse* add_synpase(uint32_t from_id, uint32_t to_id, double weight, uint32_t delay);
 
+            Neuron* get_neuron(uint32_t node_id) 
+            {
+                unordered_map <uint32_t, Neuron*>::const_iterator it;
+
+                it = neuron_map.find(node_id);
+
+                return it->second;
+            }
+
+            bool is_neuron(uint32_t node_id) 
+            {
+                return neuron_map.find(node_id) != neuron_map.end();
+            }
+
+            bool is_valid_input_id(int input_id) 
+            {
+                return !(input_id < 0 || input_id >= (int) inputs.size() || inputs[input_id] == -1);
+            }
+
+            bool is_valid_output_id(int output_id) 
+            {
+                return !(output_id < 0 || output_id >= (int) outputs.size() || outputs[output_id] == -1);
+            }
+
             void add_input(uint32_t node_id, int input_id);
+
             void add_output(uint32_t node_id, int output_id);
 
-            Neuron* get_neuron(uint32_t node_id);
-            bool is_neuron(uint32_t node_id);
-            bool is_valid_output_id(int output_id);
-            bool is_valid_input_id(int input_id);
-
-            void clear_tracking_info();   /**< Clear out all tracking info to begin run() */
+            void clear_tracking_info();   
 
             void process_events(uint32_t time); /**< Process events at time "time" */
 
