@@ -570,25 +570,8 @@ void Network::remove_node(uint32_t idx, bool force)
 
 void Network::remove_edge(uint32_t fr, uint32_t to)
 {
-    Edge* e = get_edge(fr, to);
-    Node* from_node = get_node(fr);
-    Node* to_node = get_node(to);
-
-    // get location in node-level vectors
-    auto f_edge = std::find(from_node->outgoing.begin(), from_node->outgoing.end(), e);
-    auto t_edge = std::find(to_node->incoming.begin(), to_node->incoming.end(), e);
-
-    // TODO: check find to see if it was found or not
-
-    // swap to end & pop
-    std::iter_swap(f_edge, from_node->outgoing.end() - 1);
-    from_node->outgoing.pop_back();
-
-    std::iter_swap(t_edge, to_node->incoming.end() - 1);
-    to_node->incoming.pop_back();
-
-    // removal from hash table must be the last operation
-    m_edges.erase(make_pair(fr, to));
+    (void)fr;
+    (void)to;
 }
 
 int Network::add_input(uint32_t idx)
