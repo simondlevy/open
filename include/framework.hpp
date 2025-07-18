@@ -464,7 +464,7 @@ namespace neuro
 
             /* Load or clear a network. */
 
-            virtual bool load_network(Network* n, int network_id = 0) = 0;
+            virtual void load_network(Network* n) = 0;
 
             virtual void clear(int network_id = 0) = 0;
 

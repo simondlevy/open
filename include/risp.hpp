@@ -409,10 +409,8 @@ namespace risp
 
             ~Processor() { }
 
-            bool load_network(neuro::Network* net, int network_id) 
+            void load_network(neuro::Network* net) 
             {
-
-                if (networks.find(network_id) != networks.end()) delete networks[network_id];
 
                 risp::Network * risp_net = new risp::Network(net, 
                         spike_value_factor,
@@ -424,9 +422,7 @@ namespace risp
                         inputs_from_weights,
                         weights);
 
-                networks[network_id] = risp_net;
-
-                return true;
+                networks[0] = risp_net;
             }
 
             void clear(int network_id) 

@@ -185,7 +185,8 @@ Network *load_network(Processor **pp,
     } 
 
 
-    if (!p->load_network(net)) throw SRE("load_network() failed");
+    p->load_network(net);
+
     track_all_neuron_events(p, net);
 
     return net;
