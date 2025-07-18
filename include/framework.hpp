@@ -328,7 +328,6 @@ public:
 
     const Property* get_node_property(const string& name) const;    /**< Get the node property. */
     const Property* get_edge_property(const string& name) const;    /**< Get the edge property. */
-    const Property* get_network_property(const string& name) const; /**< Get the network property. */
  
     /* Adding / modifying / deleting nodes and edges */
 
@@ -540,8 +539,6 @@ public:
        field in the network, nodes and edges.  The processor properties are so that
        applications may query the processor for various properties (e.g. input scaling,
        fire-on-threshold vs fire-over-threshold). */
-
-    virtual PropertyPack get_network_properties() const = 0;
 
     /* get_name() returns the name of the processor. */
 

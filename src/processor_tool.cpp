@@ -243,9 +243,6 @@ Network *load_network(Processor **pp,
     *pp = p;
   } 
 
-  if (p->get_network_properties().as_json() != net->get_properties().as_json()) {
-    throw SRE("network and processor properties do not match.");
-  }
 
   if (!p->load_network(net)) throw SRE("load_network() failed");
   track_all_neuron_events(p, net);
@@ -935,11 +932,10 @@ int main(int argc, char **argv)
   
       } else if (sv[0] == "PP") { 
 
-      } else if (sv[0] == "NP" || sv[0] == "PPACK") { // get_network_properties
+      } else if (sv[0] == "NP" || sv[0] == "PPACK") { 
         if (p == nullptr) {
           printf("Must make a processor first\n"); 
         } else {
-          cout << p->get_network_properties().pretty_json() << endl;
         } 
         
       } else if (sv[0] == "NAME") { 

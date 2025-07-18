@@ -203,7 +203,6 @@ public:
      applications may query the processor for various properties (e.g. input scaling,
      fire-on-threshold vs fire-over-threshold. */
 
-  PropertyPack get_network_properties() const;
   json get_params() const;
   string get_name() const;
 

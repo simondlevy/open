@@ -1053,15 +1053,6 @@ const Property* Network::get_edge_property(const string& name) const
     return &(mit->second);
 }
 
-const Property* Network::get_network_property(const string& name) const
-{
-    auto mit = m_properties.networks.find(name);
-    if(mit == m_properties.networks.end()) {
-      throw SRE((string) "Cannot find network property: " + name);
-    }
-    return &(mit->second);
-}
-
 PropertyPack Network::get_properties() const
 {
     return m_properties;

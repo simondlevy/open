@@ -716,26 +716,6 @@ namespace risp {
         get_risp_network(network_id)->clear_activity();
     }
 
-    PropertyPack Processor::get_network_properties() const 
-    {
-        PropertyPack pp;
-
-        pp.add_node_property("Threshold", min_threshold, max_threshold, 
-                (discrete) ? Property::Type::INTEGER : Property::Type::DOUBLE);
-
-        if (leak_mode[0] == 'c') pp.add_node_property("Leak", 0, 1, Property::Type::BOOLEAN);
-
-        if (weights.size() > 0) {
-            pp.add_edge_property("Weight", 0, weights.size()-1, Property::Type::INTEGER);
-        } else {
-            pp.add_edge_property("Weight", min_weight, max_weight, 
-                    (discrete) ? Property::Type::INTEGER : Property::Type::DOUBLE);
-        }
-        pp.add_edge_property("Delay", min_delay, max_delay, Property::Type::INTEGER);
-
-        return pp;
-    }
-
     string Processor::get_name() const {
         return "risp";
     }
