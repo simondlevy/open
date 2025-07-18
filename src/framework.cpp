@@ -891,74 +891,12 @@ void Network::set_properties(const PropertyPack& pp)
 
 string Network::pretty_nodes() const
 {
-  size_t i;
-  string s;
-  bool use_vector;
-  NodeMap::const_iterator nit;
-
-  if (m_nodes.size() == 0) return "[]";
-  
-  use_vector = (sorted_node_vector.size() != 0);
-
-  nit = m_nodes.begin();
-  s = "";
-  for (i = 0; i < m_nodes.size(); i++) {
-    s += ((i == 0) ? "[ " : "  ");
-    if (use_vector) {
-      s += node_json(sorted_node_vector[i]).dump();
-    } else {
-      s += node_json(nit->second.get()).dump();
-    }
-    if (i+1 == m_nodes.size()) {
-      s += " ]";
-    } else {
-      s += ",\n";
-    }
-    nit++;
-  }
-  return s;
+  return "";
 }
 
 string Network::pretty_edges() const
 {
-  json j1;
-  size_t i, j;
-  string s;
-  Node *n;
-  map <uint32_t, Edge *> m;
-  map <uint32_t, Edge *>::iterator mit;
-  
-  if (num_edges() == 0) return "[]";
-
-  if (sorted_node_vector.size() == 0) {
-    j1 = as_json();
-    s = "";
-    for (i = 0; i < j1["Edges"].size(); i++) {
-      s += ((i == 0) ? "[ " : "  ");
-      s += j1["Edges"][i].dump();
-      if (i+1 == j1["Edges"].size()) {
-        s += " ]";
-      } else {
-        s += ",\n";
-      }
-    }
-    return s;
-  } else {
-    s = "";
-    for (i = 0; i < sorted_node_vector.size(); i++) {
-      n = sorted_node_vector[i];
-      m.clear();
-      for (j = 0; j < n->outgoing.size(); j++) {
-        m[n->outgoing[j]->to->id] = n->outgoing[j];
-      }
-      for (mit = m.begin(); mit != m.end(); mit++) {
-        s += ((s.size() == 0) ? "[ " : ",\n  ");
-        s += mit->second->as_json().dump();
-      }
-    }
-    s += " ]";
-    return s;
-  }
+    return "";
 }
 
 static void append_and_indent(const string &from, string &to, size_t chars)
