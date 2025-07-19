@@ -253,10 +253,8 @@ namespace risp
 
             ~Network() {}
 
-            void apply_spike(const Spike& s, bool normalized) 
+            void apply_spike(const Spike& s) 
             {
-                (void)normalized;
-
                 Neuron * n = get_neuron(inputs[s.id]);
 
                 if (s.time >= events.size()) {

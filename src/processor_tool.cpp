@@ -61,8 +61,6 @@ int main(int argc, char **argv)
 
             else if (sv[0] == "AS" || sv[0] == "ASV") {
 
-                bool normalized = (sv[0].size() == 2);
-
                 for (size_t i = 0; i < (sv.size() - 1) / 3; i++) {
 
                     int spike_id = 0;
@@ -77,8 +75,7 @@ int main(int argc, char **argv)
                                 sv[i*3 + 3] + "]\n");
                     } 
 
-                    net->apply_spike(risp::Spike( spike_id, spike_time, spike_val),
-                            normalized);
+                    net->apply_spike(risp::Spike( spike_id, spike_time, spike_val));
 
                     spikes_array.push_back(risp::Spike(spike_id, spike_time, spike_val));
                 }
