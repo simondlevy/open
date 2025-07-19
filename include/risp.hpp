@@ -1,8 +1,6 @@
 #pragma once
 
 #include <cmath>
-#include <map>
-#include <memory>
 #include <vector>
 
 using namespace std;
