@@ -19,8 +19,6 @@ namespace risp
 
         public:
 
-            Neuron() { }
-
             Neuron(uint32_t node_id, double t, bool l) 
                 : charge(0),
                 threshold(t),
