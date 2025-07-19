@@ -504,7 +504,7 @@ namespace risp
             vector <Neuron *> to_fire;   /* To make RISP like RAVENS, this lets you fire a timestep later. */
     };
 
-    class Processor : public neuro::Processor
+    class Processor
     {
         public:
 
