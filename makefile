@@ -20,7 +20,7 @@ CXX ?= g++
 FR_LIB = lib/libframework.a
 FR_INC = include/framework.hpp
 FR_CFLAGS = -std=c++11 -Wall -Wextra -Iinclude -Iinclude/utils $(CFLAGS)
-FR_OBJ = obj/framework.o obj/properties.o
+# FR_OBJ = obj/framework.o obj/properties.o
 
 RISP_INC = include/risp.hpp
 
@@ -40,8 +40,8 @@ lib/libframework.a: $(FR_OBJ) include/framework.hpp
 	ar r lib/libframework.a $(FR_OBJ)
 	ranlib lib/libframework.a
 
-bin/processor_tool_risp: src/processor_tool.cpp $(FR_INC) $(RISP_INC) $(FR_LIB)
-	$(CXX) $(FR_CFLAGS) -o bin/processor_tool_risp src/processor_tool.cpp $(FR_LIB)
+bin/processor_tool_risp: src/processor_tool.cpp $(FR_INC) $(RISP_INC) # $(FR_LIB)
+	$(CXX) $(FR_CFLAGS) -o bin/processor_tool_risp src/processor_tool.cpp # $(FR_LIB)
 
 # ------------------------------------------------------------
 # Object files
