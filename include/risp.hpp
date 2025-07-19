@@ -556,15 +556,7 @@ namespace risp
 
             risp::Network * network;
 
-            double min_potential;
-            bool discrete;
-            double spike_value_factor;
-            bool run_time_inclusive;
-            bool threshold_inclusive;
-            bool inputs_from_weights;
             vector <double> weights;
-
-
     };
 
 }
