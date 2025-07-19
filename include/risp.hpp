@@ -389,8 +389,6 @@ namespace risp
                     n->charge += es[i].second;
                 }
 
-                size_t events_size = events.size();
-
                 for (size_t i = 0; i < es.size(); i++) {
 
                     Neuron * n = es[i].first;
@@ -406,8 +404,8 @@ namespace risp
 
                                 size_t to_time = time + syn->delay;
 
-                                if (to_time >= events_size) {
-                                    events_size = to_time + 1;
+                                if (to_time >= events.size()) {
+                                    const size_t events_size = to_time + 1;
                                     events.resize(events_size);
                                 }
 
