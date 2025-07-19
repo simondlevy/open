@@ -59,10 +59,4 @@ namespace neuro
 
     typedef tsl::robin_map<uint32_t, unique_ptr<Node>, int_hash> NodeMap;
     typedef tsl::robin_map<Coords, unique_ptr<Edge>, coord_hash> EdgeMap;
-
-    template<typename T, typename... Args>
-        unique_ptr<T> make_unique(Args&&... args)
-        {
-            return unique_ptr<T>(new T(std::forward<Args>(args)...));
-        }
 }   
