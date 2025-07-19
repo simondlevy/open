@@ -7,7 +7,6 @@
 #include <exception>
 #include <stdexcept>
 
-#include "robinhood/robin_map.h"
 #include "nlohmann/json.hpp"
 
 using namespace std;
