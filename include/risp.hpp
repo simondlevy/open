@@ -17,16 +17,6 @@ namespace risp
     class Neuron;
     class Network;
 
-    struct Spike
-    {
-        int id; 
-        double time; 
-        double value; 
-
-        Spike(int id_, double time_, double value_) : 
-            id(id_), time(time_), value(value_) {}
-    };
-
     class Neuron {
 
         public:
@@ -264,19 +254,6 @@ namespace risp
                 double v = spike_value_factor;
 
                 events[time].push_back(std::make_pair(n,v));
-            }
-
-            void apply_spike(const Spike& s) 
-            {
-                Neuron * n = get_neuron(inputs[s.id]);
-
-                if (s.time >= events.size()) {
-                    events.resize(s.time + 1);
-                }
-
-                double v = floor(s.value * spike_value_factor);
-
-                events[s.time].push_back(std::make_pair(n,v));
             }
 
             void run(double duration)
