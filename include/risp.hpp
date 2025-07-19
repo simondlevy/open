@@ -35,14 +35,12 @@ namespace risp
 
             void perform_fire(int time)
             {
-                fire_times.push_back(time);
                 last_fire = time;
                 fire_counts++;
                 charge = 0;
             }
 
             vector <Synapse*> synapses;  /**< Outgoing synapses */
-            vector <double> fire_times;  /**< Firing times */ 
             double charge;               /**< Charge value */
             double threshold;            /**< Threshold value */
             int last_check;              /**< Last time we process this node */
@@ -307,7 +305,6 @@ namespace risp
                     Neuron * n = sorted_neuron_vector[i];
                     n->last_fire = -1;
                     n->fire_counts = 0;
-                    n->fire_times.clear();
                     n->charge = 0;
                     n->last_check = -1;
                 }
@@ -449,7 +446,6 @@ namespace risp
                     n = sorted_neuron_vector[i];
                     n->last_fire = -1;
                     n->fire_counts = 0;
-                    n->fire_times.clear();  // Doesn't matter if tracking is on or off.
                 }
             }
 
