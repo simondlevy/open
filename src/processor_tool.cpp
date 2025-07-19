@@ -11,7 +11,6 @@
 #include "risp.hpp"
 
 using namespace std;
-using namespace neuro;
 
 typedef runtime_error SRE;
 
