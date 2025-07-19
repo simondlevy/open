@@ -21,8 +21,6 @@ namespace neuro
     using std::unique_ptr;
     using nlohmann::json;
 
-    class Property; 
-    class PropertyPack;
     class Node;
     class Edge;
     class Network;
@@ -67,77 +65,6 @@ namespace neuro
         {
             return unique_ptr<T>(new T(std::forward<Args>(args)...));
         }
-
-    class Property
-    {
-        public:
-
-            enum Type : signed char
-            {
-                INTEGER = 'I', 
-                DOUBLE  = 'D', 
-                BOOLEAN = 'B', 
-            };
-
-            Property(const string& dname, int idx, int len, double dmin, double dmax, Type dtype);
-            Property(const json& j);
-            Property(const Property& p);
-            Property(Property &&p) noexcept;
-
-            Property& operator= (const Property &p);
-            Property& operator= (Property &&p);
-
-            ~Property() = default;
-
-            void to_json(json &j) const;     
-            json as_json() const;            
-            void from_json(const json &j);   
-            string pretty_json() const;      
-
-            Type type;                       
-            int index;                       
-            int size;                        
-            double min_value;                
-            double max_value;                
-            string name;                     
-    };
-
-    bool operator==(const Property &lhs, const Property &rhs);
-    bool operator!=(const Property &lhs, const Property &rhs);
-
-    typedef std::map<string, Property> PropertyMap;
-
-    class PropertyPack
-    {
-        public:
-
-            void to_json(json &j) const;     
-            json as_json() const;            
-            void from_json(const json &j);   
-            string pretty_json() const;      
-            void clear();                    
-
-            PropertyMap nodes;               
-            PropertyMap edges;               
-            PropertyMap networks;            
-
-            size_t node_vec_size = 0;        
-            size_t edge_vec_size = 0;        
-            size_t net_vec_size = 0;         
-
-            operator tuple<PropertyMap&, PropertyMap&, PropertyMap&>()
-            {
-                return tuple<PropertyMap&, PropertyMap&, PropertyMap&>{nodes, edges, networks};
-            }
-
-            int add_node_property(const string& name, double dmin, double dmax, Property::Type type, int cnt = 1);
-            int add_edge_property(const string& name, double dmin, double dmax, Property::Type type, int cnt = 1);
-            int add_network_property(const string& name, double dmin, double dmax, Property::Type type, int cnt = 1);
-
-    };
-
-    bool operator==(const PropertyPack &lhs, const PropertyPack &rhs);
-    bool operator!=(const PropertyPack &lhs, const PropertyPack &rhs);
 
     class Node
     {
@@ -222,15 +149,9 @@ namespace neuro
             string pretty_nodes() const;       
             string pretty_edges() const;       
 
-            void set_properties(const PropertyPack& properties);  
-            PropertyPack get_properties() const;                  
-
             bool is_node_property(const string& name) const;    
             bool is_edge_property(const string& name) const;    
             bool is_network_property(const string& name) const; 
-
-            const Property* get_node_property(const string& name) const;    
-            const Property* get_edge_property(const string& name) const;    
 
             Node* add_node(uint32_t idx);                        
             bool is_node(uint32_t idx) const;                    
@@ -270,10 +191,6 @@ namespace neuro
             void randomize_property(MOA& moa, Node *n, const string& pname); 
             void randomize_property(MOA& moa, Edge *n, const string& pname); 
 
-            void randomize_property(MOA& moa,                
-                    const Property& p,  
-                    vector<double>& values); 
-
             void randomize(const json& params);            
 
             void prune();                      
@@ -295,8 +212,6 @@ namespace neuro
 
             void move_from(Network&& net);
 
-            double random_value(MOA &moa, const Property &p);
-
             void randomize_p(const json& params);
 
             void randomize_h(const json& params);
@@ -306,8 +221,6 @@ namespace neuro
 
             NodeMap m_nodes;
             EdgeMap m_edges;
-
-            PropertyPack m_properties;
 
             json m_associated_data = {};
 
