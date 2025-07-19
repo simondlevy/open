@@ -284,8 +284,13 @@ namespace risp
                     n->last_check = -1;
                 }
 
-                events.clear();
-                events.resize(300);
+                //events.clear();
+                //events.resize(300);
+
+                for (size_t i=0; i<event_vector_size; ++i) {
+                    events[i].size = 0;
+                }
+                event_vector_size = 0;
 
                 overall_run_time = 0;
             }
@@ -314,7 +319,18 @@ namespace risp
                         : neuron(n), weight(w) {}
             };
 
-            vector<vector<Event>> events;
+            typedef struct {
+
+                Event events[MAX_EVENTS_PER_VECTOR];
+                size_t size;
+
+            } event_vector_t;
+
+            event_vector_t events[MAX_EVENT_VECTORS];
+
+            size_t event_vector_size;
+
+            //vector<vector<Event>> events;
 
             int overall_run_time;     
             bool run_time_inclusive; 
@@ -386,10 +402,11 @@ namespace risp
 
             void process_events(uint32_t time) 
             {
-                const vector<Event> es = events[time];
+                event_vector_t es = events[time];
 
-                for (size_t i = 0; i < es.size(); i++) {
-                    Neuron * n = es[i].neuron;
+                for (size_t i = 0; i < es.size; i++) {
+
+                    Neuron * n = es.events[i].neuron;
                     if (n->leak) {
                         n->charge = 0;
                     }
@@ -398,15 +415,15 @@ namespace risp
                     }
                 }
 
-                for (size_t i = 0; i < es.size(); i++) {
-                    Neuron * n = es[i].neuron;
+                for (size_t i = 0; i < es.size; i++) {
+                    Neuron * n = es.events[i].neuron;
                     n->check = true;
-                    n->charge += es[i].weight;
+                    n->charge += es.events[i].weight;
                 }
 
-                for (size_t i = 0; i < es.size(); i++) {
+                for (size_t i = 0; i < es.size; i++) {
 
-                    Neuron * n = es[i].neuron;
+                    Neuron * n = es.events[i].neuron;
 
                     if (n->check == true) {
 
@@ -420,7 +437,14 @@ namespace risp
 
                                 int weight = syn->weight;
 
-                                events[to_time].push_back(Event(syn->to, weight));
+                                event_vector_t es_to = events[to_time];
+
+                                Event * e = &es_to.events[es_to.size];
+
+                                e->neuron = syn->to;
+                                e->weight = weight;
+
+                                es_to.size++;
                             }
 
                             n->perform_fire(time);
@@ -444,7 +468,14 @@ namespace risp
             {
                 int v = spike_value_factor;
 
-                events[time].push_back(Event(neuron, v));
+                event_vector_t ev = events[time];
+
+                Event * e = &ev.events[ev.size];
+
+                e->neuron = neuron;
+                e->weight = v;
+
+                ev.size++;
              }
 
     };
