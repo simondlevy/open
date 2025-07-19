@@ -87,7 +87,7 @@ namespace risp
 
         public:
 
-            Network(vector <double> & _weights) 
+            Network() 
             {
                 spike_value_factor = 7;
                 min_potential = -7;
@@ -95,8 +95,6 @@ namespace risp
                 threshold_inclusive = true;
                 discrete = true;
                 inputs_from_weights = false;
-
-                weights = _weights;
                 overall_run_time = 0;
 
                 add_neuron(0, 3.000000);
@@ -528,7 +526,7 @@ namespace risp
 
             void init_network() 
             {
-                network = new risp::Network(weights);
+                network = new risp::Network();
 
             }
 
@@ -555,8 +553,6 @@ namespace risp
         protected:
 
             risp::Network * network;
-
-            vector <double> weights;
     };
 
 }
