@@ -406,10 +406,6 @@ namespace risp
                 }
             }
 
-            vector <int> inputs;        
-                                       
-            vector <int> outputs;     
-
             vector <Neuron *> neurons;
 
             unordered_map <uint32_t, Neuron*> neuron_map;   
