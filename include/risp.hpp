@@ -522,15 +522,6 @@ namespace risp
 
             Processor() 
             {
-                string estring;
-
-                max_delay = 15;
-                min_threshold = 0;
-                max_threshold = 7;
-
-                min_weight = -7;
-                max_weight = 7;
-
             }
 
             ~Processor() { }
@@ -565,10 +556,6 @@ namespace risp
 
             risp::Network * network;
 
-            double min_weight;
-            double max_weight;
-            double min_threshold;
-            double max_threshold;
             double min_potential;
             bool discrete;
             double spike_value_factor;
@@ -577,7 +564,6 @@ namespace risp
             bool inputs_from_weights;
             vector <double> weights;
 
-            uint32_t max_delay;
 
     };
 
