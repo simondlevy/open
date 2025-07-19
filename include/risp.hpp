@@ -117,10 +117,6 @@ namespace risp
                 add_neuron(101, 3.000000);
                 add_neuron(102, 5.000000);
 
-                add_input(0, 0);
-                add_input(1, 1);
-                add_input(2, 2);
-
                 add_output(3, 0);
 
                 add_synpase(11, 102, -7.000000, 9.000000);
@@ -327,14 +323,12 @@ namespace risp
 
             Synapse* add_synpase(uint32_t from_id, uint32_t to_id, double weight, uint32_t delay) 
             {
-                Neuron *from, *to;
-                Synapse *syn;
                 unordered_map <uint32_t, Neuron*>::const_iterator it;
 
-                from = get_neuron(from_id);
-                to = get_neuron(to_id);
+                Neuron * from = get_neuron(from_id);
+                Neuron * to = get_neuron(to_id);
 
-                syn = new Synapse(weight, delay, to);
+                Synapse * syn = new Synapse(weight, delay, to);
                 from->synapses.push_back(syn);
 
                 return syn;
@@ -348,14 +342,6 @@ namespace risp
 
                 return it->second;
             }
-
-            void add_input(uint32_t node_id, int input_id) 
-            {
-                if (input_id >= (int) inputs.size()) inputs.resize(input_id + 1, -1);
-
-                inputs[input_id] = node_id;
-            }
-
 
             void add_output(uint32_t node_id, int output_id) 
             {
@@ -421,42 +407,34 @@ namespace risp
 
             void clear_tracking_info()
             {
-                size_t i;
-                Neuron *n;
-
-                for (i = 0; i < neurons.size(); i++) {
-                    n = neurons[i];
+                for (size_t i = 0; i < neurons.size(); i++) {
+                    Neuron * n = neurons[i];
                     n->last_fire = -1;
                     n->fire_counts = 0;
                 }
             }
 
-            vector <int> inputs;        /**< index is input id and its value is neuron id. 
-                                          If the neuron id is -1, it's not an input node. */
-
-            vector <int> outputs;       /**< index is output id and its value is neuron id. 
-                                          If the neuron id is -1, it's not an ouput node. */
+            vector <int> inputs;        
+                                       
+            vector <int> outputs;     
 
             vector <Neuron *> neurons;
 
-            unordered_map <uint32_t, Neuron*> neuron_map;   /**< key is neuron id */
+            unordered_map <uint32_t, Neuron*> neuron_map;   
 
-            /** The index of the vector is the timestep.
-             *  Each subvector stores a set of events, which is composed of neuron and charge change.
-             */
             vector < vector < std::pair<Neuron *, double> >> events;
 
-            int overall_run_time;     /**< This is what get_time() returns. */
+            int overall_run_time;     
 
-            bool run_time_inclusive;  /**< Do we run for duration+1 (true) or duration (false) */
+            bool run_time_inclusive; 
 
-            bool threshold_inclusive; /**< Do we spike on >= or >. */
+            bool threshold_inclusive; 
 
-            double min_potential;     /**< At the end of a timestep, pin the charge to this if less than. */
+            double min_potential;    
 
-            bool discrete;            /**< Are networks discrete */
+            bool discrete;           
 
-            bool inputs_from_weights; /**< Inputs are indices into the weight vector. */
+            bool inputs_from_weights; 
 
             double spike_value_factor;
     };
