@@ -40,8 +40,10 @@ static void safe_exit(Processor *p, Network *n)
 
 int main(int argc, char **argv) 
 {
-    Processor *p;
+    risp::Processor *p;
+
     Network *net; 
+
     NodeMap::iterator nit;
 
     string proc_name, prompt;

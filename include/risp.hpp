@@ -563,12 +563,12 @@ namespace risp
                 network->clear_activity();
             }
 
-        protected:
-
             void apply_spike(const Spike& s, bool normalized) 
             {
                 network->apply_spike(s, normalized);
             }
+
+        protected:
 
             double get_input_spike_factor() const;
 
