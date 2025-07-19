@@ -249,14 +249,14 @@ namespace risp
 
             void run(double duration)
             {
-                /* if clear_activity get called, we don't want to clear tracking info again. */
-                if (overall_run_time != 0) clear_tracking_info();
+                if (overall_run_time != 0) {
+                    clear_tracking_info();
+                }
 
                 int run_time = (run_time_inclusive) ? duration : duration-1;
 
                 overall_run_time += (run_time+1);
 
-                /* expand the event buffer */
                 if ((int) events.size() <= run_time) {
                     events.resize(run_time + 1);
                 }
@@ -265,16 +265,12 @@ namespace risp
                     process_events(i);
                 }
 
-                /* shift extra spiking events to the beginning from the previous run() call*/
                 if ((int) events.size() > run_time + 1) {
                     for (size_t i = run_time + 1; i < events.size(); i++) {
-                        events[i - run_time - 1] = std::move(events[i]);   // Google tells me this is O(1)
+                        events[i - run_time - 1] = std::move(events[i]);
 
                     }
                 }
-
-                /* Deal with leak/non-negative charge  at the end of the run, 
-                   so that if you pull neuron charges, they will be correct */
 
                 for (size_t i = 0; i < neurons.size(); i++) {
                     Neuron * n = neurons[i];
