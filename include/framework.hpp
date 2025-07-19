@@ -43,17 +43,4 @@ namespace neuro
                 return h;
             }
     };
-
-    class coord_hash
-    {
-        public:
-
-            size_t operator() (const Coords &p) const
-            {
-                size_t l = int_hash{}(p.first);
-                size_t r = int_hash{}(p.second);
-                l ^= r + 0x9e3779b9 + (l << 6) + (l >> 2);
-                return l;
-            }
-    };
 }   
