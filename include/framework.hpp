@@ -315,13 +315,5 @@ namespace neuro
             friend class Edge;
     };
 
-    struct Spike
-    {
-        int id; 
-        double time; 
-        double value; 
 
-        Spike(int id_, double time_, double value_) : 
-            id(id_), time(time_), value(value_) {}
-    };
 }   

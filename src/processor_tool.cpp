@@ -53,8 +53,8 @@ int main(int argc, char **argv)
 
     vector <string> sv; // read inputs
     vector <Node *> node_vector;
-    vector <Spike> spikes_array;
-    vector <Spike> spikes;
+    vector <risp::Spike> spikes_array;
+    vector <risp::Spike> spikes;
     vector < vector< double> > neuron_times;     
     vector <string> spike_strings;              
     vector <int> v;
@@ -121,10 +121,10 @@ int main(int argc, char **argv)
                                 sv[i*3 + 3] + "]\n");
                     } 
 
-                    p->apply_spike(Spike( spike_id, spike_time, spike_val),
+                    p->apply_spike(risp::Spike( spike_id, spike_time, spike_val),
                             normalized);
 
-                    spikes_array.push_back(Spike(spike_id, spike_time, spike_val));
+                    spikes_array.push_back(risp::Spike(spike_id, spike_time, spike_val));
                 }
             } 
 

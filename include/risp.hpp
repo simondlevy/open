@@ -12,6 +12,16 @@ namespace risp
     class Neuron;
     class Network;
 
+    struct Spike
+    {
+        int id; 
+        double time; 
+        double value; 
+
+        Spike(int id_, double time_, double value_) : 
+            id(id_), time(time_), value(value_) {}
+    };
+
     class Neuron {
 
         public:
