@@ -63,6 +63,8 @@ namespace risp
 
             Network() 
             {
+                neuron_count = 0;
+
                 spike_value_factor = 7;
                 min_potential = -7;
                 run_time_inclusive = false;
@@ -269,7 +271,7 @@ namespace risp
                     }
                 }
 
-                for (size_t i = 0; i < neurons.size(); i++) {
+                for (size_t i = 0; i < neuron_count; i++) {
                     Neuron * n = neurons[i];
                     if (n->leak) n->charge = 0;
                     if (n->charge < min_potential) n->charge = min_potential;
@@ -283,7 +285,7 @@ namespace risp
 
             void clear_activity() 
             {
-                for (size_t i = 0; i < neurons.size(); i++) {
+                for (size_t i = 0; i < neuron_count; i++) {
                     Neuron * n = neurons[i];
                     n->last_fire = -1;
                     n->fire_counts = 0;
@@ -296,6 +298,10 @@ namespace risp
             }
 
         private:
+
+            static const size_t MAX_NEURONS = 100;
+
+            size_t neuron_count;
 
             Neuron * neuron_0;
             Neuron * neuron_1;
@@ -342,7 +348,7 @@ namespace risp
             {
                 Neuron * n = new Neuron(threshold);
 
-                neurons.push_back(n);
+                neurons[neuron_count++] = n;
 
                 return n;
             }
@@ -359,8 +365,6 @@ namespace risp
 
             void process_events(uint32_t time) 
             {
-                // const vector<std::pair <Neuron*, double>> es = std::move(events[time]);
-
                 const vector<std::pair <Neuron*, double>> es = events[time];
 
                 for (size_t i = 0; i < es.size(); i++) {
@@ -417,7 +421,7 @@ namespace risp
 
             void clear_tracking_info()
             {
-                for (size_t i = 0; i < neurons.size(); i++) {
+                for (size_t i = 0; i < neuron_count; i++) {
                     Neuron * n = neurons[i];
                     n->last_fire = -1;
                     n->fire_counts = 0;
@@ -435,7 +439,7 @@ namespace risp
                 events[time].push_back(std::make_pair(neuron, v));
              }
 
-            vector<Neuron *> neurons;
+            Neuron * neurons[MAX_NEURONS];
 
             vector<vector< std::pair<Neuron *, double> >> events;
 
