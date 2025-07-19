@@ -205,27 +205,6 @@ namespace neuro
             size_t num_edges() const;          
 
             vector<double> values;
-
-        protected:
-
-            void copy_from(const Network& net);
-
-            void move_from(Network&& net);
-
-            void randomize_p(const json& params);
-
-            void randomize_h(const json& params);
-
-            vector<uint32_t> m_inputs;
-            vector<uint32_t> m_outputs;
-
-            NodeMap m_nodes;
-            EdgeMap m_edges;
-
-            json m_associated_data = {};
-
-            friend class Node;
-            friend class Edge;
     };
 
 
