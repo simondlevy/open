@@ -19,7 +19,7 @@ namespace risp
 
         public:
 
-            Neuron(double t) 
+            Neuron(int t) 
                 : charge(0),
                 threshold(t),
                 last_check(-1),
@@ -37,8 +37,8 @@ namespace risp
 
             vector<Synapse*> synapses; 
 
-            double charge;             
-            double threshold;         
+            int charge;             
+            int threshold;         
             int last_check;          
             int last_fire;          
             uint32_t fire_counts;  
@@ -50,9 +50,9 @@ namespace risp
 
         public:
 
-            Synapse(double w, uint32_t d, Neuron* to_n) : weight(w), to(to_n), delay(d) {};
+            Synapse(int w, uint32_t d, Neuron* to_n) : weight(w), to(to_n), delay(d) {};
 
-            double weight;     
+            int weight;     
             Neuron *to;       
             uint32_t delay;  
     };
@@ -231,22 +231,22 @@ namespace risp
 
             ~Network() {}
 
-            void apply_spike_input0(const double time)
+            void apply_spike_input0(const int time)
             {
                 apply_spike_input(neuron_0, time);
             }
 
-            void apply_spike_input1(const double time)
+            void apply_spike_input1(const int time)
             {
                 apply_spike_input(neuron_1, time);
             }
 
-            void apply_spike_input2(const double time)
+            void apply_spike_input2(const int time)
             {
                 apply_spike_input(neuron_2, time);
             }
 
-            void run(double duration)
+            void run(int duration)
             {
                 if (overall_run_time != 0) {
                     clear_tracking_info();
@@ -344,7 +344,7 @@ namespace risp
             Neuron * neuron_101;
             Neuron * neuron_102;
 
-            Neuron* add_neuron(double threshold) 
+            Neuron* add_neuron(int threshold) 
             {
                 Neuron * n = new Neuron(threshold);
 
@@ -354,7 +354,7 @@ namespace risp
             }
 
              Synapse* add_synapse(
-                    Neuron * from, Neuron * to, double weight, uint32_t delay) 
+                    Neuron * from, Neuron * to, int weight, uint32_t delay) 
             {
                 Synapse * syn = new Synapse(weight, delay, to);
 
@@ -365,7 +365,7 @@ namespace risp
 
             void process_events(uint32_t time) 
             {
-                const vector<std::pair <Neuron*, double>> es = events[time];
+                const vector<std::pair <Neuron*, int>> es = events[time];
 
                 for (size_t i = 0; i < es.size(); i++) {
                     Neuron * n = es[i].first;
@@ -405,7 +405,7 @@ namespace risp
                                     events.resize(events_size);
                                 }
 
-                                double weight = syn->weight;
+                                int weight = syn->weight;
 
                                 events[to_time].push_back(make_pair(syn->to, weight));
 
@@ -421,27 +421,27 @@ namespace risp
 
             void clear_tracking_info()
             {
-                for (size_t i = 0; i < neuron_count; i++) {
+                for (size_t i=0; i<neuron_count; i++) {
                     Neuron * n = neurons[i];
                     n->last_fire = -1;
                     n->fire_counts = 0;
                 }
             }
 
-            void apply_spike_input(Neuron * neuron, const double time)
+            void apply_spike_input(Neuron * neuron, const size_t time)
             {
                 if (time >= events.size()) {
                     events.resize(time + 1);
                 }
 
-                double v = spike_value_factor;
+                int v = spike_value_factor;
 
                 events[time].push_back(std::make_pair(neuron, v));
              }
 
             Neuron * neurons[MAX_NEURONS];
 
-            vector<vector< std::pair<Neuron *, double> >> events;
+            vector<vector< std::pair<Neuron *, int> >> events;
 
             int overall_run_time;     
 
@@ -449,12 +449,12 @@ namespace risp
 
             bool threshold_inclusive; 
 
-            double min_potential;    
+            int min_potential;    
 
             bool discrete;           
 
             bool inputs_from_weights; 
 
-            double spike_value_factor;
+            int spike_value_factor;
     };
 }
