@@ -19,13 +19,13 @@ namespace risp
 
         public:
 
-            Neuron(double t, bool l) 
+            Neuron(double t) 
                 : charge(0),
                 threshold(t),
                 last_check(-1),
                 last_fire(-1),
                 fire_counts(0),
-                leak(l),
+                leak(false),
                 check(false) {};
 
             void perform_fire(int time)
@@ -297,6 +297,7 @@ namespace risp
         private:
 
             Neuron * neuron_0;
+
             Neuron * neuron_1;
             Neuron * neuron_2;
             Neuron * neuron_3;
@@ -339,7 +340,7 @@ namespace risp
 
             Neuron* add_neuron(double threshold) 
             {
-                Neuron * n = new Neuron(threshold, false);
+                Neuron * n = new Neuron(threshold);
 
                 if (!threshold_inclusive) {
                     n->threshold = (discrete) ? (n->threshold+1) : (n->threshold + 0.0000001);
