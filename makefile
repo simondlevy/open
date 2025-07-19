@@ -17,10 +17,9 @@
 
 CXX ?= g++
 
-FR_LIB = lib/libframework.a
 FR_INC = include/framework.hpp
+
 FR_CFLAGS = -std=c++11 -Wall -Wextra -Iinclude -Iinclude/utils $(CFLAGS)
-# FR_OBJ = obj/framework.o obj/properties.o
 
 RISP_INC = include/risp.hpp
 
@@ -32,22 +31,5 @@ test: bin/processor_tool_risp
 clean:
 	rm -f bin/* obj/* lib/*
 
-# ------------------------------------------------------------
-# The library and two programs.  You should see how to compile the processor_tool
-# for a different processor.
-
-lib/libframework.a: $(FR_OBJ) include/framework.hpp
-	ar r lib/libframework.a $(FR_OBJ)
-	ranlib lib/libframework.a
-
-bin/processor_tool_risp: src/processor_tool.cpp $(FR_INC) $(RISP_INC) # $(FR_LIB)
-	$(CXX) $(FR_CFLAGS) -o bin/processor_tool_risp src/processor_tool.cpp # $(FR_LIB)
-
-# ------------------------------------------------------------
-# Object files
-
-obj/framework.o: src/framework.cpp $(FR_INC)
-	$(CXX) -c $(FR_CFLAGS) -o obj/framework.o src/framework.cpp
-
-obj/properties.o: src/properties.cpp $(FR_INC)
-	$(CXX) -c $(FR_CFLAGS) -o obj/properties.o src/properties.cpp
+bin/processor_tool_risp: src/processor_tool.cpp $(FR_INC) $(RISP_INC) 
+	$(CXX) $(FR_CFLAGS) -o bin/processor_tool_risp src/processor_tool.cpp 
