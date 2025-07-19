@@ -26,61 +26,39 @@ static void to_uppercase(string &s)
 
 int main(int argc, char **argv) 
 {
-    risp::Processor *p;
-
-    string proc_name, prompt;
-    string cmd;
-    string l,s;
-
-    ofstream fout;
+    string prompt;
 
     istringstream ss;
 
-    size_t i;
-    int spike_id;
-    double spike_time, spike_val;
-    double sim_time;
-    string alias, id;
+    vector <string> sv; 
 
-    vector <string> sv; // read inputs
     vector <risp::Spike> spikes_array;
-    vector <risp::Spike> spikes;
-    vector < vector< double> > neuron_times;     
-    vector <string> spike_strings;              
-    vector <int> v;
-    vector <int> neuron_alias;
-    vector <int> event_counts;
-    vector <uint32_t> pres, posts;
-    vector <double> weights;
-    vector <double> charges;
-    vector <double> data;
-    vector <char> sr;
-    map <int, double>::iterator mit;
-    map <int, string> aliases; // Aliases for input/output nodes.
-    map <int, string>::iterator ait;
-    bool normalized;
-    unordered_set <int> gsr_nodes;
 
     if (argc == 2) {
         prompt = argv[1];
         prompt += " ";
     }
 
-    p = nullptr;
+    risp::Processor * p = nullptr;
 
-    while(1) {
+    while (true) {
 
         try {
 
             if (prompt != "") printf("%s", prompt.c_str());
+
+            string l;
+
             if (!getline(cin, l)) exit(0);
+
             sv.clear();
             ss.clear();
             ss.str(l);
 
+            string s;
+
             while (ss >> s) sv.push_back(s);
 
-            // convert cmd to uppercase
             if (sv.size() != 0) to_uppercase(sv[0]); 
 
             if (sv[0] == "ML") {
@@ -92,9 +70,13 @@ int main(int argc, char **argv)
 
             else if (sv[0] == "AS" || sv[0] == "ASV") {
 
-                normalized = (sv[0].size() == 2);
+                bool normalized = (sv[0].size() == 2);
 
-                for (i = 0; i < (sv.size() - 1) / 3; i++) {
+                for (size_t i = 0; i < (sv.size() - 1) / 3; i++) {
+
+                    int spike_id = 0;
+                    double spike_time = 0;
+                    double spike_val = 0;
 
                     if (sscanf(sv[i*3 + 1].c_str(), "%d", &spike_id) != 1 ||
                             sscanf(sv[i*3 + 2].c_str(), "%lf", &spike_time) != 1 || 
@@ -113,6 +95,8 @@ int main(int argc, char **argv)
 
             else if (sv[0] == "RUN") {
 
+                double sim_time = 0;
+
                 if (sv.size() != 2 || sscanf(sv[1].c_str(), "%lf", &sim_time) != 1 || sim_time < 0) {
                     printf("usage: RUN sim_time. sim_time >= 0\n");
                 } else {
@@ -127,7 +111,7 @@ int main(int argc, char **argv)
 
                 if (sv.size() == 1) {
 
-                    event_counts = p->output_counts();
+                    const auto event_counts = p->output_counts();
 
                     printf("node 3 spike counts: %d\n", event_counts[0]);
                 }
