@@ -1,12 +1,5 @@
-#include <vector>
 #include <iostream>
 #include <sstream>
-#include <fstream>
-#include <cstdlib>
-#include <cstdio>
-#include <map>
-#include <unordered_set>
-#include <unistd.h>
 
 #include "risp.hpp"
 
