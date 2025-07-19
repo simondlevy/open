@@ -40,15 +40,15 @@ namespace risp
                 charge = 0;
             }
 
-            vector <Synapse*> synapses;  /**< Outgoing synapses */
-            double charge;               /**< Charge value */
-            double threshold;            /**< Threshold value */
-            int last_check;              /**< Last time we process this node */
-            int last_fire;               /**< Last firing time */
-            uint32_t fire_counts;        /**< Number of fires */
-            bool leak;                   /**< Leak on this neuron or not */
-            uint32_t id;                 /**< ID for logging events */
-            bool check;                  /**< True if we have checked if this neruon fires or not */
+            vector <Synapse*> synapses; 
+            double charge;             
+            double threshold;         
+            int last_check;          
+            int last_fire;          
+            uint32_t fire_counts;  
+            bool leak;            
+            uint32_t id;         
+            bool check;         
     };
 
     class Synapse {
@@ -57,9 +57,9 @@ namespace risp
 
             Synapse(double w, uint32_t d, Neuron* to_n) : weight(w), to(to_n), delay(d) {};
 
-            double weight;             /**< Weight value */
-            Neuron *to;                /**< To neuron on this synapse */
-            uint32_t delay;            /**< Delay value */
+            double weight;     
+            Neuron *to;       
+            uint32_t delay;  
     };
 
     class Network {
@@ -238,7 +238,6 @@ namespace risp
                 add_synpase(51, 60, 0.000000, 12.000000);
             }
 
-
             ~Network() {}
 
             void apply_spike(const int id, const double time)
@@ -287,8 +286,8 @@ namespace risp
                 /* Deal with leak/non-negative charge  at the end of the run, 
                    so that if you pull neuron charges, they will be correct */
 
-                for (i = 0; i < sorted_neuron_vector.size(); i++) {
-                    n = sorted_neuron_vector[i];
+                for (i = 0; i < neurons.size(); i++) {
+                    n = neurons[i];
                     if (n->leak) n->charge = 0;
                     if (n->charge < min_potential) n->charge = min_potential;
                 }
@@ -301,8 +300,8 @@ namespace risp
 
             void clear_activity() 
             {
-                for (size_t i = 0; i < sorted_neuron_vector.size(); i++) {
-                    Neuron * n = sorted_neuron_vector[i];
+                for (size_t i = 0; i < neurons.size(); i++) {
+                    Neuron * n = neurons[i];
                     n->last_fire = -1;
                     n->fire_counts = 0;
                     n->charge = 0;
@@ -326,7 +325,7 @@ namespace risp
 
                 neuron_map[node_id] = n;
 
-                sorted_neuron_vector.push_back(n);
+                neurons.push_back(n);
 
                 return n;
             }
@@ -442,8 +441,8 @@ namespace risp
                 size_t i;
                 Neuron *n;
 
-                for (i = 0; i < sorted_neuron_vector.size(); i++) {
-                    n = sorted_neuron_vector[i];
+                for (i = 0; i < neurons.size(); i++) {
+                    n = neurons[i];
                     n->last_fire = -1;
                     n->fire_counts = 0;
                 }
@@ -455,7 +454,7 @@ namespace risp
             vector <int> outputs;       /**< index is output id and its value is neuron id. 
                                           If the neuron id is -1, it's not an ouput node. */
 
-            vector <Neuron *> sorted_neuron_vector;         /**< sorted neurons by node id */
+            vector <Neuron *> neurons;
 
             unordered_map <uint32_t, Neuron*> neuron_map;   /**< key is neuron id */
 
