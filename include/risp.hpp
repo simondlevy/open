@@ -307,13 +307,11 @@ namespace risp
 
             void clear_activity() 
             {
-                Neuron *n;
-                size_t i;
-                for (i = 0; i < sorted_neuron_vector.size(); i++) {
-                    n = sorted_neuron_vector[i];
+                for (size_t i = 0; i < sorted_neuron_vector.size(); i++) {
+                    Neuron * n = sorted_neuron_vector[i];
                     n->last_fire = -1;
                     n->fire_counts = 0;
-                    n->fire_times.clear();  // JSP should clear regardless of tracking.
+                    n->fire_times.clear();
                     n->charge = 0;
                     n->last_check = -1;
                 }
