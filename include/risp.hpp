@@ -296,13 +296,9 @@ namespace risp
                 }
             }
 
-            vector <int> output_counts() 
+            int n3_count()
             {
-                vector <int> rv;
-
-                rv.push_back(neuron_map[3]->fire_counts);
-
-                return rv;
+                return neuron_map[3]->fire_counts;
             }
 
             void clear_activity() 

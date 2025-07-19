@@ -94,9 +94,7 @@ int main(int argc, char **argv)
 
                 if (sv.size() == 1) {
 
-                    const auto event_counts = net->output_counts();
-
-                    printf("node 3 spike counts: %d\n", event_counts[0]);
+                    printf("node 3 spike counts: %d\n", net->n3_count());
                 }
 
             }
