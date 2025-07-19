@@ -308,9 +308,21 @@ namespace risp
             static const size_t MAX_NEURONS = 100;
 
             size_t neuron_count;
+
             Neuron * neurons[MAX_NEURONS];
 
-            vector<vector< std::pair<Neuron *, int> >> events;
+            class Event {
+
+                public:
+
+                    Neuron * neuron;
+                    int weight;
+
+                    Event(Neuron * n, int w) 
+                        : neuron(n), weight(w) {}
+            };
+
+            vector<vector<Event>> events;
 
             int overall_run_time;     
             bool run_time_inclusive; 
@@ -382,10 +394,10 @@ namespace risp
 
             void process_events(uint32_t time) 
             {
-                const vector<std::pair <Neuron*, int>> es = events[time];
+                const vector<Event> es = events[time];
 
                 for (size_t i = 0; i < es.size(); i++) {
-                    Neuron * n = es[i].first;
+                    Neuron * n = es[i].neuron;
                     if (n->leak) {
                         n->charge = 0;
                     }
@@ -395,18 +407,17 @@ namespace risp
                 }
 
                 for (size_t i = 0; i < es.size(); i++) {
-                    Neuron * n = es[i].first;
+                    Neuron * n = es[i].neuron;
                     n->check = true;
-                    n->charge += es[i].second;
+                    n->charge += es[i].weight;
                 }
 
                 for (size_t i = 0; i < es.size(); i++) {
 
-                    Neuron * n = es[i].first;
+                    Neuron * n = es[i].neuron;
 
                     if (n->check == true) {
 
-                        /* fire */
                         if (n->charge >= n->threshold) {
 
                             for (size_t j = 0; j < n->synapse_count; j++) {
@@ -421,7 +432,7 @@ namespace risp
 
                                 int weight = syn->weight;
 
-                                events[to_time].push_back(make_pair(syn->to, weight));
+                                events[to_time].push_back(Event(syn->to, weight));
                             }
 
                             n->perform_fire(time);
@@ -449,7 +460,7 @@ namespace risp
 
                 int v = spike_value_factor;
 
-                events[time].push_back(std::make_pair(neuron, v));
+                events[time].push_back(Event(neuron, v));
              }
 
     };
