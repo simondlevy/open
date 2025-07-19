@@ -258,7 +258,7 @@ namespace risp
 
                 overall_run_time += (run_time+1);
 
-                for (size_t i = 0; i <= run_time; i++) {
+                for (size_t i = 0; i <= 0 /*run_time*/; i++) {
                     process_events(i);
                 }
 
@@ -286,6 +286,8 @@ namespace risp
 
                 events.clear();
                 events.resize(300);
+
+                printf("clear_activity: %lu\n", events[0].size());
 
                 overall_run_time = 0;
             }
@@ -388,6 +390,9 @@ namespace risp
             {
                 const vector<Event> es = events[time];
 
+                printf("process_events: time %d : %lu event(s)\n", time, es.size());
+                exit(0);
+
                 for (size_t i = 0; i < es.size(); i++) {
                     Neuron * n = es[i].neuron;
                     if (n->leak) {
@@ -445,6 +450,8 @@ namespace risp
                 int v = spike_value_factor;
 
                 events[time].push_back(Event(neuron, v));
+
+                printf("apply_spike_input: time = %lu size = %lu\n", time, events[time].size());
              }
 
     };

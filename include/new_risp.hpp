@@ -258,7 +258,7 @@ namespace risp
 
                 overall_run_time += (run_time+1);
 
-                for (size_t i = 0; i <= run_time; i++) {
+                for (size_t i = 0; i <= 0 /*run_time*/; i++) {
                     process_events(i);
                 }
 
@@ -283,9 +283,6 @@ namespace risp
                     n->charge = 0;
                     n->last_check = -1;
                 }
-
-                //events.clear();
-                //events.resize(300);
 
                 for (size_t i=0; i<event_vector_size; ++i) {
                     events[i].size = 0;
@@ -329,8 +326,6 @@ namespace risp
             event_vector_t events[MAX_EVENT_VECTORS];
 
             size_t event_vector_size;
-
-            //vector<vector<Event>> events;
 
             int overall_run_time;     
             bool run_time_inclusive; 
@@ -404,6 +399,9 @@ namespace risp
             {
                 event_vector_t es = events[time];
 
+                printf("process_events: time %d : %lu event(s)\n", time,  es.size);
+                exit(0);
+
                 for (size_t i = 0; i < es.size; i++) {
 
                     Neuron * n = es.events[i].neuron;
@@ -466,16 +464,12 @@ namespace risp
 
             void apply_spike_input(Neuron * neuron, const size_t time)
             {
-                int v = spike_value_factor;
+                const size_t size = events[time].size;
 
-                event_vector_t ev = events[time];
+                events[time].events[size].neuron = neuron;
+                events[time].events[size].weight = spike_value_factor;
 
-                Event * e = &ev.events[ev.size];
-
-                e->neuron = neuron;
-                e->weight = v;
-
-                ev.size++;
+                events[time].size++;
              }
 
     };
