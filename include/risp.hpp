@@ -369,17 +369,10 @@ namespace risp
 
             void process_events(uint32_t time) 
             {
-                size_t i, j;
-                Neuron *n;
-                Synapse *syn;
-                size_t to_time;
-                size_t events_size;
-                double weight;
-
                 const vector<std::pair <Neuron*, double>> es = std::move(events[time]);
 
-                for (i = 0; i < es.size(); i++) {
-                    n = es[i].first;
+                for (size_t i = 0; i < es.size(); i++) {
+                    Neuron * n = es[i].first;
                     if (n->leak) {
                         n->charge = 0;
                     }
@@ -388,35 +381,35 @@ namespace risp
                     }
                 }
 
-                for (i = 0; i < es.size(); i++) {
-                    n = es[i].first;
+                for (size_t i = 0; i < es.size(); i++) {
+                    Neuron * n = es[i].first;
                     n->check = true;
                     n->charge += es[i].second;
                 }
 
-                events_size = events.size();
+                size_t events_size = events.size();
 
-                for (i = 0; i < es.size(); i++) {
+                for (size_t i = 0; i < es.size(); i++) {
 
-                    n = es[i].first;
+                    Neuron * n = es[i].first;
 
                     if (n->check == true) {
 
                         /* fire */
                         if (n->charge >= n->threshold) {
 
-                            for (j = 0; j < n->synapses.size(); j++) {
+                            for (size_t j = 0; j < n->synapses.size(); j++) {
 
-                                syn = n->synapses[j];
+                                Synapse * syn = n->synapses[j];
 
-                                to_time = time + syn->delay;
+                                size_t to_time = time + syn->delay;
 
                                 if (to_time >= events_size) {
                                     events_size = to_time + 1;
                                     events.resize(events_size);
                                 }
 
-                                weight = syn->weight;
+                                double weight = syn->weight;
 
                                 events[to_time].push_back(make_pair(syn->to, weight));
 
