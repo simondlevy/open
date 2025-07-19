@@ -14,11 +14,6 @@ using namespace std;
 
 typedef runtime_error SRE;
 
-static void print_commands(FILE *f) 
-{ 
-    fprintf(f, "Q                                   - Quit\n");
-}
-
 static void to_uppercase(string &s) 
 {
     size_t i;
@@ -65,13 +60,6 @@ int main(int argc, char **argv)
     map <int, string>::iterator ait;
     bool normalized;
     unordered_set <int> gsr_nodes;
-
-    if (argc > 2 || (argc == 2 && strcmp(argv[1], "--help") == 0)) {
-        fprintf(stderr, "usage: processor_tool [prompt]\n");
-        fprintf(stderr, "\n");
-        print_commands(stderr);
-        exit(1);
-    }
 
     if (argc == 2) {
         prompt = argv[1];
