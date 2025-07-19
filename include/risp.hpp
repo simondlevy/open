@@ -309,7 +309,9 @@ namespace risp
 
             size_t neuron_count;
             Neuron * neurons[MAX_NEURONS];
+
             vector<vector< std::pair<Neuron *, int> >> events;
+
             int overall_run_time;     
             bool run_time_inclusive; 
             bool threshold_inclusive; 
@@ -414,8 +416,7 @@ namespace risp
                                 size_t to_time = time + syn->delay;
 
                                 if (to_time >= events.size()) {
-                                    const size_t events_size = to_time + 1;
-                                    events.resize(events_size);
+                                    events.resize(to_time + 1);
                                 }
 
                                 int weight = syn->weight;
