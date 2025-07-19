@@ -513,45 +513,4 @@ namespace risp
 
             vector <Neuron *> to_fire;   /* To make RISP like RAVENS, this lets you fire a timestep later. */
     };
-
-    class Processor
-    {
-        public:
-
-            Processor() 
-            {
-            }
-
-            ~Processor() { }
-
-            void init_network() 
-            {
-                network = new risp::Network();
-            }
-
-            void run(double duration) 
-            {
-                network->run(duration);
-            }
-
-            vector <int> output_counts() 
-            {
-                return network->output_counts();
-            }
-
-            void clear_activity() 
-            {
-                network->clear_activity();
-            }
-
-            void apply_spike(const Spike& s, bool normalized) 
-            {
-                network->apply_spike(s, normalized);
-            }
-
-        protected:
-
-            risp::Network * network;
-    };
-
 }
