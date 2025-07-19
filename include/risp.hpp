@@ -308,6 +308,15 @@ namespace risp
             static const size_t MAX_NEURONS = 100;
 
             size_t neuron_count;
+            Neuron * neurons[MAX_NEURONS];
+            vector<vector< std::pair<Neuron *, int> >> events;
+            int overall_run_time;     
+            bool run_time_inclusive; 
+            bool threshold_inclusive; 
+            int min_potential;    
+            bool discrete;           
+            bool inputs_from_weights; 
+            int spike_value_factor;
 
             Neuron * neuron_0;
             Neuron * neuron_1;
@@ -412,7 +421,6 @@ namespace risp
                                 int weight = syn->weight;
 
                                 events[to_time].push_back(make_pair(syn->to, weight));
-
                             }
 
                             n->perform_fire(time);
@@ -443,22 +451,5 @@ namespace risp
                 events[time].push_back(std::make_pair(neuron, v));
              }
 
-            Neuron * neurons[MAX_NEURONS];
-
-            vector<vector< std::pair<Neuron *, int> >> events;
-
-            int overall_run_time;     
-
-            bool run_time_inclusive; 
-
-            bool threshold_inclusive; 
-
-            int min_potential;    
-
-            bool discrete;           
-
-            bool inputs_from_weights; 
-
-            int spike_value_factor;
     };
 }
