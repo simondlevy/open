@@ -258,10 +258,6 @@ namespace risp
 
                 overall_run_time += (run_time+1);
 
-                if (events.size() <= run_time) {
-                    events.resize(run_time + 1);
-                }
-
                 for (size_t i = 0; i <= run_time; i++) {
                     process_events(i);
                 }
@@ -290,7 +286,7 @@ namespace risp
 
                 events.clear();
 
-                events.resize(240);
+                events.resize(300);
 
                 overall_run_time = 0;
             }
@@ -417,10 +413,6 @@ namespace risp
                                 Synapse * syn = n->synapses[j];
 
                                 size_t to_time = time + syn->delay;
-
-                                if (to_time >= events.size()) {
-                                    events.resize(to_time + 1);
-                                }
 
                                 int weight = syn->weight;
 
