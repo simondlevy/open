@@ -117,8 +117,6 @@ namespace risp
                 add_neuron(101, 3.000000);
                 add_neuron(102, 5.000000);
 
-                add_output(3, 0);
-
                 add_synpase(11, 102, -7.000000, 9.000000);
                 add_synpase(8, 34, 5.000000, 3.000000);
                 add_synpase(12, 17, 3.000000, 10.000000);
@@ -341,12 +339,6 @@ namespace risp
                 it = neuron_map.find(node_id);
 
                 return it->second;
-            }
-
-            void add_output(uint32_t node_id, int output_id) 
-            {
-                if (output_id >= (int) outputs.size()) outputs.resize(output_id + 1, -1);
-                outputs[output_id] = node_id;
             }
 
             void process_events(uint32_t time) 
