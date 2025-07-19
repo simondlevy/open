@@ -76,9 +76,10 @@ namespace risp
                 inputs_from_weights = false;
                 overall_run_time = 0;
 
-                add_neuron(0, 3.000000);
-                add_neuron(1, 1.000000);
-                add_neuron(2, 6.000000);
+                neuron_0 = add_neuron(0, 3.000000);
+                neuron_1 = add_neuron(1, 1.000000);
+                neuron_2 = add_neuron(2, 6.000000);
+
                 add_neuron(3, 0.000000);
                 add_neuron(4, 6.000000);
                 add_neuron(5, 7.000000);
@@ -234,17 +235,19 @@ namespace risp
 
             ~Network() {}
 
-            void apply_spike(const int id, const double time)
+            void apply_spike_input0(const double time)
             {
-                Neuron * n = get_neuron(id);
+                apply_spike_input(neuron_0, time);
+            }
 
-                if (time >= events.size()) {
-                    events.resize(time + 1);
-                }
+            void apply_spike_input1(const double time)
+            {
+                apply_spike_input(neuron_1, time);
+            }
 
-                double v = spike_value_factor;
-
-                events[time].push_back(std::make_pair(n,v));
+            void apply_spike_input2(const double time)
+            {
+                apply_spike_input(neuron_2, time);
             }
 
             void run(double duration)
@@ -298,7 +301,11 @@ namespace risp
                 overall_run_time = 0;
             }
 
-        protected:
+        private:
+
+            Neuron * neuron_0;
+            Neuron * neuron_1;
+            Neuron * neuron_2;
 
             Neuron* add_neuron(uint32_t node_id, double threshold) 
             {
@@ -401,6 +408,17 @@ namespace risp
                     n->fire_counts = 0;
                 }
             }
+
+            void apply_spike_input(Neuron * neuron, const double time)
+            {
+                if (time >= events.size()) {
+                    events.resize(time + 1);
+                }
+
+                double v = spike_value_factor;
+
+                events[time].push_back(std::make_pair(neuron, v));
+             }
 
             vector <Neuron *> neurons;
 

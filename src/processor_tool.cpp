@@ -73,7 +73,23 @@ int main(int argc, char **argv)
                                 sv[i*3 + 3] + "]\n");
                     } 
 
-                    net->apply_spike(spike_id, spike_time);
+                    switch (spike_id) {
+
+                        case 0:
+                            net->apply_spike_input0(spike_time);
+                            break;
+
+                        case 1:
+                            net->apply_spike_input1(spike_time);
+                            break;
+
+                        case 2:
+                            net->apply_spike_input2(spike_time);
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
             } 
 
