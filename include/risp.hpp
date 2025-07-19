@@ -342,10 +342,6 @@ namespace risp
             {
                 Neuron * n = new Neuron(threshold);
 
-                if (!threshold_inclusive) {
-                    n->threshold = (discrete) ? (n->threshold+1) : (n->threshold + 0.0000001);
-                }
-
                 neurons.push_back(n);
 
                 return n;
