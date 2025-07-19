@@ -26,7 +26,6 @@ namespace neuro
     class Node;
     class Edge;
     class Network;
-    class Processor;
     struct Spike;
 
     typedef pair<int,int> Coords;
@@ -325,23 +324,4 @@ namespace neuro
         Spike(int id_, double time_, double value_) : 
             id(id_), time(time_), value(value_) {}
     };
-
-    class Processor
-    {
-        public:
-            virtual ~Processor() {}
-
-            static Processor *make();
-
-            virtual void init_network() = 0;
-
-            virtual void apply_spike(const Spike& s, bool normalized = true) = 0;
-
-            virtual void run(double duration) = 0;
-
-            virtual vector <int> output_counts() = 0;
-
-            virtual void clear_activity() = 0;
-    };
-
 }   
