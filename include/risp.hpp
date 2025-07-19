@@ -91,15 +91,12 @@ namespace risp
             Network(
                     double _spike_value_factor, 
                     double _min_potential, 
-                    char leak,
                     bool _run_time_inclusive,
                     bool _threshold_inclusive,
                     bool _discrete, 
                     bool _inputs_from_weights, 
                     vector <double> & _weights) 
             {
-                leak_mode = leak;
-
                 spike_value_factor = _spike_value_factor;
                 min_potential = _min_potential;
                 run_time_inclusive = _run_time_inclusive;
@@ -519,8 +516,6 @@ namespace risp
 
             bool inputs_from_weights; /**< Inputs are indices into the weight vector. */
 
-            char leak_mode;           /**< 'a' for all, 'n' for nothing, 'c' for configurable */
-
             vector <double> weights;
 
             double spike_value_factor;
@@ -539,7 +534,6 @@ namespace risp
                 /* Default params */
 
                 min_delay = 1;
-                leak_mode = "none";
                 run_time_inclusive = false;
                 threshold_inclusive = true;
                 inputs_from_weights = false;
@@ -563,7 +557,6 @@ namespace risp
                 network = new risp::Network(
                         spike_value_factor,
                         min_potential,
-                        leak_mode[0], 
                         run_time_inclusive, 
                         threshold_inclusive, 
                         discrete, 
@@ -603,7 +596,6 @@ namespace risp
             double min_potential;
             bool discrete;
             double spike_value_factor;
-            string leak_mode;
             bool run_time_inclusive;
             bool threshold_inclusive;
             bool inputs_from_weights;
