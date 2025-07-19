@@ -2,23 +2,14 @@
 
 #include <cmath>
 #include <map>
-#include <vector>
-#include <map>
 #include <memory>
-#include <exception>
-#include <stdexcept>
 #include <unordered_map>
+#include <vector>
 
 using namespace std;
 
 using std::map;
-using std::string;
 using std::vector;
-using std::pair;
-using std::tuple;
-using std::unique_ptr;
-
-typedef pair<int,int> Coords;
 
 namespace risp
 {
