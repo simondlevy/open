@@ -253,6 +253,19 @@ namespace risp
 
             ~Network() {}
 
+            void apply_spike(const int id, const double time)
+            {
+                Neuron * n = get_neuron(id);
+
+                if (time >= events.size()) {
+                    events.resize(time + 1);
+                }
+
+                double v = spike_value_factor;
+
+                events[time].push_back(std::make_pair(n,v));
+            }
+
             void apply_spike(const Spike& s) 
             {
                 Neuron * n = get_neuron(inputs[s.id]);

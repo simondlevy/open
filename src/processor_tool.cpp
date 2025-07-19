@@ -25,8 +25,6 @@ int main(int argc, char **argv)
 
     vector <string> sv; 
 
-    vector <risp::Spike> spikes_array;
-
     if (argc == 2) {
         prompt = argv[1];
         prompt += " ";
@@ -75,9 +73,7 @@ int main(int argc, char **argv)
                                 sv[i*3 + 3] + "]\n");
                     } 
 
-                    net->apply_spike(risp::Spike( spike_id, spike_time, spike_val));
-
-                    spikes_array.push_back(risp::Spike(spike_id, spike_time, spike_val));
+                    net->apply_spike(spike_id, spike_time);
                 }
             } 
 
@@ -90,7 +86,6 @@ int main(int argc, char **argv)
                 } else {
 
                     net->run(sim_time);
-                    spikes_array.clear();
                 }
 
             }
