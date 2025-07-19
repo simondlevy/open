@@ -31,18 +31,9 @@ static void to_uppercase(string &s)
     }
 }
 
-static void safe_exit(Processor *p, Network *n)
-{
-    if (p != nullptr) delete p;
-    if (n != nullptr) delete n;
-    exit(0);
-}
-
 int main(int argc, char **argv) 
 {
     risp::Processor *p;
-
-    Network *net; 
 
     NodeMap::iterator nit;
 
@@ -93,14 +84,13 @@ int main(int argc, char **argv)
     }
 
     p = nullptr;
-    net = nullptr;
 
     while(1) {
 
         try {
 
             if (prompt != "") printf("%s", prompt.c_str());
-            if (!getline(cin, l)) safe_exit(p, net);
+            if (!getline(cin, l)) exit(0);
             sv.clear();
             ss.clear();
             ss.str(l);

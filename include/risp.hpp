@@ -570,8 +570,6 @@ namespace risp
 
         protected:
 
-            double get_input_spike_factor() const;
-
             risp::Network * network;
 
             double min_weight;
