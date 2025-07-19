@@ -7,7 +7,6 @@
 
 using namespace std;
 
-using std::map;
 using std::vector;
 
 namespace risp
