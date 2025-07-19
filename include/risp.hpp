@@ -253,19 +253,19 @@ namespace risp
                     clear_tracking_info();
                 }
 
-                int run_time = (run_time_inclusive) ? duration : duration-1;
+                const size_t run_time = (run_time_inclusive) ? duration : duration-1;
 
                 overall_run_time += (run_time+1);
 
-                if ((int) events.size() <= run_time) {
+                if (events.size() <= run_time) {
                     events.resize(run_time + 1);
                 }
 
-                for (size_t i = 0; i <= (uint32_t) run_time; i++) {
+                for (size_t i = 0; i <= run_time; i++) {
                     process_events(i);
                 }
 
-                if ((int) events.size() > run_time + 1) {
+                if (events.size() > run_time + 1) {
                     for (size_t i = run_time + 1; i < events.size(); i++) {
                         events[i - run_time - 1] = std::move(events[i]);
 
