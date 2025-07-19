@@ -78,7 +78,6 @@ namespace risp
 
             Synapse(double w, uint32_t d, Neuron* to_n) : weight(w), to(to_n), delay(d) {};
 
-
             double weight;             /**< Weight value */
             Neuron *to;                /**< To neuron on this synapse */
             uint32_t delay;            /**< Delay value */
@@ -88,22 +87,16 @@ namespace risp
 
         public:
 
-            Network(
-                    double _spike_value_factor, 
-                    double _min_potential, 
-                    bool _run_time_inclusive,
-                    bool _threshold_inclusive,
-                    bool _discrete, 
-                    bool _inputs_from_weights, 
-                    vector <double> & _weights) 
+            Network(vector <double> & _weights) 
             {
-                spike_value_factor = _spike_value_factor;
-                min_potential = _min_potential;
-                run_time_inclusive = _run_time_inclusive;
-                threshold_inclusive = _threshold_inclusive;
+                spike_value_factor = 7;
+                min_potential = -7;
+                run_time_inclusive = false;
+                threshold_inclusive = true;
+                discrete = true;
+                inputs_from_weights = false;
+
                 weights = _weights;
-                discrete = _discrete;
-                inputs_from_weights = _inputs_from_weights;
                 overall_run_time = 0;
 
                 add_neuron(0, 3.000000);
@@ -531,37 +524,20 @@ namespace risp
             {
                 string estring;
 
-                /* Default params */
-
-                min_delay = 1;
-                run_time_inclusive = false;
-                threshold_inclusive = true;
-                inputs_from_weights = false;
-
                 max_delay = 15;
                 min_threshold = 0;
                 max_threshold = 7;
-                min_potential = -7;
-                discrete = true;
 
                 min_weight = -7;
                 max_weight = 7;
 
-                spike_value_factor = 7;
             }
 
             ~Processor() { }
 
             void init_network() 
             {
-                network = new risp::Network(
-                        spike_value_factor,
-                        min_potential,
-                        run_time_inclusive, 
-                        threshold_inclusive, 
-                        discrete, 
-                        inputs_from_weights,
-                        weights);
+                network = new risp::Network(weights);
 
             }
 
@@ -601,7 +577,6 @@ namespace risp
             bool inputs_from_weights;
             vector <double> weights;
 
-            uint32_t min_delay;
             uint32_t max_delay;
 
     };
