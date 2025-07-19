@@ -248,13 +248,13 @@ namespace risp
                 apply_spike_input(neuron_2, time);
             }
 
-            void run(int duration)
+            void run(int timesteps)
             {
                 if (overall_run_time != 0) {
                     clear_tracking_info();
                 }
 
-                const size_t run_time = (run_time_inclusive) ? duration : duration-1;
+                const size_t run_time = (run_time_inclusive) ? timesteps : timesteps-1;
 
                 overall_run_time += (run_time+1);
 
@@ -264,13 +264,6 @@ namespace risp
 
                 for (size_t i = 0; i <= run_time; i++) {
                     process_events(i);
-                }
-
-                if (events.size() > run_time + 1) {
-                    for (size_t i = run_time + 1; i < events.size(); i++) {
-                        events[i - run_time - 1] = std::move(events[i]);
-
-                    }
                 }
 
                 for (size_t i = 0; i < neuron_count; i++) {
@@ -296,6 +289,9 @@ namespace risp
                 }
 
                 events.clear();
+
+                events.resize(240);
+
                 overall_run_time = 0;
             }
 
@@ -450,10 +446,6 @@ namespace risp
 
             void apply_spike_input(Neuron * neuron, const size_t time)
             {
-                if (time >= events.size()) {
-                    events.resize(time + 1);
-                }
-
                 int v = spike_value_factor;
 
                 events[time].push_back(Event(neuron, v));
