@@ -3,7 +3,6 @@
 #include <cmath>
 #include <map>
 #include <memory>
-#include <unordered_map>
 #include <vector>
 
 using namespace std;
@@ -283,7 +282,7 @@ namespace risp
 
             int n3_count()
             {
-                return neuron_map[3]->fire_counts;
+                return neuron_3->fire_counts;
             }
 
             void clear_activity() 
@@ -350,8 +349,6 @@ namespace risp
                 if (!threshold_inclusive) {
                     n->threshold = (discrete) ? (n->threshold+1) : (n->threshold + 0.0000001);
                 }
-
-                neuron_map[node_id] = n;
 
                 neurons.push_back(n);
 
@@ -445,8 +442,6 @@ namespace risp
              }
 
             vector <Neuron *> neurons;
-
-            unordered_map <uint32_t, Neuron*> neuron_map;   
 
             vector < vector < std::pair<Neuron *, double> >> events;
 
