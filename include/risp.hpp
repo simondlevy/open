@@ -70,46 +70,46 @@ namespace risp
                 inputs_from_weights = false;
                 overall_run_time = 0;
 
-                neuron_0 = add_neuron(0, 3);
-                neuron_1 = add_neuron(1, 1);
-                neuron_2 = add_neuron(2, 6);
-                neuron_3 = add_neuron(3, 0);
-                neuron_4 = add_neuron(4, 6);
-                neuron_5 = add_neuron(5, 7);
-                neuron_6 = add_neuron(6, 0);
-                neuron_7 = add_neuron(7, 3);
-                neuron_8 = add_neuron(8, 3);
-                neuron_9 = add_neuron(9, 0);
-                neuron_10 = add_neuron(10, 6);
-                neuron_11 = add_neuron(11, 2);
-                neuron_12 = add_neuron(12, 0);
-                neuron_13 = add_neuron(13, 0);
-                neuron_15 = add_neuron(15, 4);
-                neuron_16 = add_neuron(16, 7);
-                neuron_17 = add_neuron(17, 7);
-                neuron_18 = add_neuron(18, 3);
-                neuron_20 = add_neuron(20, 7);
-                neuron_22 = add_neuron(22, 6);
-                neuron_26 = add_neuron(26, 4);
-                neuron_30 = add_neuron(30, 3);
-                neuron_32 = add_neuron(32, 2);
-                neuron_33 = add_neuron(33, 4);
-                neuron_34 = add_neuron(34, 6);
-                neuron_41 = add_neuron(41, 5);
-                neuron_42 = add_neuron(42, 7);
-                neuron_51 = add_neuron(51, 3);
-                neuron_60 = add_neuron(60, 4);
-                neuron_62 = add_neuron(62, 2);
-                neuron_64 = add_neuron(64, 2);
-                neuron_67 = add_neuron(67, 5);
-                neuron_68 = add_neuron(68, 7);
-                neuron_77 = add_neuron(77, 3);
-                neuron_80 = add_neuron(80, 4);
-                neuron_88 = add_neuron(88, 3);
-                neuron_93 = add_neuron(93, 3);
-                neuron_95 = add_neuron(95, 5);
-                neuron_101 = add_neuron(101, 3);
-                neuron_102 = add_neuron(102, 5);
+                neuron_0 = add_neuron(3);
+                neuron_1 = add_neuron(1);
+                neuron_2 = add_neuron(6);
+                neuron_3 = add_neuron(0);
+                neuron_4 = add_neuron(6);
+                neuron_5 = add_neuron(7);
+                neuron_6 = add_neuron(0);
+                neuron_7 = add_neuron(3);
+                neuron_8 = add_neuron(3);
+                neuron_9 = add_neuron(0);
+                neuron_10 = add_neuron(6);
+                neuron_11 = add_neuron(2);
+                neuron_12 = add_neuron(0);
+                neuron_13 = add_neuron(0);
+                neuron_15 = add_neuron(4);
+                neuron_16 = add_neuron(7);
+                neuron_17 = add_neuron(7);
+                neuron_18 = add_neuron(3);
+                neuron_20 = add_neuron(7);
+                neuron_22 = add_neuron(6);
+                neuron_26 = add_neuron(4);
+                neuron_30 = add_neuron(3);
+                neuron_32 = add_neuron(2);
+                neuron_33 = add_neuron(4);
+                neuron_34 = add_neuron(6);
+                neuron_41 = add_neuron(5);
+                neuron_42 = add_neuron(7);
+                neuron_51 = add_neuron(3);
+                neuron_60 = add_neuron(4);
+                neuron_62 = add_neuron(2);
+                neuron_64 = add_neuron(2);
+                neuron_67 = add_neuron(5);
+                neuron_68 = add_neuron(7);
+                neuron_77 = add_neuron(3);
+                neuron_80 = add_neuron(4);
+                neuron_88 = add_neuron(3);
+                neuron_93 = add_neuron(3);
+                neuron_95 = add_neuron(5);
+                neuron_101 = add_neuron(3);
+                neuron_102 = add_neuron(5);
 
                 add_synapse(neuron_11, neuron_102, -7, 9);
                 add_synapse(neuron_8, neuron_34, 5, 3);
@@ -337,10 +337,8 @@ namespace risp
             Neuron * neuron_101;
             Neuron * neuron_102;
 
-            Neuron* add_neuron(uint32_t node_id, double threshold) 
+            Neuron* add_neuron(double threshold) 
             {
-                (void)node_id;
-
                 Neuron * n = new Neuron(threshold, false);
 
                 if (!threshold_inclusive) {
