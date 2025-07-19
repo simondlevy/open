@@ -235,17 +235,17 @@ namespace risp
 
             void apply_spike_input0(const int time)
             {
-                apply_spike_input(neuron_0, time);
+                apply_spike_input(neuron_0, 0, time);
             }
 
             void apply_spike_input1(const int time)
             {
-                apply_spike_input(neuron_1, time);
+                apply_spike_input(neuron_1, 1, time);
             }
 
             void apply_spike_input2(const int time)
             {
-                apply_spike_input(neuron_2, time);
+                apply_spike_input(neuron_2, 2, time);
             }
 
             void run(int timesteps)
@@ -460,8 +460,10 @@ namespace risp
                 }
             }
 
-            void apply_spike_input(Neuron * neuron, const size_t time)
+            void apply_spike_input(Neuron * neuron, const int id, const size_t time)
             {
+                printf("apply_spike_input: neuron=%d time=%lu\n", id, time);
+
                 const size_t size = events[time].size;
 
                 events[time].events[size].neuron = neuron;
