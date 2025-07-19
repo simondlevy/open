@@ -8,7 +8,6 @@
 #include <unordered_set>
 #include <unistd.h>
 
-#include "framework.hpp"
 #include "risp.hpp"
 
 using namespace std;
@@ -50,7 +49,6 @@ int main(int argc, char **argv)
     string alias, id;
 
     vector <string> sv; // read inputs
-    vector <Node *> node_vector;
     vector <risp::Spike> spikes_array;
     vector <risp::Spike> spikes;
     vector < vector< double> > neuron_times;     
