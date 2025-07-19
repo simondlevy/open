@@ -309,7 +309,6 @@ namespace risp
                 }
 
                 events.clear();
-                to_fire.clear();
                 overall_run_time = 0;
             }
 
@@ -378,11 +377,6 @@ namespace risp
                 double weight;
 
                 const vector<std::pair <Neuron*, double>> es = std::move(events[time]);
-
-                for (i = 0; i < to_fire.size(); i++) {
-                    to_fire[i]->perform_fire(time);
-                }
-                to_fire.clear();
 
                 for (i = 0; i < es.size(); i++) {
                     n = es[i].first;
@@ -475,10 +469,6 @@ namespace risp
 
             bool inputs_from_weights; /**< Inputs are indices into the weight vector. */
 
-            vector <double> weights;
-
             double spike_value_factor;
-
-            vector <Neuron *> to_fire;   /* To make RISP like RAVENS, this lets you fire a timestep later. */
     };
 }
