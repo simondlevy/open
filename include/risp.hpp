@@ -527,7 +527,6 @@ namespace risp
             void init_network() 
             {
                 network = new risp::Network();
-
             }
 
             void run(double duration) 

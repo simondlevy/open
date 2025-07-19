@@ -32,7 +32,7 @@ int main(int argc, char **argv)
         prompt += " ";
     }
 
-    risp::Processor * p = nullptr;
+    risp::Network * net = nullptr;
 
     while (true) {
 
@@ -56,9 +56,7 @@ int main(int argc, char **argv)
 
             if (sv[0] == "ML") {
 
-                p = new risp::Processor();
-
-                p->init_network();
+                net = new risp::Network();
             }
 
             else if (sv[0] == "AS" || sv[0] == "ASV") {
@@ -79,7 +77,7 @@ int main(int argc, char **argv)
                                 sv[i*3 + 3] + "]\n");
                     } 
 
-                    p->apply_spike(risp::Spike( spike_id, spike_time, spike_val),
+                    net->apply_spike(risp::Spike( spike_id, spike_time, spike_val),
                             normalized);
 
                     spikes_array.push_back(risp::Spike(spike_id, spike_time, spike_val));
@@ -94,7 +92,7 @@ int main(int argc, char **argv)
                     printf("usage: RUN sim_time. sim_time >= 0\n");
                 } else {
 
-                    p->run(sim_time);
+                    net->run(sim_time);
                     spikes_array.clear();
                 }
 
@@ -104,7 +102,7 @@ int main(int argc, char **argv)
 
                 if (sv.size() == 1) {
 
-                    const auto event_counts = p->output_counts();
+                    const auto event_counts = net->output_counts();
 
                     printf("node 3 spike counts: %d\n", event_counts[0]);
                 }
@@ -113,7 +111,7 @@ int main(int argc, char **argv)
 
             else if (sv[0] == "CA" || sv[0] == "CLEAR-A") { // clear_activity
 
-                p->clear_activity();
+                net->clear_activity();
 
             }
 
