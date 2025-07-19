@@ -368,15 +368,6 @@ namespace risp
                 return syn;
             }
 
-            Neuron* get_neuron(uint32_t node_id) 
-            {
-                unordered_map <uint32_t, Neuron*>::const_iterator it;
-
-                it = neuron_map.find(node_id);
-
-                return it->second;
-            }
-
             void process_events(uint32_t time) 
             {
                 const vector<std::pair <Neuron*, double>> es = std::move(events[time]);
