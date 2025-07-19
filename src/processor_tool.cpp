@@ -35,8 +35,6 @@ int main(int argc, char **argv)
 {
     risp::Processor *p;
 
-    NodeMap::iterator nit;
-
     string proc_name, prompt;
     string cmd;
     string l,s;
