@@ -35,7 +35,8 @@ namespace risp
                 charge = 0;
             }
 
-            vector <Synapse*> synapses; 
+            vector<Synapse*> synapses; 
+
             double charge;             
             double threshold;         
             int last_check;          
@@ -297,7 +298,6 @@ namespace risp
         private:
 
             Neuron * neuron_0;
-
             Neuron * neuron_1;
             Neuron * neuron_2;
             Neuron * neuron_3;
@@ -359,7 +359,9 @@ namespace risp
 
             void process_events(uint32_t time) 
             {
-                const vector<std::pair <Neuron*, double>> es = std::move(events[time]);
+                // const vector<std::pair <Neuron*, double>> es = std::move(events[time]);
+
+                const vector<std::pair <Neuron*, double>> es = events[time];
 
                 for (size_t i = 0; i < es.size(); i++) {
                     Neuron * n = es[i].first;
@@ -433,9 +435,9 @@ namespace risp
                 events[time].push_back(std::make_pair(neuron, v));
              }
 
-            vector <Neuron *> neurons;
+            vector<Neuron *> neurons;
 
-            vector < vector < std::pair<Neuron *, double> >> events;
+            vector<vector< std::pair<Neuron *, double> >> events;
 
             int overall_run_time;     
 
