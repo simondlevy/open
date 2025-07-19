@@ -17,10 +17,15 @@ namespace risp
 
     class Neuron {
 
+        private:
+
+            static const size_t MAX_SYNAPSES = 50;
+
         public:
 
             Neuron(int t) 
-                : charge(0),
+                : synapse_count(0),
+                charge(0),
                 threshold(t),
                 last_check(-1),
                 last_fire(-1),
@@ -35,8 +40,9 @@ namespace risp
                 charge = 0;
             }
 
-            vector<Synapse*> synapses; 
+            Synapse * synapses[MAX_SYNAPSES]; 
 
+            size_t synapse_count;
             int charge;             
             int threshold;         
             int last_check;          
@@ -358,7 +364,7 @@ namespace risp
             {
                 Synapse * syn = new Synapse(weight, delay, to);
 
-                from->synapses.push_back(syn);
+                from->synapses[from->synapse_count++] = syn;
 
                 return syn;
             }
@@ -394,7 +400,7 @@ namespace risp
                         /* fire */
                         if (n->charge >= n->threshold) {
 
-                            for (size_t j = 0; j < n->synapses.size(); j++) {
+                            for (size_t j = 0; j < n->synapse_count; j++) {
 
                                 Synapse * syn = n->synapses[j];
 
