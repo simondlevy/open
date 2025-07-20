@@ -380,7 +380,7 @@ namespace risp
                 neurons[neuron_count++] = neuron;
             }
 
-            void add_synapse(
+            static void add_synapse(
                     Neuron * from, Neuron * to, int weight, uint32_t delay) 
             {
                 Synapse * syn = new Synapse(weight, delay, to);
