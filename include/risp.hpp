@@ -276,6 +276,12 @@ namespace risp
                     process_events(i);
                 }
 
+                reset_neurons();
+
+            }
+
+            void reset_neurons()
+            {
                 for (size_t i = 0; i < neuron_count; i++) {
                     neurons[i]->reset(min_potential);
                 }
