@@ -3,6 +3,8 @@
 #include <cmath>
 #include <vector>
 
+#include <string.h>
+
 using namespace std;
 
 namespace risp
@@ -29,6 +31,7 @@ namespace risp
                 fire_counts(0),
                 leak(false),
                 check(false) {};
+
 
             void perform_fire(int time)
             {
@@ -286,9 +289,7 @@ namespace risp
                     n->last_check = -1;
                 }
 
-                events.clear();
-
-                events.resize(300);
+                memset(events, 0, sizeof(events));
 
                 overall_run_time = 0;
             }
@@ -296,6 +297,9 @@ namespace risp
         private:
 
             static const size_t MAX_NEURONS = 100;
+
+            static const size_t MAX_EVENT_VECTORS = 300;
+            static const size_t MAX_EVENTS_PER_VECTOR = 300;
 
             size_t neuron_count;
 
@@ -308,11 +312,20 @@ namespace risp
                     Neuron * neuron;
                     int weight;
 
+                    Event() = default;
+
                     Event(Neuron * n, int w) 
                         : neuron(n), weight(w) {}
             };
 
-            vector<vector<Event>> events;
+            typedef struct {
+
+                Event events[MAX_EVENTS_PER_VECTOR];
+                size_t size;
+
+            } event_vector_t;
+
+            event_vector_t events[MAX_EVENT_VECTORS];
 
             int overall_run_time;     
             bool run_time_inclusive; 
@@ -372,6 +385,7 @@ namespace risp
                 return n;
             }
 
+ 
              Synapse* add_synapse(
                     Neuron * from, Neuron * to, int weight, uint32_t delay) 
             {
@@ -384,11 +398,11 @@ namespace risp
 
             void process_events(uint32_t time) 
             {
-                const vector<Event> es = events[time];
+                event_vector_t es = events[time];
 
-                for (size_t i = 0; i < es.size(); i++) {
+                for (size_t i = 0; i < es.size; i++) {
 
-                    Neuron * n = es[i].neuron;
+                    Neuron * n = es.events[i].neuron;
                     if (n->leak) {
                         n->charge = 0;
                     }
@@ -397,15 +411,15 @@ namespace risp
                     }
                 }
 
-                for (size_t i = 0; i < es.size(); i++) {
-                    Neuron * n = es[i].neuron;
+                for (size_t i = 0; i < es.size; i++) {
+                    Neuron * n = es.events[i].neuron;
                     n->check = true;
-                    n->charge += es[i].weight;
+                    n->charge += es.events[i].weight;
                 }
 
-                for (size_t i = 0; i < es.size(); i++) {
+                for (size_t i = 0; i < es.size; i++) {
 
-                    Neuron * n = es[i].neuron;
+                    Neuron * n = es.events[i].neuron;
 
                     if (n->check == true) {
 
@@ -419,7 +433,12 @@ namespace risp
 
                                 int weight = syn->weight;
 
-                                events[to_time].push_back(Event(syn->to, weight));
+                                const size_t size = events[to_time].size;
+
+                                events[to_time].events[size].neuron = syn->to;
+                                events[to_time].events[size].weight = weight;
+
+                                events[to_time].size++;
                             }
 
                             n->perform_fire(time);
@@ -441,10 +460,13 @@ namespace risp
 
             void apply_spike_input(Neuron * neuron, const size_t time)
             {
-                int v = spike_value_factor;
+                const size_t size = events[time].size;
 
-                events[time].push_back(Event(neuron, v));
-             }
+                events[time].events[size].neuron = neuron;
+                events[time].events[size].weight = spike_value_factor;
+
+                events[time].size++;
+            }
 
     };
 }
