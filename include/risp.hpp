@@ -27,8 +27,10 @@ namespace risp
     };
 
     class Neuron {
+        
+        friend class Network;
 
-        public:
+        private:
 
             synapse_t synapses[Constants::MAX_SYNAPASES_PER_NEURON]; 
             
@@ -88,7 +90,6 @@ namespace risp
                 charge = 0;
                 last_check = -1;
             }
-
    };
 
     class Synapse {
@@ -105,7 +106,7 @@ namespace risp
             class Synapse * next;
 
             Synapse(Neuron * f, Neuron * t, int w, uint32_t d) 
-                : from(f), to(t), weight(w), delay(d) { }
+                : from(f), to(t), weight(w), delay(d), next(nullptr) { }
     };
 
 
@@ -238,7 +239,7 @@ namespace risp
                 add_synapse(&n51, &n34, -4, 14);
                 add_synapse(&n2, &n6, 3, 14);
                 add_synapse(&n51, &n60, 0, 12);
-            
+
                 connect_synapse(&s11_102);
                 connect_synapse(&s11_8);
                 connect_synapse(&s12_17);
@@ -352,6 +353,10 @@ namespace risp
                 connect_synapse(&s51_34);
                 connect_synapse(&s2_6);
                 connect_synapse(&s51_60);
+
+                //debug_neuron(&n0);
+                //exit(0);
+
             }
 
             ~Network() {}
@@ -692,11 +697,12 @@ namespace risp
 
                 if (!from->synapse_list_head) {
                     from->synapse_list_head = syn;
-                    from->synapse_list_tail = syn;
                 }
                 else {
                     from->synapse_list_tail->next = syn;
                 }
+
+                from->synapse_list_tail = syn;
             }
 
             void process_events(uint32_t time) 
@@ -826,6 +832,16 @@ namespace risp
                 events[time].events[size].weight = spike_value_factor;
 
                 events[time].size++;
+            }
+
+            static void debug_neuron(Neuron * n)
+            {
+                size_t count = 0;
+                for (Synapse *s=n->synapse_list_head; s; s=s->next) {
+                    count++;
+                }
+
+                printf("%p: %lu %lu\n", n, count, n->synapse_count);
             }
 
     };
