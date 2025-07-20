@@ -66,6 +66,14 @@ namespace risp
                 fire_counts = 0;
             }
 
+            void clear_activity()
+            {
+                last_fire = -1;
+                fire_counts = 0;
+                charge = 0;
+                last_check = -1;
+            }
+
             synapse_t synapses[Constants::MAX_SYNAPASES_PER_NEURON]; 
 
             size_t synapse_count;
@@ -338,11 +346,7 @@ namespace risp
             void clear_activity() 
             {
                 for (size_t i = 0; i < neuron_count; i++) {
-                    Neuron * n = neurons[i];
-                    n->last_fire = -1;
-                    n->fire_counts = 0;
-                    n->charge = 0;
-                    n->last_check = -1;
+                    neurons[i]->clear_activity();
                 }
 
                 memset(events, 0, sizeof(events));
