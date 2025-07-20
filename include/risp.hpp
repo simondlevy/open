@@ -21,9 +21,9 @@ namespace risp
 
         private:
 
-            static const size_t MAX_SYNAPASES_PER_NEURON = 50;
-            static const size_t MAX_EVENT_VECTORS = 300;
-            static const size_t MAX_EVENTS_PER_VECTOR = 300;
+        static const size_t MAX_SYNAPASES_PER_NEURON = 50;
+        static const size_t MAX_EVENT_VECTORS = 300;
+        static const size_t MAX_EVENTS_PER_VECTOR = 300;
     };
 
     class Neuron {
@@ -85,6 +85,22 @@ namespace risp
             bool leak;            
             bool check;         
     };
+
+    class Synapse {
+
+        private:
+
+            Neuron * from;       
+            Neuron * to;       
+            int weight;     
+            uint32_t delay;  
+
+        public:
+
+            Synapse(Neuron * f, Neuron * t, int w, uint32_t d) 
+                : from(f), to(t), weight(w), delay(d) { }
+    };
+
 
     class Network {
 
@@ -352,7 +368,7 @@ namespace risp
                 n95.clear_activity();
                 n101.clear_activity();
                 n102.clear_activity();
-             }
+            }
 
         private:
 
@@ -422,6 +438,120 @@ namespace risp
             Neuron n95 = Neuron(5);
             Neuron n101 = Neuron(3);
             Neuron n102 = Neuron(5);
+
+            Synapse s11_102 = Synapse(&n11, &n102, -7, 9);
+            Synapse s8_34 = Synapse(&n8, &n34, 5, 3);
+            Synapse s12_17 = Synapse(&n12, &n17, 3, 10);
+            Synapse s1_11 = Synapse(&n1, &n11, -6, 12);
+            Synapse s8_2 = Synapse(&n8, &n2, -2, 1);
+            Synapse s13_1 = Synapse(&n13, &n1, 4, 2);
+            Synapse s8_9 = Synapse(&n8, &n9, -2, 14);
+            Synapse s2_8 = Synapse(&n2, &n8, 3, 7);
+            Synapse s13_26 = Synapse(&n13, &n26, -6, 4);
+            Synapse s64_ = Synapse(&n64, &n95, -1, 6);
+            Synapse s20_15 = Synapse(&n20, &n15, 3, 7);
+            Synapse s16_13 = Synapse(&n16, &n13, 3, 8);
+            Synapse s80_34 = Synapse(&n80, &n34, 0, 9);
+            Synapse s60_26 = Synapse(&n60, &n26, 2, 11);
+            Synapse s8_15 = Synapse(&n8, &n15, -3, 6);
+            Synapse s6_9 = Synapse(&n6, &n9, 2, 3);
+            Synapse s77_101 = Synapse(&n77, &n101, 2, 14);
+            Synapse s26_11 = Synapse(&n26, &n11, 2, 1);
+            Synapse s9_20 = Synapse(&n9, &n20, 6, 9);
+            Synapse s0_22 = Synapse(&n0, &n22, -5, 15);
+            Synapse s51_1 = Synapse(&n51, &n1, -7, 1);
+            Synapse s2_77 = Synapse(&n2, &n77, 6, 7);
+            Synapse s1_3 = Synapse(&n1, &n3, 1, 3);
+            Synapse s2_42 = Synapse(&n2, &n42, 1, 2);
+            Synapse s3_16 = Synapse(&n3, &n16, -7, 13);
+            Synapse s32_60 = Synapse(&n32, &n60, -2, 14);
+            Synapse s10_1 = Synapse(&n10, &n1, -2, 3);
+            Synapse s6_10 = Synapse(&n6, &n10, 0, 3);
+            Synapse s16_62 = Synapse(&n16, &n62, 0, 1);
+            Synapse s102_30 = Synapse(&n102, &n30, -3, 11);
+            Synapse s60_10 = Synapse(&n60, &n10, 6, 9);
+            Synapse s32_34 = Synapse(&n32, &n34, 1, 1);
+            Synapse s32_2 = Synapse(&n32, &n2, -4, 14);
+            Synapse s30_32 = Synapse(&n30, &n32, 0, 9);
+            Synapse s13_3 = Synapse(&n13, &n3, 5, 3);
+            Synapse s26_77 = Synapse(&n26, &n77, 1, 15);
+            Synapse s64_13 = Synapse(&n64, &n13, -2, 12);
+            Synapse s2_67 = Synapse(&n2, &n67, 2, 14);
+            Synapse s11_8 = Synapse(&n11, &n8, -7, 8);
+            Synapse s5_95 = Synapse(&n5, &n95, 4, 9);
+            Synapse s30_80 = Synapse(&n30, &n80, 5, 5);
+            Synapse s9_51 = Synapse(&n9, &n51, -5, 12);
+            Synapse s51_8 = Synapse(&n51, &n8, 1, 15);
+            Synapse s0_1 = Synapse(&n0, &n1, -4, 3);
+            Synapse s11_6 = Synapse(&n11, &n6, 3, 14);
+            Synapse s101_26 = Synapse(&n101, &n26, 2, 2);
+            Synapse s4_93 = Synapse(&n4, &n93, 1, 4);
+            Synapse s1_17 = Synapse(&n1, &n17, -3, 14);
+            Synapse s9_4 = Synapse(&n9, &n4, -1, 7);
+            Synapse s95_60 = Synapse(&n95, &n60, 6, 8);
+            Synapse s1_30 = Synapse(&n1, &n30, 1, 13);
+            Synapse s17_102 = Synapse(&n17, &n102, 4, 1);
+            Synapse s6_26 = Synapse(&n6, &n26, 6, 2);
+            Synapse s0_26 = Synapse(&n0, &n26, 7, 1);
+            Synapse s4_0 = Synapse(&n4, &n0, 2, 15);
+            Synapse s2_3 = Synapse(&n2, &n3, 2, 9);
+            Synapse s101_10 = Synapse(&n101, &n10, 1, 4);
+            Synapse s51_11 = Synapse(&n51, &n11, 0, 14);
+            Synapse s8_51 = Synapse(&n8, &n51, 7, 5);
+            Synapse s10_68 = Synapse(&n10, &n68, 1, 4);
+            Synapse s4_33 = Synapse(&n4, &n33, 1, 6);
+            Synapse s8_0 = Synapse(&n8, &n0, 0, 4);
+            Synapse s0_13 = Synapse(&n0, &n13, 3, 8);
+            Synapse s68_12 = Synapse(&n68, &n12, -2, 13);
+            Synapse s12_80 = Synapse(&n12, &n80, -4, 3);
+            Synapse s4_4 = Synapse(&n4, &n4, 5, 3);
+            Synapse s5_93 = Synapse(&n5, &n93, 7, 12);
+            Synapse s9_77 = Synapse(&n9, &n77, -2, 15);
+            Synapse s1_2 = Synapse(&n1, &n2, -1, 6);
+            Synapse s6_8 = Synapse(&n6, &n8, 3, 12);
+            Synapse s11_7 = Synapse(&n11, &n7, -2, 5);
+            Synapse s80_32 = Synapse(&n80, &n32, 1, 11);
+            Synapse s9_26 = Synapse(&n9, &n26, 5, 4);
+            Synapse s15_10 = Synapse(&n15, &n10, 1, 10);
+            Synapse s33_30 = Synapse(&n33, &n30, 4, 9);
+            Synapse s6_88 = Synapse(&n6, &n88, -6, 15);
+            Synapse s93_12 = Synapse(&n93, &n12, 1, 1);
+            Synapse s88_10 = Synapse(&n88, &n10, 2, 14);
+            Synapse s18_41 = Synapse(&n18, &n41, -3, 8);
+            Synapse s0_18 = Synapse(&n0, &n18, 4, 14);
+            Synapse s11_41 = Synapse(&n11, &n41, 2, 12);
+            Synapse s6_51 = Synapse(&n6, &n51, -1, 10);
+            Synapse s30_101 = Synapse(&n30, &n101, -5, 14);
+            Synapse s13_4 = Synapse(&n13, &n4, 3, 15);
+            Synapse s60_17 = Synapse(&n60, &n17, -4, 8);
+            Synapse s80_10 = Synapse(&n80, &n10, 3, 6);
+            Synapse s102_1 = Synapse(&n102, &n1, 7, 8);
+            Synapse s12_8 = Synapse(&n12, &n8, 0, 12);
+            Synapse s5_13 = Synapse(&n5, &n13, 2, 1);
+            Synapse s20_95 = Synapse(&n20, &n95, 2, 8);
+            Synapse s42_5 = Synapse(&n42, &n5, 4, 6);
+            Synapse s7_32 = Synapse(&n7, &n32, 1, 11);
+            Synapse s33_51 = Synapse(&n33, &n51, -5, 15);
+            Synapse s67_102 = Synapse(&n67, &n102, 3, 10);
+            Synapse s41_77 = Synapse(&n41, &n77, 6, 6);
+            Synapse s60_93 = Synapse(&n60, &n93, -6, 12);
+            Synapse s77_95 = Synapse(&n77, &n95, 3, 8);
+            Synapse s80_26 = Synapse(&n80, &n26, -3, 6);
+            Synapse s17_0 = Synapse(&n17, &n0, 2, 10);
+            Synapse s60_0 = Synapse(&n60, &n0, -5, 9);
+            Synapse s62_4 = Synapse(&n62, &n4, 7, 5);
+            Synapse s68_11 = Synapse(&n68, &n11, 6, 7);
+            Synapse s9_2 = Synapse(&n9, &n2, 0, 4);
+            Synapse s0_95 = Synapse(&n0, &n95, -2, 14);
+            Synapse s34_7 = Synapse(&n34, &n7, 1, 10);
+            Synapse s64_3 = Synapse(&n64, &n3, 4, 14);
+            Synapse s9_67 = Synapse(&n9, &n67, -5, 3);
+            Synapse s22_64 = Synapse(&n22, &n64, -1, 13);
+            Synapse s10_41 = Synapse(&n10, &n41, -7, 15);
+            Synapse s67_9 = Synapse(&n67, &n9, 5, 13);
+            Synapse s51_34 = Synapse(&n51, &n34, -4, 14);
+            Synapse s2_6 = Synapse(&n2, &n6, 3, 14);
+            Synapse s51_60 = Synapse(&n51, &n60, 0, 12);
 
             static void add_synapse(
                     Neuron * from, Neuron * to, int weight, uint32_t delay) 
@@ -530,7 +660,7 @@ namespace risp
                 n95.clear_tracking_info();
                 n101.clear_tracking_info();
                 n102.clear_tracking_info();
-             }
+            }
 
             void apply_spike_input(Neuron * neuron, const size_t time)
             {
