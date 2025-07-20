@@ -282,9 +282,46 @@ namespace risp
 
             void reset_neurons()
             {
-                for (size_t i = 0; i < neuron_count; i++) {
-                    neurons[i]->reset(min_potential);
-                }
+                n0.reset(min_potential);
+                n1.reset(min_potential);
+                n2.reset(min_potential);
+                n3.reset(min_potential);
+                n4.reset(min_potential);
+                n5.reset(min_potential);
+                n6.reset(min_potential);
+                n7.reset(min_potential);
+                n8.reset(min_potential);
+                n9.reset(min_potential);
+                n10.reset(min_potential);
+                n11.reset(min_potential);
+                n12.reset(min_potential);
+                n13.reset(min_potential);
+                n15.reset(min_potential);
+                n16.reset(min_potential);
+                n17.reset(min_potential);
+                n18.reset(min_potential);
+                n20.reset(min_potential);
+                n22.reset(min_potential);
+                n26.reset(min_potential);
+                n30.reset(min_potential);
+                n32.reset(min_potential);
+                n33.reset(min_potential);
+                n34.reset(min_potential);
+                n41.reset(min_potential);
+                n42.reset(min_potential);
+                n51.reset(min_potential);
+                n60.reset(min_potential);
+                n62.reset(min_potential);
+                n64.reset(min_potential);
+                n67.reset(min_potential);
+                n68.reset(min_potential);
+                n77.reset(min_potential);
+                n80.reset(min_potential);
+                n88.reset(min_potential);
+                n93.reset(min_potential);
+                n95.reset(min_potential);
+                n101.reset(min_potential);
+                n102.reset(min_potential);
             }
 
             void report_counts()
