@@ -30,6 +30,20 @@ namespace risp
 
         public:
 
+            synapse_t synapses[Constants::MAX_SYNAPASES_PER_NEURON]; 
+            
+            size_t synapse_count;
+            int id;
+            int charge;             
+            int threshold;         
+            int last_check;          
+            int last_fire;          
+            uint32_t fire_counts;  
+            bool leak;            
+            bool check;         
+            class Synapse * synapse_list;
+
+
             Neuron(int t) 
                 : synapse_count(0),
                 id(-1),
@@ -39,7 +53,8 @@ namespace risp
                 last_fire(-1),
                 fire_counts(0),
                 leak(false),
-                check(false) {};
+                check(false),
+                synapse_list(nullptr) {};
 
             void perform_fire(int time)
             {
@@ -73,18 +88,7 @@ namespace risp
                 last_check = -1;
             }
 
-            synapse_t synapses[Constants::MAX_SYNAPASES_PER_NEURON]; 
-
-            size_t synapse_count;
-            int id;
-            int charge;             
-            int threshold;         
-            int last_check;          
-            int last_fire;          
-            uint32_t fire_counts;  
-            bool leak;            
-            bool check;         
-    };
+   };
 
     class Synapse {
 
