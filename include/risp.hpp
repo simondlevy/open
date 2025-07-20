@@ -14,11 +14,17 @@ namespace risp
 
     } synapse_t;
 
-    class Neuron {
+    class Constants {
+
+        friend class Neuron;
 
         private:
 
-            static const size_t MAX_SYNAPSES = 50;
+            static const size_t MAX_SYNAPASES_PER_NEURON = 50;
+
+    };
+
+    class Neuron {
 
         public:
 
@@ -40,7 +46,7 @@ namespace risp
                 charge = 0;
             }
 
-            synapse_t synapses[MAX_SYNAPSES]; 
+            synapse_t synapses[Constants::MAX_SYNAPASES_PER_NEURON]; 
 
             size_t synapse_count;
             int id;
@@ -286,7 +292,6 @@ namespace risp
         private:
 
             static const size_t MAX_NEURONS = 100;
-
             static const size_t MAX_EVENT_VECTORS = 300;
             static const size_t MAX_EVENTS_PER_VECTOR = 300;
 
