@@ -102,7 +102,7 @@ namespace risp
         public:
 
             Synapse(Neuron * f, Neuron * t, int w, uint32_t d) 
-                : from(f), to(t), weight(w), delay(d), next(nullptr) { }
+                : from(f), to(t), weight(w), delay(d) { }
     };
 
 
@@ -235,6 +235,122 @@ namespace risp
                 add_synapse(&n51, &n34, -4, 14);
                 add_synapse(&n2, &n6, 3, 14);
                 add_synapse(&n51, &n60, 0, 12);
+            
+                /*
+                add_synapse(&n11, &n102, -7, 9);
+                add_synapse(&n8, &n34, 5, 3);
+                add_synapse(&n12, &n17, 3, 10);
+                add_synapse(&n1, &n11, -6, 12);
+                add_synapse(&n8, &n2, -2, 1);
+                add_synapse(&n13, &n1, 4, 2);
+                add_synapse(&n8, &n9, -2, 14);
+                add_synapse(&n2, &n8, 3, 7);
+                add_synapse(&n13, &n26, -6, 4);
+                add_synapse(&n64, &n95, -1, 6);
+                add_synapse(&n20, &n15, 3, 7);
+                add_synapse(&n16, &n13, 3, 8);
+                add_synapse(&n80, &n34, 0, 9);
+                add_synapse(&n60, &n26, 2, 11);
+                add_synapse(&n8, &n15, -3, 6);
+                add_synapse(&n6, &n9, 2, 3);
+                add_synapse(&n77, &n101, 2, 14);
+                add_synapse(&n26, &n11, 2, 1);
+                add_synapse(&n9, &n20, 6, 9);
+                add_synapse(&n0, &n22, -5, 15);
+                add_synapse(&n51, &n1, -7, 1);
+                add_synapse(&n2, &n77, 6, 7);
+                add_synapse(&n1, &n3, 1, 3);
+                add_synapse(&n2, &n42, 1, 2);
+                add_synapse(&n3, &n16, -7, 13);
+                add_synapse(&n32, &n60, -2, 14);
+                add_synapse(&n10, &n1, -2, 3);
+                add_synapse(&n6, &n10, 0, 3);
+                add_synapse(&n16, &n62, 0, 1);
+                add_synapse(&n102, &n30, -3, 11);
+                add_synapse(&n60, &n10, 6, 9);
+                add_synapse(&n32, &n34, 1, 1);
+                add_synapse(&n32, &n2, -4, 14);
+                add_synapse(&n30, &n32, 0, 9);
+                add_synapse(&n13, &n3, 5, 3);
+                add_synapse(&n26, &n77, 1, 15);
+                add_synapse(&n64, &n13, -2, 12);
+                add_synapse(&n2, &n67, 2, 14);
+                add_synapse(&n11, &n8, -7, 8);
+                add_synapse(&n5, &n95, 4, 9);
+                add_synapse(&n30, &n80, 5, 5);
+                add_synapse(&n9, &n51, -5, 12);
+                add_synapse(&n51, &n8, 1, 15);
+                add_synapse(&n0, &n1, -4, 3);
+                add_synapse(&n11, &n6, 3, 14);
+                add_synapse(&n101, &n26, 2, 2);
+                add_synapse(&n4, &n93, 1, 4);
+                add_synapse(&n1, &n17, -3, 14);
+                add_synapse(&n9, &n4, -1, 7);
+                add_synapse(&n95, &n60, 6, 8);
+                add_synapse(&n1, &n30, 1, 13);
+                add_synapse(&n17, &n102, 4, 1);
+                add_synapse(&n6, &n26, 6, 2);
+                add_synapse(&n0, &n26, 7, 1);
+                add_synapse(&n4, &n0, 2, 15);
+                add_synapse(&n2, &n3, 2, 9);
+                add_synapse(&n101, &n10, 1, 4);
+                add_synapse(&n51, &n11, 0, 14);
+                add_synapse(&n8, &n51, 7, 5);
+                add_synapse(&n10, &n68, 1, 4);
+                add_synapse(&n4, &n33, 1, 6);
+                add_synapse(&n8, &n0, 0, 4);
+                add_synapse(&n0, &n13, 3, 8);
+                add_synapse(&n68, &n12, -2, 13);
+                add_synapse(&n12, &n80, -4, 3);
+                add_synapse(&n4, &n4, 5, 3);
+                add_synapse(&n5, &n93, 7, 12);
+                add_synapse(&n9, &n77, -2, 15);
+                add_synapse(&n1, &n2, -1, 6);
+                add_synapse(&n6, &n8, 3, 12);
+                add_synapse(&n11, &n7, -2, 5);
+                add_synapse(&n80, &n32, 1, 11);
+                add_synapse(&n9, &n26, 5, 4);
+                add_synapse(&n15, &n10, 1, 10);
+                add_synapse(&n33, &n30, 4, 9);
+                add_synapse(&n6, &n88, -6, 15);
+                add_synapse(&n93, &n12, 1, 1);
+                add_synapse(&n88, &n10, 2, 14);
+                add_synapse(&n18, &n41, -3, 8);
+                add_synapse(&n0, &n18, 4, 14);
+                add_synapse(&n11, &n41, 2, 12);
+                add_synapse(&n6, &n51, -1, 10);
+                add_synapse(&n30, &n101, -5, 14);
+                add_synapse(&n13, &n4, 3, 15);
+                add_synapse(&n60, &n17, -4, 8);
+                add_synapse(&n80, &n10, 3, 6);
+                add_synapse(&n102, &n1, 7, 8);
+                add_synapse(&n12, &n8, 0, 12);
+                add_synapse(&n5, &n13, 2, 1);
+                add_synapse(&n20, &n95, 2, 8);
+                add_synapse(&n42, &n5, 4, 6);
+                add_synapse(&n7, &n32, 1, 11);
+                add_synapse(&n33, &n51, -5, 15);
+                add_synapse(&n67, &n102, 3, 10);
+                add_synapse(&n41, &n77, 6, 6);
+                add_synapse(&n60, &n93, -6, 12);
+                add_synapse(&n77, &n95, 3, 8);
+                add_synapse(&n80, &n26, -3, 6);
+                add_synapse(&n17, &n0, 2, 10);
+                add_synapse(&n60, &n0, -5, 9);
+                add_synapse(&n62, &n4, 7, 5);
+                add_synapse(&n68, &n11, 6, 7);
+                add_synapse(&n9, &n2, 0, 4);
+                add_synapse(&n0, &n95, -2, 14);
+                add_synapse(&n34, &n7, 1, 10);
+                add_synapse(&n64, &n3, 4, 14);
+                add_synapse(&n9, &n67, -5, 3);
+                add_synapse(&n22, &n64, -1, 13);
+                add_synapse(&n10, &n41, -7, 15);
+                add_synapse(&n67, &n9, 5, 13);
+                add_synapse(&n51, &n34, -4, 14);
+                add_synapse(&n2, &n6, 3, 14);
+                add_synapse(&n51, &n60, 0, 12);
+                */
             }
 
             ~Network() {}
@@ -567,6 +683,16 @@ namespace risp
                 syn->weight = weight;
 
                 from->synapse_count++;
+            }
+
+            static void add_synapse(Synapse * syn, Neuron * from, Neuron * to,
+                    int weight, uint32_t delay) 
+            {
+                (void)syn;
+                (void)from;
+                (void)to;
+                (void)weight;
+                (void)delay;
             }
 
             void process_events(uint32_t time) 
