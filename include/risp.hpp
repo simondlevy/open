@@ -49,6 +49,17 @@ namespace risp
                 charge = 0;
             }
 
+            void reset(const int min_potential)
+            {
+                if (leak) {
+                    charge = 0;
+                }
+
+                if (charge < min_potential) {
+                    charge = min_potential;
+                }
+            }
+
             synapse_t synapses[Constants::MAX_SYNAPASES_PER_NEURON]; 
 
             size_t synapse_count;
@@ -266,9 +277,7 @@ namespace risp
                 }
 
                 for (size_t i = 0; i < neuron_count; i++) {
-                    Neuron * n = neurons[i];
-                    if (n->leak) n->charge = 0;
-                    if (n->charge < min_potential) n->charge = min_potential;
+                    neurons[i]->reset(min_potential);
                 }
             }
 
