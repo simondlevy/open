@@ -79,7 +79,8 @@ namespace risp
                 inputs_from_weights = false;
                 overall_run_time = 0;
 
-                neuron_0 = add_neuron(3);
+                neurons[neuron_count++] = &neuron_0;
+
                 neuron_1 = add_neuron(1);
                 neuron_2 = add_neuron(6);
                 neuron_3 = add_neuron(0);
@@ -139,7 +140,7 @@ namespace risp
                 add_synapse(neuron_77, neuron_101, 2, 14);
                 add_synapse(neuron_26, neuron_11, 2, 1);
                 add_synapse(neuron_9, neuron_20, 6, 9);
-                add_synapse(neuron_0, neuron_22, -5, 15);
+                add_synapse(&neuron_0, neuron_22, -5, 15);
                 add_synapse(neuron_51, neuron_1, -7, 1);
                 add_synapse(neuron_2, neuron_77, 6, 7);
                 add_synapse(neuron_1, neuron_3, 1, 3);
@@ -163,7 +164,7 @@ namespace risp
                 add_synapse(neuron_30, neuron_80, 5, 5);
                 add_synapse(neuron_9, neuron_51, -5, 12);
                 add_synapse(neuron_51, neuron_8, 1, 15);
-                add_synapse(neuron_0, neuron_1, -4, 3);
+                add_synapse(&neuron_0, neuron_1, -4, 3);
                 add_synapse(neuron_11, neuron_6, 3, 14);
                 add_synapse(neuron_101, neuron_26, 2, 2);
                 add_synapse(neuron_4, neuron_93, 1, 4);
@@ -173,16 +174,16 @@ namespace risp
                 add_synapse(neuron_1, neuron_30, 1, 13);
                 add_synapse(neuron_17, neuron_102, 4, 1);
                 add_synapse(neuron_6, neuron_26, 6, 2);
-                add_synapse(neuron_0, neuron_26, 7, 1);
-                add_synapse(neuron_4, neuron_0, 2, 15);
+                add_synapse(&neuron_0, neuron_26, 7, 1);
+                add_synapse(neuron_4, &neuron_0, 2, 15);
                 add_synapse(neuron_2, neuron_3, 2, 9);
                 add_synapse(neuron_101, neuron_10, 1, 4);
                 add_synapse(neuron_51, neuron_11, 0, 14);
                 add_synapse(neuron_8, neuron_51, 7, 5);
                 add_synapse(neuron_10, neuron_68, 1, 4);
                 add_synapse(neuron_4, neuron_33, 1, 6);
-                add_synapse(neuron_8, neuron_0, 0, 4);
-                add_synapse(neuron_0, neuron_13, 3, 8);
+                add_synapse(neuron_8, &neuron_0, 0, 4);
+                add_synapse(&neuron_0, neuron_13, 3, 8);
                 add_synapse(neuron_68, neuron_12, -2, 13);
                 add_synapse(neuron_12, neuron_80, -4, 3);
                 add_synapse(neuron_4, neuron_4, 5, 3);
@@ -199,7 +200,7 @@ namespace risp
                 add_synapse(neuron_93, neuron_12, 1, 1);
                 add_synapse(neuron_88, neuron_10, 2, 14);
                 add_synapse(neuron_18, neuron_41, -3, 8);
-                add_synapse(neuron_0, neuron_18, 4, 14);
+                add_synapse(&neuron_0, neuron_18, 4, 14);
                 add_synapse(neuron_11, neuron_41, 2, 12);
                 add_synapse(neuron_6, neuron_51, -1, 10);
                 add_synapse(neuron_30, neuron_101, -5, 14);
@@ -218,12 +219,12 @@ namespace risp
                 add_synapse(neuron_60, neuron_93, -6, 12);
                 add_synapse(neuron_77, neuron_95, 3, 8);
                 add_synapse(neuron_80, neuron_26, -3, 6);
-                add_synapse(neuron_17, neuron_0, 2, 10);
-                add_synapse(neuron_60, neuron_0, -5, 9);
+                add_synapse(neuron_17, &neuron_0, 2, 10);
+                add_synapse(neuron_60, &neuron_0, -5, 9);
                 add_synapse(neuron_62, neuron_4, 7, 5);
                 add_synapse(neuron_68, neuron_11, 6, 7);
                 add_synapse(neuron_9, neuron_2, 0, 4);
-                add_synapse(neuron_0, neuron_95, -2, 14);
+                add_synapse(&neuron_0, neuron_95, -2, 14);
                 add_synapse(neuron_34, neuron_7, 1, 10);
                 add_synapse(neuron_64, neuron_3, 4, 14);
                 add_synapse(neuron_9, neuron_67, -5, 3);
@@ -239,7 +240,7 @@ namespace risp
 
             void apply_spike_input0(const int time)
             {
-                apply_spike_input(neuron_0, time);
+                apply_spike_input(&neuron_0, time);
             }
 
             void apply_spike_input1(const int time)
@@ -334,7 +335,8 @@ namespace risp
             bool inputs_from_weights; 
             int spike_value_factor;
 
-            Neuron * neuron_0;
+            Neuron neuron_0 = Neuron(3);
+
             Neuron * neuron_1;
             Neuron * neuron_2;
             Neuron * neuron_3;
