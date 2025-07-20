@@ -738,7 +738,24 @@ namespace risp
                 }
             }
 
-            void forward_pass_activation(Neuron * n, const uint32_t time)
+            void new_forward_pass_activation(Neuron * n, const uint32_t time)
+            {
+                for (Synapse * s=n->synapse_list_head; s; s=s->next) {
+
+                    size_t to_time = time + s->delay;
+
+                    int weight = s->weight;
+
+                    const size_t size = events[to_time].size;
+
+                    events[to_time].events[size].neuron = s->to;
+                    events[to_time].events[size].weight = weight;
+
+                    events[to_time].size++;
+                }
+            }
+
+             void forward_pass_activation(Neuron * n, const uint32_t time)
             {
                 for (size_t j = 0; j < n->synapse_count; j++) {
 
