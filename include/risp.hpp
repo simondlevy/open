@@ -22,7 +22,6 @@ namespace risp
         private:
 
             static const size_t MAX_SYNAPASES_PER_NEURON = 50;
-            static const size_t MAX_NEURONS = 100;
             static const size_t MAX_EVENT_VECTORS = 300;
             static const size_t MAX_EVENTS_PER_VECTOR = 300;
     };
@@ -102,47 +101,6 @@ namespace risp
                 discrete = true;
                 inputs_from_weights = false;
                 overall_run_time = 0;
-
-                add_neuron(&n0);
-                add_neuron(&n1);
-                add_neuron(&n6);
-                add_neuron(&n0);
-                add_neuron(&n6);
-                add_neuron(&n7);
-                add_neuron(&n0);
-                add_neuron(&n3);
-                add_neuron(&n3);
-                add_neuron(&n0);
-                add_neuron(&n6);
-                add_neuron(&n2);
-                add_neuron(&n0);
-                add_neuron(&n0);
-                add_neuron(&n4);
-                add_neuron(&n7);
-                add_neuron(&n7);
-                add_neuron(&n3);
-                add_neuron(&n7);
-                add_neuron(&n6);
-                add_neuron(&n4);
-                add_neuron(&n3);
-                add_neuron(&n2);
-                add_neuron(&n4);
-                add_neuron(&n6);
-                add_neuron(&n5);
-                add_neuron(&n7);
-                add_neuron(&n3);
-                add_neuron(&n4);
-                add_neuron(&n2);
-                add_neuron(&n2);
-                add_neuron(&n5);
-                add_neuron(&n7);
-                add_neuron(&n3);
-                add_neuron(&n4);
-                add_neuron(&n3);
-                add_neuron(&n3);
-                add_neuron(&n5);
-                add_neuron(&n3);
-                add_neuron(&n5);
 
                 add_synapse(&n11, &n102, -7, 9);
                 add_synapse(&n8, &n34, 5, 3);
@@ -400,8 +358,6 @@ namespace risp
 
             size_t neuron_count;
 
-            Neuron * neurons[Constants::MAX_NEURONS];
-
             typedef struct {
 
                 Neuron * neuron;
@@ -466,11 +422,6 @@ namespace risp
             Neuron n95 = Neuron(5);
             Neuron n101 = Neuron(3);
             Neuron n102 = Neuron(5);
-
-            void add_neuron(Neuron * neuron)
-            {
-                neurons[neuron_count++] = neuron;
-            }
 
             static void add_synapse(
                     Neuron * from, Neuron * to, int weight, uint32_t delay) 
