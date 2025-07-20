@@ -8,9 +8,16 @@ using namespace std;
 
 namespace risp
 {
-    class Synapse;
     class Neuron;
     class Network;
+
+    typedef struct {
+
+        int weight;     
+        class Neuron *to;       
+        uint32_t delay;  
+
+    } synapse_t;
 
     class Neuron {
 
@@ -31,7 +38,6 @@ namespace risp
                 leak(false),
                 check(false) {};
 
-
             void perform_fire(int time)
             {
                 last_fire = time;
@@ -39,7 +45,7 @@ namespace risp
                 charge = 0;
             }
 
-            Synapse * synapses[MAX_SYNAPSES]; 
+            synapse_t synapses[MAX_SYNAPSES]; 
 
             size_t synapse_count;
             int id;
@@ -50,17 +56,6 @@ namespace risp
             uint32_t fire_counts;  
             bool leak;            
             bool check;         
-    };
-
-    class Synapse {
-
-        public:
-
-            Synapse(int w, uint32_t d, Neuron* to_n) : weight(w), to(to_n), delay(d) {};
-
-            int weight;     
-            Neuron *to;       
-            uint32_t delay;  
     };
 
     class Network {
@@ -383,9 +378,13 @@ namespace risp
             static void add_synapse(
                     Neuron * from, Neuron * to, int weight, uint32_t delay) 
             {
-                Synapse * syn = new Synapse(weight, delay, to);
+                synapse_t * syn = &from->synapses[from->synapse_count];
 
-                from->synapses[from->synapse_count++] = syn;
+                syn->to = to;
+                syn->delay = delay;
+                syn->weight = weight;
+
+                from->synapse_count++;
             }
 
             void process_events(uint32_t time) 
@@ -419,7 +418,7 @@ namespace risp
 
                             for (size_t j = 0; j < n->synapse_count; j++) {
 
-                                Synapse * syn = n->synapses[j];
+                                synapse_t * syn = &n->synapses[j];
 
                                 size_t to_time = time + syn->delay;
 
