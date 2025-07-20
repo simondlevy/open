@@ -8,9 +8,6 @@ using namespace std;
 
 namespace risp
 {
-    class Neuron;
-    class Network;
-
     typedef struct {
 
         int weight;     
