@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cmath>
-
 #include <string.h>
 
 using namespace std;
