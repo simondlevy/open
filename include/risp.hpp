@@ -354,10 +354,47 @@ namespace risp
 
             void clear_neuron_activities()
             {
-                for (size_t i = 0; i < neuron_count; i++) {
-                    neurons[i]->clear_activity();
-                }
-            }
+                n0.clear_activity();
+                n1.clear_activity();
+                n2.clear_activity();
+                n3.clear_activity();
+                n4.clear_activity();
+                n5.clear_activity();
+                n6.clear_activity();
+                n7.clear_activity();
+                n8.clear_activity();
+                n9.clear_activity();
+                n10.clear_activity();
+                n11.clear_activity();
+                n12.clear_activity();
+                n13.clear_activity();
+                n15.clear_activity();
+                n16.clear_activity();
+                n17.clear_activity();
+                n18.clear_activity();
+                n20.clear_activity();
+                n22.clear_activity();
+                n26.clear_activity();
+                n30.clear_activity();
+                n32.clear_activity();
+                n33.clear_activity();
+                n34.clear_activity();
+                n41.clear_activity();
+                n42.clear_activity();
+                n51.clear_activity();
+                n60.clear_activity();
+                n62.clear_activity();
+                n64.clear_activity();
+                n67.clear_activity();
+                n68.clear_activity();
+                n77.clear_activity();
+                n80.clear_activity();
+                n88.clear_activity();
+                n93.clear_activity();
+                n95.clear_activity();
+                n101.clear_activity();
+                n102.clear_activity();
+             }
 
         private:
 
