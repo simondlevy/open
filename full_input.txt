@@ -1,4 +1,4 @@
-ML sinewave_network.txt
+ML network.txt
 
 CA
 AS 0 0 1

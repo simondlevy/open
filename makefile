@@ -5,7 +5,7 @@ FR_CFLAGS = -std=c++11 -Wall -Wextra -Iinclude -Iinclude/utils $(CFLAGS)
 all: bin/processor_tool_risp
 
 test: bin/processor_tool_risp
-	bin/processor_tool_risp < sinewave_pt_input.txt
+	bin/processor_tool_risp < full_input.txt
 
 clean:
 	rm -f bin/* obj/* lib/*
