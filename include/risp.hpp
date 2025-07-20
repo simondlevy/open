@@ -298,22 +298,16 @@ namespace risp
 
             Neuron * neurons[Constants::MAX_NEURONS];
 
-            class Event {
+            typedef struct {
 
-                public:
+                Neuron * neuron;
+                int weight;
 
-                    Neuron * neuron;
-                    int weight;
-
-                    Event() = default;
-
-                    Event(Neuron * n, int w) 
-                        : neuron(n), weight(w) {}
-            };
+            } event_t;
 
             typedef struct {
 
-                Event events[Constants::MAX_EVENTS_PER_VECTOR];
+                event_t events[Constants::MAX_EVENTS_PER_VECTOR];
                 size_t size;
 
             } event_vector_t;
