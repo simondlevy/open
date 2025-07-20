@@ -79,7 +79,7 @@ namespace risp
                 inputs_from_weights = false;
                 overall_run_time = 0;
 
-                neurons[neuron_count++] = &neuron_0;
+                add_neuron(&neuron_0);
 
                 neuron_1 = add_neuron(1);
                 neuron_2 = add_neuron(6);
@@ -386,7 +386,11 @@ namespace risp
                 return n;
             }
 
- 
+            void add_neuron(Neuron * neuron)
+            {
+                neurons[neuron_count++] = neuron;
+            }
+
              Synapse* add_synapse(
                     Neuron * from, Neuron * to, int weight, uint32_t delay) 
             {
