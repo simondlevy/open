@@ -41,8 +41,7 @@ namespace risp
             uint32_t fire_counts;  
             bool leak;            
             bool check;         
-            class Synapse * synapse_list;
-
+            class Synapse * synapse_list_tail;
 
             Neuron(int t) 
                 : synapse_count(0),
@@ -54,7 +53,7 @@ namespace risp
                 fire_counts(0),
                 leak(false),
                 check(false),
-                synapse_list(nullptr) {};
+                synapse_list_tail(nullptr) {};
 
             void perform_fire(int time)
             {
@@ -98,11 +97,12 @@ namespace risp
             Neuron * to;       
             int weight;     
             uint32_t delay;  
+            class Synapse * next;
 
         public:
 
             Synapse(Neuron * f, Neuron * t, int w, uint32_t d) 
-                : from(f), to(t), weight(w), delay(d) { }
+                : from(f), to(t), weight(w), delay(d), next(nullptr) { }
     };
 
 
