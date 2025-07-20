@@ -345,13 +345,18 @@ namespace risp
 
             void clear_activity() 
             {
-                for (size_t i = 0; i < neuron_count; i++) {
-                    neurons[i]->clear_activity();
-                }
+                clear_neuron_activities();
 
                 memset(events, 0, sizeof(events));
 
                 overall_run_time = 0;
+            }
+
+            void clear_neuron_activities()
+            {
+                for (size_t i = 0; i < neuron_count; i++) {
+                    neurons[i]->clear_activity();
+                }
             }
 
         private:
