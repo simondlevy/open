@@ -690,14 +690,13 @@ namespace risp
             {
                 Neuron * from = syn->from;
 
-                if (!from->synapse_list_tail) {
+                if (!from->synapse_list_head) {
+                    from->synapse_list_head = syn;
                     from->synapse_list_tail = syn;
                 }
                 else {
                     from->synapse_list_tail->next = syn;
                 }
-
-                from->synapse_list_tail = nullptr;
             }
 
             void process_events(uint32_t time) 
