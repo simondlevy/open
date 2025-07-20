@@ -734,7 +734,7 @@ namespace risp
 
                         if (n->charge >= n->threshold) {
 
-                            forward_pass_activation(n, time);
+                            new_forward_pass_activation(n, time);
 
                             n->perform_fire(time);
                         }
