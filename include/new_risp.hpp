@@ -33,9 +33,6 @@ namespace risp
 
             void perform_fire(int time)
             {
-                if (id >= 0) {
-                    printf("neuron %d fires at time %d\n", id, time);
-                }
                 last_fire = time;
                 fire_counts++;
                 charge = 0;
@@ -81,9 +78,9 @@ namespace risp
                 inputs_from_weights = false;
                 overall_run_time = 0;
 
-                neuron_0 = add_neuron(3, 0);
-                neuron_1 = add_neuron(1, 1);
-                neuron_2 = add_neuron(6, 2);
+                neuron_0 = add_neuron(3);
+                neuron_1 = add_neuron(1);
+                neuron_2 = add_neuron(6);
                 neuron_3 = add_neuron(0);
                 neuron_4 = add_neuron(6);
                 neuron_5 = add_neuron(7);
@@ -241,17 +238,17 @@ namespace risp
 
             void apply_spike_input0(const int time)
             {
-                apply_spike_input(neuron_0, 0, time);
+                apply_spike_input(neuron_0, time);
             }
 
             void apply_spike_input1(const int time)
             {
-                apply_spike_input(neuron_1, 1, time);
+                apply_spike_input(neuron_1, time);
             }
 
             void apply_spike_input2(const int time)
             {
-                apply_spike_input(neuron_2, 2, time);
+                apply_spike_input(neuron_2, time);
             }
 
             void run(int timesteps)
@@ -277,9 +274,6 @@ namespace risp
 
             void report_counts()
             {
-                printf("n0: %d\n", neuron_0->fire_counts);
-                printf("n1: %d\n", neuron_1->fire_counts);
-                printf("n2: %d\n", neuron_2->fire_counts);
                 printf("n3: %d\n", neuron_3->fire_counts);
             }
 
@@ -385,13 +379,9 @@ namespace risp
             Neuron * neuron_101;
             Neuron * neuron_102;
 
-            Neuron* add_neuron(int threshold, const int id=-1) 
+            Neuron* add_neuron(int threshold) 
             {
                 Neuron * n = new Neuron(threshold);
-
-                if (id >= 0) {
-                    n->id = id;
-                }
 
                 neurons[neuron_count++] = n;
 
@@ -412,8 +402,6 @@ namespace risp
             void process_events(uint32_t time) 
             {
                 event_vector_t es = events[time];
-
-                printf("time = %d es.size = %lu\n", time, es.size);
 
                 for (size_t i = 0; i < es.size; i++) {
 
@@ -473,10 +461,8 @@ namespace risp
                 }
             }
 
-            void apply_spike_input(Neuron * neuron, const int id, const size_t time)
+            void apply_spike_input(Neuron * neuron, const size_t time)
             {
-                printf("apply_spike_input: neuron=%d time=%lu\n", id, time);
-
                 const size_t size = events[time].size;
 
                 events[time].events[size].neuron = neuron;
