@@ -60,6 +60,12 @@ namespace risp
                 }
             }
 
+            void clear_tracking_info()
+            {
+                last_fire = -1;
+                fire_counts = 0;
+            }
+
             synapse_t synapses[Constants::MAX_SYNAPASES_PER_NEURON]; 
 
             size_t synapse_count;
@@ -487,12 +493,47 @@ namespace risp
 
             void clear_tracking_info()
             {
-                for (size_t i=0; i<neuron_count; i++) {
-                    Neuron * n = neurons[i];
-                    n->last_fire = -1;
-                    n->fire_counts = 0;
-                }
-            }
+                n0.clear_tracking_info();
+                n1.clear_tracking_info();
+                n2.clear_tracking_info();
+                n3.clear_tracking_info();
+                n4.clear_tracking_info();
+                n5.clear_tracking_info();
+                n6.clear_tracking_info();
+                n7.clear_tracking_info();
+                n8.clear_tracking_info();
+                n9.clear_tracking_info();
+                n10.clear_tracking_info();
+                n11.clear_tracking_info();
+                n12.clear_tracking_info();
+                n13.clear_tracking_info();
+                n15.clear_tracking_info();
+                n16.clear_tracking_info();
+                n17.clear_tracking_info();
+                n18.clear_tracking_info();
+                n20.clear_tracking_info();
+                n22.clear_tracking_info();
+                n26.clear_tracking_info();
+                n30.clear_tracking_info();
+                n32.clear_tracking_info();
+                n33.clear_tracking_info();
+                n34.clear_tracking_info();
+                n41.clear_tracking_info();
+                n42.clear_tracking_info();
+                n51.clear_tracking_info();
+                n60.clear_tracking_info();
+                n62.clear_tracking_info();
+                n64.clear_tracking_info();
+                n67.clear_tracking_info();
+                n68.clear_tracking_info();
+                n77.clear_tracking_info();
+                n80.clear_tracking_info();
+                n88.clear_tracking_info();
+                n93.clear_tracking_info();
+                n95.clear_tracking_info();
+                n101.clear_tracking_info();
+                n102.clear_tracking_info();
+             }
 
             void apply_spike_input(Neuron * neuron, const size_t time)
             {
