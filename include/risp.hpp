@@ -728,27 +728,32 @@ namespace risp
 
                         if (n->charge >= n->threshold) {
 
-                            for (size_t j = 0; j < n->synapse_count; j++) {
-
-                                synapse_t * syn = &n->synapses[j];
-
-                                size_t to_time = time + syn->delay;
-
-                                int weight = syn->weight;
-
-                                const size_t size = events[to_time].size;
-
-                                events[to_time].events[size].neuron = syn->to;
-                                events[to_time].events[size].weight = weight;
-
-                                events[to_time].size++;
-                            }
+                            forward_pass_activation(n, time);
 
                             n->perform_fire(time);
                         }
 
                         n->check = false;
                     }
+                }
+            }
+
+            void forward_pass_activation(Neuron * n, const uint32_t time)
+            {
+                for (size_t j = 0; j < n->synapse_count; j++) {
+
+                    synapse_t * syn = &n->synapses[j];
+
+                    size_t to_time = time + syn->delay;
+
+                    int weight = syn->weight;
+
+                    const size_t size = events[to_time].size;
+
+                    events[to_time].events[size].neuron = syn->to;
+                    events[to_time].events[size].weight = weight;
+
+                    events[to_time].size++;
                 }
             }
 
