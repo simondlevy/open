@@ -237,7 +237,9 @@ namespace risp
                 add_synapse(&n2, &n6, 3, 14);
                 add_synapse(&n51, &n60, 0, 12);
             
-                add_synapse(&s11_102, &n102);
+                add_synapse(&s11_102);
+                add_synapse(&s11_8);
+                add_synapse(&s12_17);
             }
 
             ~Network() {}
@@ -572,8 +574,10 @@ namespace risp
                 from->synapse_count++;
             }
 
-            static void add_synapse(Synapse * syn, Neuron * from)
+            static void add_synapse(Synapse * syn)
             {
+                Neuron * from = syn->from;
+
                 if (!from->synapse_list_tail) {
                     from->synapse_list_tail = syn;
                 }
