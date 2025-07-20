@@ -17,11 +17,14 @@ namespace risp
     class Constants {
 
         friend class Neuron;
+        friend class Network;
 
         private:
 
             static const size_t MAX_SYNAPASES_PER_NEURON = 50;
-
+            static const size_t MAX_NEURONS = 100;
+            static const size_t MAX_EVENT_VECTORS = 300;
+            static const size_t MAX_EVENTS_PER_VECTOR = 300;
     };
 
     class Neuron {
@@ -291,13 +294,9 @@ namespace risp
 
         private:
 
-            static const size_t MAX_NEURONS = 100;
-            static const size_t MAX_EVENT_VECTORS = 300;
-            static const size_t MAX_EVENTS_PER_VECTOR = 300;
-
             size_t neuron_count;
 
-            Neuron * neurons[MAX_NEURONS];
+            Neuron * neurons[Constants::MAX_NEURONS];
 
             class Event {
 
@@ -314,12 +313,12 @@ namespace risp
 
             typedef struct {
 
-                Event events[MAX_EVENTS_PER_VECTOR];
+                Event events[Constants::MAX_EVENTS_PER_VECTOR];
                 size_t size;
 
             } event_vector_t;
 
-            event_vector_t events[MAX_EVENT_VECTORS];
+            event_vector_t events[Constants::MAX_EVENT_VECTORS];
 
             int overall_run_time;     
             bool run_time_inclusive; 
