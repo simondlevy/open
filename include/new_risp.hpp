@@ -21,6 +21,7 @@ namespace risp
 
             Neuron(int t) 
                 : synapse_count(0),
+                id(-1),
                 charge(0),
                 threshold(t),
                 last_check(-1),
@@ -29,8 +30,12 @@ namespace risp
                 leak(false),
                 check(false) {};
 
+
             void perform_fire(int time)
             {
+                if (id >= 0) {
+                    printf("neuron %d fires at time %d\n", id, time);
+                }
                 last_fire = time;
                 fire_counts++;
                 charge = 0;
@@ -39,6 +44,7 @@ namespace risp
             Synapse * synapses[MAX_SYNAPSES]; 
 
             size_t synapse_count;
+            int id;
             int charge;             
             int threshold;         
             int last_check;          
@@ -75,9 +81,9 @@ namespace risp
                 inputs_from_weights = false;
                 overall_run_time = 0;
 
-                neuron_0 = add_neuron(3);
-                neuron_1 = add_neuron(1);
-                neuron_2 = add_neuron(6);
+                neuron_0 = add_neuron(3, 0);
+                neuron_1 = add_neuron(1, 1);
+                neuron_2 = add_neuron(6, 2);
                 neuron_3 = add_neuron(0);
                 neuron_4 = add_neuron(6);
                 neuron_5 = add_neuron(7);
@@ -258,7 +264,7 @@ namespace risp
 
                 overall_run_time += (run_time+1);
 
-                for (size_t i = 0; i <= 0 /*run_time*/; i++) {
+                for (size_t i = 0; i <= run_time; i++) {
                     process_events(i);
                 }
 
@@ -379,15 +385,20 @@ namespace risp
             Neuron * neuron_101;
             Neuron * neuron_102;
 
-            Neuron* add_neuron(int threshold) 
+            Neuron* add_neuron(int threshold, const int id=-1) 
             {
                 Neuron * n = new Neuron(threshold);
+
+                if (id >= 0) {
+                    n->id = id;
+                }
 
                 neurons[neuron_count++] = n;
 
                 return n;
             }
 
+ 
              Synapse* add_synapse(
                     Neuron * from, Neuron * to, int weight, uint32_t delay) 
             {
@@ -401,6 +412,8 @@ namespace risp
             void process_events(uint32_t time) 
             {
                 event_vector_t es = events[time];
+
+                printf("time = %d es.size = %lu\n", time, es.size);
 
                 for (size_t i = 0; i < es.size; i++) {
 
